@@ -1,0 +1,161 @@
+:root {
+    --bgcolor1: #e1e2e3;
+    --maincolor: #8B4411;
+    --light: #fff;
+    --dark: #333;
+    --tagcolor: #C7AD7F;
+    --bgcolor2: #F5F5DD;
+    --tagcolor2:  #969696;
+    --submitBtn: #24a0ed;
+    --inputBorder: #d9d2d2;
+    --boxShadow: 5px 5px 20px -1px rgba(0,0,0,0.55);
+    --btnShadow: 5px 5px 20px -1px rgba(0,0,0,0.3);
+}
+
+html, body{
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+/*this is the container for index.html/title-page
+using css grid template*/
+.container {
+    display: grid;
+    height: 100vh;
+    grid-template-columns: 3fr 3.5fr 3.5fr 3fr;
+    grid-template-rows: 1.5fr 8fr 1.5fr;
+    grid-template-areas: 
+    ". . . ."
+    ". title-tagline login-page ."
+    ". . . .";
+    background-color:var(--bgcolor1);
+}
+
+/*this is the title-tagline container*/
+.title-tagline {
+    grid-area: title-tagline;
+    background-color: var(--maincolor);
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    padding: 20px;
+    box-shadow: var(--boxShadow);
+    color: var(--light);
+    display: flex;
+    flex-direction: column;
+}
+
+/*these are the title-tagline components*/
+.title-tagline > .title-card {
+    flex-grow: 100;
+}
+
+.title-tagline > .title {
+    flex-grow: 1;
+}
+
+.title-tagline > .title h3 {
+    font-size: 1.5em;
+    font-weight: 500;
+    margin: 0;
+}
+
+.title-tagline > .tagline {
+    flex-grow: 1;
+    font-size: 1em;
+    font-weight: 400;
+    color: var(--tagcolor);
+}
+
+.title-tagline > .tagline p {
+    margin: 10px 0px 80px 0px;
+}
+
+/*this is a page container*/
+.wrapper {
+    grid-area: login-page;
+    background-color: var(--bgcolor2);
+    padding: 20px;
+    box-shadow: var(--boxShadow);
+}
+
+/*this contains the page-header*/
+.wrapper > .header {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.wrapper > .header > img {
+    background-color: var(--maincolor);
+    border-radius: 50%;
+    width: 15%;
+    height: auto;
+    flex-grow: 1;
+    margin: 0;
+}
+
+.wrapper > .header > h3 {
+    flex-grow: 1;
+    font-size: 1.4em;
+    margin: 0;
+    color: var(--dark);
+    margin: 5px 0px 0px 0px;
+}
+
+.wrapper > .header > p {
+    flex-grow: 1;
+    font-size: 0.8em;
+    margin: 5px 0px 0px 0px;
+    color:var(--tagcolor2);
+}
+
+/*this contains the form*/
+.form {
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form > h5 {
+    flex-grow: 1;
+    margin: 0px 0px 0px 0px;
+}
+
+.form > .label-top {
+    flex-grow: 1;
+    margin: 10px 0px 0px 0px;
+}
+
+.form > input {
+    flex-grow: 1;
+    margin: 0px 0px 0px 0px;
+    background-color: var(--bgcolor2);
+    border-color: var(--inputBorder);
+    color: var(--dark);
+    border-width: 1px;
+    border-radius: 10px;
+    padding: 5px;
+    border-style: solid;
+}
+
+.form > input::placeholder {
+    color: var(--tagcolor2);
+}
+
+.form > button {
+    flex-grow: 1;
+    margin: 20px 0px 0px 0px;
+    background-color: var(--submitBtn);
+    border: none;
+    padding: 5px;
+    border-radius: 10px;
+    box-shadow: var(--btnShadow);
+    color:var(--light);
+    font-weight: 600;
+}
+
+.form > .no-acc {
+    flex-grow: 1;
+    margin: 10px 0px 0px 0px;
+    text-align: center;
+}

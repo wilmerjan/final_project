@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' gap:; style-src 'self' 'unsafe-inline'; media-src *" />
+   
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <title>Login</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="title-tagline">
+            <div class="title-card"></div>
+            <div class="title">
+                <h3>Welcome to the MySystem</h3>
+            </div>
+            <div class="tagline">
+                <p>Manage your business with MySystem 
+                    business management system</p>
+            </div>
+        </div>
+        <div class="wrapper login-page">
+            <div class="header login-header">
+                <img src="./res/icon/android/drawable-hdpi-icon.png" alt="" class="logo">
+                <h3>Register.</h3>
+                <p>Fill up the required information
+                </p>
+            </div>
+            <div class="form regis-form">
+                <h5>Business name*</h5>
+                <input type="text" placeholder="Enter your business name here..." class="regis-name" required>
+
+                <h5 class="label-top">Business description*</h5>
+                <input type="text" placeholder="Enter your business description here..." class="regis-desc" required>
+
+                <h5 class="label-top">Contact number*</h5>
+                <input type="text" placeholder="11 digit contact number..." class="regis-num" required>
+
+                <h5 class="label-top">Address*</h5>
+                <input type="text" placeholder="Enter your business address here..." class="regis-num" required>
+
+                <h5 class="label-top regis-pw">Password*</h5>
+                <input type="text" placeholder="Enter your password here..." class="regis-password" required>
+
+                <h5 class="label-top confirm-pw">Confirm password*</h5>
+                <input type="text" placeholder="Confirm your password here..." class="regis-password" required>
+
+                <button>Register</button>
+                <h5 class="no-acc">Existing user? <a href="/">Log in</a></h5>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript">
+        app.initialize();
+    </script>
+</body>
+
+</html>
