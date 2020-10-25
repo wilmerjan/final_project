@@ -9,6 +9,7 @@
     --submitBtn: #24a0ed;
     --inputBorder: #d9d2d2;
     --boxShadow: 5px 5px 20px -1px rgba(0,0,0,0.55);
+    --boxShadow2: 5px 5px 20px -1px rgba(0,0,0,0.2);
     --btnShadow: 5px 5px 20px -1px rgba(0,0,0,0.3);
 }
 
@@ -158,4 +159,224 @@ using css grid template*/
     flex-grow: 1;
     margin: 10px 0px 0px 0px;
     text-align: center;
+}
+
+/*This is for the main-page
+contains the brand, topbar, sidenav and main-section*/
+.main-page-wrapper {
+    display: grid;
+    height: 100vh;
+    grid-template-columns: 1fr 9fr;
+    grid-template-rows: 0.75fr 9.25fr;
+    grid-template-areas: 
+    "brandname topbar"
+    "sidenav main";
+    background-color: var(--bgcolor1);
+    overflow: hidden;
+}
+
+brandname-section {
+    grid-area: brandname;
+    color: var(--maincolor);
+    background-color: var(--light);
+}
+
+brandname-section > p {
+    font-weight: 800;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1em;
+    text-align: center;
+}
+
+topbar-section {
+    grid-area: topbar;
+    display: flex;
+    flex-direction: row;
+    background-color: var(--maincolor);
+    color: var(--light);
+    align-items: center;
+}
+
+topbar-section > .burger-search {
+    margin: 10px 10px 10px 10px;
+}
+
+topbar-section > .burger-search > i {
+    margin: 0px 10px 0px 0px;
+}
+
+topbar-section > .burger-search > .search-bar {
+    margin: 0px;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    background-color: var(--tagcolor);
+    color: var(--light);
+    padding: 5px 10px 5px 10px;
+    border: 0;
+}
+
+topbar-section > .burger-search > .search-bar::placeholder {
+    color: var(--light);
+}
+
+topbar-section > .burger-search > .search-btn {
+    margin: 0px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    background-color: var(--tagcolor);
+    color: var(--light);
+    padding: 5px 10px 5px 10px;
+    border: 0;
+}
+
+topbar-section > .admin-logout {
+    margin-left: auto;
+}
+
+topbar-section > .admin-logout > .admin-btn{
+    border: 0;
+    margin: 0px 10px 0px 0px;
+    padding: 5px;
+    border-radius: 50%;
+    background-color: var(--maincolor);
+    color: var(--light)
+}
+
+topbar-section > .admin-logout > .logout{
+    border: 0;
+    margin: 0px 10px 0px 0px;
+    padding: 5px;
+    background-color: var(--maincolor);
+    color: var(--light);
+    font-weight: 600;
+}
+
+topbar-section > .admin-logout > .logout:hover{
+    background-color: var(--tagcolor);
+    color: var(--maincolor);
+    border-radius: 5px;
+}
+
+sidenav-section {
+    grid-area: sidenav;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--light);
+    margin: 10px 0px 0px 0px;
+}
+sidenav-section > a {
+    text-align: center;
+    text-decoration: none;
+    color: var(--tagcolor2);
+    padding: 20px 10px 20px 10px;
+    font-size: 0.8em;
+}
+
+sidenav-section > a:hover {
+    color: var(--tagcolor);
+    background-color: var(--light);
+}
+
+sidenav-section > .current {
+    color: var(--tagcolor);
+    background-color: var(--light);
+}
+
+/*Main section, nested grid
+contains the business details as card
+and cards that is linked to tabs*/
+.dashboard{
+    grid-area: main;
+    display: grid;
+    grid-template-columns: 2fr 2fr;
+    grid-template-rows: 1fr 10fr;
+    grid-template-areas: 
+    "title title"
+    "bus-desc-card card-holder";
+}
+
+.title {
+    grid-area: title;
+    margin: 0px 0px 0px 10px;
+    padding: 0;
+    line-height: .8;
+}
+
+.bus-desc-card {
+    grid-area: bus-desc-card;
+    background-color: var(--bgcolor2);
+    padding: 20px;
+    box-shadow: var(--boxShadow2);
+    margin: 10px 25px 10px 25px;
+    border-radius: 20px;
+}
+
+.bus-desc-card > img {
+    background-color: var(--maincolor);
+    border-radius: 50%;
+    width: 10%;
+    height: auto;   
+    margin: 0;
+}
+
+/*Grid for anchors*/
+.card-holder {
+    grid-area: card-holder;
+    display: grid;
+    grid-template-columns: 2fr 2fr;
+    grid-template-rows: 1.5fr 1.5fr 1.5fr;
+    grid-template-areas: 
+    "subscriber regis-food"
+    "add-menu rec-order"
+    "del-pick sales";
+    grid-gap: 10px;
+    margin: 10px 10px 100px 10px;
+}
+
+.card-holder > .a-card {
+    background-color:var(--light);
+    color: var(--maincolor);
+    border-radius: 10px;
+    box-shadow: var(--boxShadow2);
+}
+
+.card-holder > .a-card:hover {
+    background-color:var(--tagcolor);
+    color: var(--light);
+}
+
+.card-holder > .a-card > i{
+    font-size: 2.5em;
+    margin: 50px 0px 0px 20px;
+}
+
+.card-holder > .a-card > h3{
+    font-size: 1.25em;
+    margin: 10px 0px 0px 20px;
+}
+
+
+.subscriber {
+    grid-area: subscriber;
+}
+
+.regis-food {
+    grid-area: regis-food;
+}
+
+.add-menu {
+    grid-area: add-menu;
+}
+
+.rec-order {
+    grid-area: rec-order;
+}
+
+.del-pick {
+    grid-area: del-pick;
+}
+
+.sales {
+    grid-area: sales;
 }
