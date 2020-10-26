@@ -52,12 +52,15 @@ using css grid template*/
 
 .title-tagline > .title {
     flex-grow: 1;
+    margin: 0;
+    padding: 0;
 }
 
 .title-tagline > .title h3 {
     font-size: 1.5em;
     font-weight: 500;
     margin: 0;
+    text-align: left;
 }
 
 .title-tagline > .tagline {
@@ -289,7 +292,7 @@ and cards that is linked to tabs*/
 .dashboard{
     grid-area: main;
     display: grid;
-    grid-template-columns: 2fr 2fr;
+    grid-template-columns: 1.75fr 2.25fr;
     grid-template-rows: 1fr 10fr;
     grid-template-areas: 
     "title title"
@@ -299,17 +302,18 @@ and cards that is linked to tabs*/
 .title {
     grid-area: title;
     margin: 0px 0px 0px 10px;
-    padding: 0;
+    padding: 0px 0px 0px 20px; 
     line-height: .8;
+    font-size: 1em;
 }
 
 .bus-desc-card {
     grid-area: bus-desc-card;
-    background-color: var(--bgcolor2);
-    padding: 20px;
+    background-color: var(--light);
     box-shadow: var(--boxShadow2);
-    margin: 10px 25px 10px 25px;
+    margin: 0px 10px 10px 10px;
     border-radius: 20px;
+    padding: 50px;
 }
 
 .bus-desc-card > img {
@@ -320,7 +324,28 @@ and cards that is linked to tabs*/
     margin: 0;
 }
 
-/*Grid for anchors*/
+.bus-desc-card > p {
+    color: var(--tagcolor2);
+    font-size: 0.8em;
+}
+
+.bus-desc-card > .bus-name {
+    color: var(--dark);
+    font-size: 1.5em;
+    margin: 0;
+}
+
+.bus-desc-card > .bus-loc {
+    color: var(--dark);
+    font-size: 1em;
+}
+
+.bus-desc-card > .con-num {
+    color: var(--dark);
+    font-size: 1em;
+}
+
+/*Grid for dashboard anchors*/
 .card-holder {
     grid-area: card-holder;
     display: grid;
@@ -331,7 +356,7 @@ and cards that is linked to tabs*/
     "add-menu rec-order"
     "del-pick sales";
     grid-gap: 10px;
-    margin: 10px 10px 100px 10px;
+    margin: 0px 10px 10px 10px;
 }
 
 .card-holder > .a-card {
@@ -339,6 +364,7 @@ and cards that is linked to tabs*/
     color: var(--maincolor);
     border-radius: 10px;
     box-shadow: var(--boxShadow2);
+    text-decoration: none;
 }
 
 .card-holder > .a-card:hover {
