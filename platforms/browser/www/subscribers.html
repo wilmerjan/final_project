@@ -6,12 +6,154 @@
     <meta name="format-detection" content="telephone=no" />
     <meta name="msapplication-tap-highlight" content="no" />
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
-    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' gap:; style-src 'self' 'unsafe-inline'; media-src *" />
-   
+ 
     <link rel="stylesheet" type="text/css" href="css/index.css" />
     <link rel="stylesheet" href="./fontawesome-free-5.15.1-web/fontawesome-free-5.15.1-web/css/all.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <title>Login</title>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#sub-insert").click(function() {  
+                var sub_name = $("#sub-name").val();
+                var sub_contact = $("#sub-contact").val();
+                var dataString = "&sub_name=" + sub_name + "&sub_contact=" + sub_contact +
+                "&insert=";
+                console.log(dataString);
+                if ($.trim(sub_name).length > 0 & $.trim(sub_contact).length > 0)
+                {
+                    $.ajax({
+                        type: "POST",
+                        url: "http://192.168.254.118/final_project/platforms/browser/www/server/insert.php",  
+                        data: dataString,
+                        crossDomain: true,  
+                        cache: false,  
+                        beforeSend: function() {
+                        $("#insert").val('Connecting...');
+                        },
+                        success: function(data) {
+                            if (data == "success") {  alert("inserted");
+                            $("#insert").val('submit');
+                            } else if (data == "error") {  alert("error");
+                            }
+                        }
+                    });
+                    location.reload(true);
+                }
+                return false;
+            });
+        });
+        </script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                var url = "http://192.168.254.118/final_project/platforms/browser/www/server/json.php";
+                $.getJSON(url, function(result) {  
+                console.log(result);
+                    $.each(result, function(i, field) {  
+                    var id = field.subs_id;
+                    var name = field.name;
+                    var contact_number = field.contact_number;
+                    const url_back = `subscribers.html`;
+                    
+                    $("#subs-list").append(`<tr><td class="sub-id">` + id + `</td><td class="sub-name-table">` + name + `</td>` +
+                    `<td class="sub-contact-table">` + contact_number + 
+                    `</td><td><button class="update-btn" onclick="update_modal()" href="`+ `subscribers.html?id=` + id + `&name=` + name + `&contact=` + contact_number +`">Update</button></td>` +
+                    `<td><button class="delete-btn" onclick="delete_modal()" href="`+ `subscribers.html?id=` + id + `&name=` + name + `&contact=` + contact_number +`">Delete</button></td></tr>`);
+                    //const url = `subscribers.html?id=` + id + `&name` + name + `&contact=` + contact_number;
+
+                    $(".update-btn").on("click", function(){
+                        const url = this.getAttribute('href');
+                        console.log(url);
+                        history.pushState('','', url);
+                        var code = decodeURI(getUrlVars());
+                        var id = decodeURI(getUrlVars()["id"]);
+                        var name = decodeURI(getUrlVars()["name"]);
+                        var contact = decodeURI(getUrlVars()["contact"]);  
+
+                        console.log(code);
+                        console.log(id);
+                        console.log(name);
+                        console.log(contact);
+
+                        $("#sub-name-update").val(name);
+                        $("#sub-contact-update").val(contact);
+                    });
+                    $(".delete-btn").on("click", function(){
+                        const url = this.getAttribute('href');
+                        console.log(url);
+                        history.pushState('','', url);
+                    });
+                    $(".cancel-btn").on("click", function(){
+                        history.pushState('','', url_back);
+                    });
+                    $(".cancel-del-btn").on("click", function(){
+                        history.pushState('','', url_back);
+                    });
+                    });
+
+                });
+            });
+        </script>
+        <script type="text/javascript">
+            $(document).ready(function() { 
+            $("#sub-update").on("click", function() { 
+                console.log("clicked-updatebtn");
+                var id = decodeURI(getUrlVars()["id"]);
+                var name = $("#sub-name-update").val(); 
+                var contact = $("#sub-contact-update").val();
+                var dataString = "id=" + id + "&name=" + name + "&contact=" + contact + "&update=";
+                console.log(dataString);
+                $.ajax({
+                    type: "POST",
+                    url: "http://192.168.254.118/final_project/platforms/browser/www/server/update.php",  
+                    data: dataString,
+                    crossDomain: true,  
+                    cache: false,
+                    beforeSend: function() {
+                        $("#sub-update").val('Connecting...');
+                    },
+                    success: function(data) {  
+                        if (data == "success") {
+                            alert("Updated");
+                            history.pushState('','', "subscribers.html");
+                            location.reload(true);
+                        $("#sub-update").val("Update");
+                        } else if (data == "error") {  
+                            alert("error");
+                        }
+                    }
+                });
+            });
+
+        $("#sub-delete").on("click", function() { 
+            console.log("clicked-deletebtn"); 
+            var id = decodeURI(getUrlVars()["id"]);
+            var dataString = "id=" + id + "&delete=";
+            console.log(dataString);
+            $.ajax({
+                type: "GET",
+                url: "http://192.168.254.118/final_project/platforms/browser/www/server/delete.php",  
+                data: dataString,
+                crossDomain: true,  
+                cache: false,  
+                beforeSend: function() {
+                    $("#sub-delete").val('Connecting...');
+                },
+                success: function(data) {  
+                    if (data == "success") {
+                        alert("Deleted");
+                        history.pushState('','', "subscribers.html");
+                        location.reload(true);
+                    } else if (data == "error") {  
+                        alert("may error!!!");
+                    }
+                }
+            });
+        });
+    });
+</script>
+
 </head>
 
 <body>
@@ -58,19 +200,14 @@
                     <table>
                         <thead>
                             <tr>
-                                <th>Name</span></th>
+                                <th>ID</span></th>
+                                <th>Name</th>
                                 <th>Contact Number</th>
                                 <th>Update</th>
                                 <th>Delete</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td>Wilmer Jan Fontanilla Pascua</td>
-                                <td>09174005797</td>
-                                <td><button class="update-btn">Update</button></td>
-                                <td><button class="delete-btn">Delete</button></td>
-                            </tr>
+                        <tbody id="subs-list">
                         </tbody>
                     </table>
                 </div>
@@ -79,23 +216,47 @@
                     <h3>Register.</h3>
 
                     <h5 class="label-top">Subscriber's Name*</h5>
-                    <input type="text" placeholder="Enter subscriber's name" class="sub-name" required>
+                    <input type="text" placeholder="Enter subscriber's name" class="sub-name" id="sub-name" required>
 
                     <h5 class="label-top">Contact Number*</h5>
-                    <input type="text" placeholder="Enter 11 digit number..." class="sub-contact" required>
+                    <input type="text" placeholder="Enter 11 digit number..." class="sub-contact" id="sub-contact" required>
 
                     <br>
-                    <button class="sub-regiss-btn">Register</button>
+                    <button class="sub-regis-btn" id="sub-insert">Register</button>
                 </div>
             </div>
         </main-section>
+        <div class="modal-container">
+            <div class="modal-update">
+                <img src="./res/icon/android/drawable-hdpi-icon.png" alt="" class="logo">
+                <h3>Update.</h3>
+
+                <h5 class="label-top">Subscriber's Name*</h5>
+                <input type="text" placeholder="Enter subscriber's name" class="sub-name" id="sub-name-update" required>
+
+                <h5 class="label-top">Contact Number*</h5>
+                <input type="text" placeholder="Enter 11 digit number..." class="sub-contact" id="sub-contact-update" required>
+
+                <br>
+                <button class="sub-update-btn" id="sub-update">Update</button>
+                <button class="cancel-btn" onclick="cancel_modal()">Cancel</button>
+            </div>
+        </div>
+        <div class="delete-modal-container">
+            <div class="delete-card">
+                <img src="./res/icon/android/drawable-hdpi-icon.png" alt="" class="logo">
+                <h3>Delete.</h3>
+
+                <h5 class="label-top">Are you sure, you want to delete?</h5>
+                <br>
+                <button class="sub-update-btn" id="sub-delete">Delete</button>
+                <button class="cancel-del-btn" onclick="cancel_del_modal()">Cancel</button>
+            </div>
+        </div>
     </div>
 
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
-    <script type="text/javascript">
-        app.initialize();
-    </script>
 </body>
 
 </html>

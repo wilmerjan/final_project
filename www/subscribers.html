@@ -67,9 +67,9 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>01</td>
-                                <td>Wilmer Jan Fontanilla Pascua</td>
-                                <td>09174005797</td>
+                                <td id="subs-id">01</td>
+                                <td id="subs-name">Wilmer Jan Fontanilla Pascua</td>
+                                <td id="subs-contact">09174005797</td>
                                 <td><button class="update-btn">Update</button></td>
                                 <td><button class="delete-btn">Delete</button></td>
                             </tr>
@@ -81,13 +81,13 @@
                     <h3>Register.</h3>
 
                     <h5 class="label-top">Subscriber's Name*</h5>
-                    <input type="text" placeholder="Enter subscriber's name" class="sub-name" required>
+                    <input type="text" placeholder="Enter subscriber's name" class="sub-name" id="sub-name" required>
 
                     <h5 class="label-top">Contact Number*</h5>
-                    <input type="text" placeholder="Enter 11 digit number..." class="sub-contact" required>
+                    <input type="text" placeholder="Enter 11 digit number..." class="sub-contact" id="sub-contact" required>
 
                     <br>
-                    <button class="sub-regiss-btn">Register</button>
+                    <button class="sub-regis-btn" id="sub-insert">Register</button>
                 </div>
             </div>
         </main-section>
@@ -95,6 +95,37 @@
 
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#sub-insert").click(function() {  
+                var sub_name = $("#sub-name").val();
+                var sub_contact = $("#sub-contact").val();
+                var dataString = "&sub_name=" + sub_name + "&sub_contact=" + sub_contact +
+                "&insert=";
+                if ($.trim(sub_name).length > 0 & $.trim(sub_contact).length > 0)
+                {
+                    $.ajax({
+                        type: "POST",
+                        url: "http://192.168.254.118:3000/final_project/server/insert.php",  
+                        data: dataString,
+                        crossDomain: true,  
+                        cache: false,  
+                        beforeSend: function() {
+                        $("#insert").val('Connecting...');
+                        },
+                        success: function(data) {
+                            if (data == "success") {  alert("inserted");
+                            $("#insert").val('submit');
+                            } else if (data == "error") {  alert("error");
+                            }
+                        }
+                    });
+                }
+                return false;
+            });
+        });
+        </script>
+        
     <script type="text/javascript">
         app.initialize();
     </script>
