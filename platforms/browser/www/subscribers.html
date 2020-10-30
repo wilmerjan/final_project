@@ -137,9 +137,7 @@
                 data: dataString,
                 crossDomain: true,  
                 cache: false,  
-                beforeSend: function() {
-                    $("#sub-delete").val('Connecting...');
-                },
+                beforeSend: function(){ $("#delete").val('Connecting...');},
                 success: function(data) {  
                     if (data == "success") {
                         alert("Deleted");
@@ -147,6 +145,8 @@
                         location.reload(true);
                     } else if (data == "error") {  
                         alert("may error!!!");
+                        console.log(data);
+                        location.reload(true);
                     }
                 }
             });
