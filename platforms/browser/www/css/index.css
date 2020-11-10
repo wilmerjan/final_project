@@ -57,11 +57,12 @@ using css grid template*/
     padding: 0;
 }
 
-.title-tagline > .title h3 {
-    font-size: 1.5em;
-    font-weight: 500;
+.title-tagline > .title > img {
     margin: 0;
     text-align: left;
+    width: 75%;
+    height: auto;
+    filter: brightness(0) invert(1);
 }
 
 .title-tagline > .tagline {
@@ -78,7 +79,7 @@ using css grid template*/
 /*this is a page container*/
 .wrapper {
     grid-area: login-page;
-    background-color: var(--bgcolor2);
+    background-color: var(--light);
     padding: 20px;
     box-shadow: var(--boxShadow);
 }
@@ -134,7 +135,7 @@ using css grid template*/
 .form > input {
     flex-grow: 1;
     margin: 0px 0px 0px 0px;
-    background-color: var(--bgcolor2);
+    background-color: var(--light);
     border-color: var(--inputBorder);
     color: var(--dark);
     border-width: 1px;
@@ -193,13 +194,21 @@ brandname-section {
     grid-area: brandname;
     color: var(--maincolor);
     background-color: var(--light);
+    width: 100%;
+    height: auto;
+    text-align: center;
 }
 
-brandname-section > p {
-    font-weight: 800;
-    font-family: 'Roboto', sans-serif;
-    font-size: 1em;
-    text-align: center;
+brandname-section > .bn-holder {
+    height: 50px;
+    width: 100%;
+}
+
+brandname-section > .bn-holder > img {
+    width: 50%;
+    height: auto;
+    margin: 7px 0px 0px 0px;
+    object-fit: contain;
 }
 
 topbar-section {
@@ -273,6 +282,7 @@ topbar-section > .admin-logout > .logout:hover{
 
 sidenav-section {
     grid-area: sidenav;
+    height: 100%;
 }
 
 sidenav-section > .sidenav {
@@ -474,31 +484,70 @@ and cards that is linked to tabs*/
     margin: 0% 2% 5% 2%;
     box-shadow: var(--boxShadow2);
     font-size: 0.7em;
+    height: 450px;
 }
 
 .subs-table > table{
     width: 100%;
     border-collapse: collapse;
     border: none;
+    height: 100%;
+}
+
+.table-header {
+    width: 100%;
+    border-collapse: collapse;
+    border: none;
     height: auto;
 }
 
-.subs-table > table > thead > tr > th {
+.header-row > th {
     text-align: left;
     padding: 5px;
     background-color: var(--maincolor);
     color: var(--light);
     border: none;
+    height: 20px;
+    width: 20%;
 }
 
-.subs-table > table > tbody > tr > td {
+.overflow {
+    overflow: auto;
+    height: 430px;
+    background-color: var(--light);
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--light); 
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--maincolor); 
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--dark); 
+}
+
+#subs-list {
+    width: 100%;
+    border-collapse: collapse;
+    border: none;
+}
+
+#subs-list > tr > td {
     text-align: left;
     padding: 5px;
     color: var(--dark);
     border: none;
+    width: 20%;
 }
 
-.subs-table > table > tbody > tr > td > .update-btn{
+.update-btn {
     color: var(--submitBtn);
     border: none;
     background-color: var(--light);
@@ -507,18 +556,23 @@ and cards that is linked to tabs*/
     font-size: 1em;
 }
 
-.subs-table > table > tbody > tr > td > .update-btn:hover{
+.update-btn:hover {
     color: var(--light);
     background-color: var(--submitBtn);
 }
 
-.subs-table > table > tbody > tr > td > .delete-btn{
+.delete-btn {
     color: var(--deleteBtn);
     border: none;
     background-color: var(--light);
     padding: 5px;
     border-radius: 5px;
     font-size: 1em;
+}
+
+.delete-btn:hover {
+    color: var(--light);
+    background-color: var(--deleteBtn);
 }
 
 .subs-table > table > tbody > tr > td > .delete-btn:hover{
@@ -761,6 +815,10 @@ and cards that is linked to tabs*/
         display: none;
     }
 
+    brandname-section > .bn-holder > img {
+        margin: 30px 0px 0px 0px;
+    }
+    
     topbar-section > .burger-search{
         width: 70%;
         margin: 0px 0px 0px 0px;
@@ -775,6 +833,11 @@ and cards that is linked to tabs*/
     }
 
     topbar-section > .admin-logout > .admin-btn {
+        margin: ;
+        margin-top: auto;
+    }
+
+    topbar-section > .admin-logout > .admin-logout {
         margin: ;
         margin-top: auto;
     }
@@ -807,7 +870,7 @@ and cards that is linked to tabs*/
 
     .bus-desc-card > img {
         width: 20%;
-        height: auto;;
+        height: auto;
     }
 
     .subscribers-tab{
@@ -822,4 +885,13 @@ and cards that is linked to tabs*/
         "subs-regis-card";
     }
 
+    .modal-update {
+        width: 75%;
+        height: 75%;
+    }
+
+    .delete-card {
+        width: 60%;
+        height: 50%;
+    }
 }

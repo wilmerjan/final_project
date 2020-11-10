@@ -1,10 +1,30 @@
 const open_sidenav = document.querySelector("#open-sidenav");
 const close_sidenav = document.querySelector(".close-sidenav");
-const brandname = document.querySelector(".brandname");
-const sidenav_collapsed = document.querySelector(".sidenav-collapsed");
-const main_page_wrapper = document.querySelector(".main-page-wrapper");
 const modal = document.querySelector(".modal-container");
 const del_modal = document.querySelector(".delete-modal-container");
+const main_page_wrapper = document.querySelector(".main-page-wrapper");
+const mobile_width = window.matchMedia("(max-width: 768px)");
+const brandname = document.querySelector(".brandname");
+const sidenav_collapsed = document.querySelector(".sidenav-collapsed");
+const logout = document.querySelector(".logout");
+
+function myFunction(mobile_width) {
+    if (mobile_width.matches) {
+        brandname.style.display = "none";
+        sidenav_collapsed.style.display = "none";
+        main_page_wrapper.classList.remove('main-page-wrapper');
+        main_page_wrapper.classList.add('main-page-wrapper-collapsed');
+    } else {
+        brandname.style.display = "block";
+        sidenav_collapsed.style.display = "block";
+        main_page_wrapper.classList.remove('main-page-wrapper-collapsed');
+        main_page_wrapper.classList.add('main-page-wrapper');
+        }
+  }
+  
+  myFunction(mobile_width);
+  mobile_width.addListener(myFunction);
+
 
 /*This is for the sidenav toggle */
 close_sidenav.addEventListener('click', event =>{
@@ -20,11 +40,6 @@ open_sidenav.addEventListener('click', event =>{
     main_page_wrapper.classList.remove('main-page-wrapper-collapsed');
     main_page_wrapper.classList.add('main-page-wrapper');
 });
-
-function login() {
-    location.href = "http://192.168.254.118:3000/dashboard.html";
-    window.location = "dashboard.html";
-}
 
 function update_modal() {
     modal.style.display = "block";
@@ -53,6 +68,5 @@ function getUrlVars() {
             vars[hash[0]] = hash[1];
         }
     return vars;
-    }
-    
+}
 

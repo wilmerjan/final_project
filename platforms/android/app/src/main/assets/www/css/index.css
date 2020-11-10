@@ -1,0 +1,834 @@
+:root {
+    --bgcolor1: #e1e2e3;
+    --maincolor: #8B4411;
+    --light: #fff;
+    --dark: #333;
+    --tagcolor: #C7AD7F;
+    --bgcolor2: #F5F5DD;
+    --tagcolor2:  #969696;
+    --submitBtn: #24a0ed;
+    --deleteBtn: #d11a2a;
+    --inputBorder: #d9d2d2;
+    --boxShadow: 5px 5px 20px -1px rgba(0,0,0,0.55);
+    --boxShadow2: 5px 5px 20px -1px rgba(0,0,0,0.2);
+    --btnShadow: 5px 5px 20px -1px rgba(0,0,0,0.3);
+}
+
+html, body{
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+/*this is the container for index.html/title-page
+using css grid template*/
+.container {
+    display: grid;
+    height: 100vh;
+    grid-template-columns: 3fr 3.5fr 3.5fr 3fr;
+    grid-template-rows: 1.5fr 8fr 1.5fr;
+    grid-template-areas: 
+    ". . . ."
+    ". title-tagline login-page ."
+    ". . . .";
+    background-color:var(--bgcolor1);
+}
+
+/*this is the title-tagline container*/
+.title-tagline {
+    grid-area: title-tagline;
+    background-color: var(--maincolor);
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    padding: 20px;
+    box-shadow: var(--boxShadow);
+    color: var(--light);
+    display: flex;
+    flex-direction: column;
+}
+
+/*these are the title-tagline components*/
+.title-tagline > .title-card {
+    flex-grow: 100;
+}
+
+.title-tagline > .title {
+    flex-grow: 1;
+    margin: 0;
+    padding: 0;
+}
+
+.title-tagline > .title h3 {
+    font-size: 1.5em;
+    font-weight: 500;
+    margin: 0;
+    text-align: left;
+}
+
+.title-tagline > .tagline {
+    flex-grow: 1;
+    font-size: 1em;
+    font-weight: 400;
+    color: var(--tagcolor);
+}
+
+.title-tagline > .tagline p {
+    margin: 10px 0px 80px 0px;
+}
+
+/*this is a page container*/
+.wrapper {
+    grid-area: login-page;
+    background-color: var(--light);
+    padding: 20px;
+    box-shadow: var(--boxShadow);
+}
+
+/*this contains the page-header*/
+.wrapper > .header {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.wrapper > .header > img {
+    background-color: var(--maincolor);
+    border-radius: 50%;
+    width: 15%;
+    height: auto;
+    flex-grow: 1;
+    margin: 0;
+}
+
+.wrapper > .header > h3 {
+    flex-grow: 1;
+    font-size: 1.4em;
+    margin: 0;
+    color: var(--dark);
+    margin: 5px 0px 0px 0px;
+}
+
+.wrapper > .header > p {
+    flex-grow: 1;
+    font-size: 0.8em;
+    margin: 5px 0px 0px 0px;
+    color:var(--tagcolor2);
+}
+
+/*this contains the form*/
+.form {
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form > h5 {
+    flex-grow: 1;
+    margin: 0px 0px 0px 0px;
+}
+
+.form > .label-top {
+    flex-grow: 1;
+    margin: 10px 0px 0px 0px;
+}
+
+.form > input {
+    flex-grow: 1;
+    margin: 0px 0px 0px 0px;
+    background-color: var(--light);
+    border-color: var(--inputBorder);
+    color: var(--dark);
+    border-width: 1px;
+    border-radius: 10px;
+    padding: 5px;
+    border-style: solid;
+}
+
+.form > input::placeholder {
+    color: var(--tagcolor2);
+}
+
+.form > button {
+    flex-grow: 1;
+    margin: 20px 0px 0px 0px;
+    background-color: var(--submitBtn);
+    border: none;
+    padding: 5px;
+    border-radius: 10px;
+    box-shadow: var(--btnShadow);
+    color:var(--light);
+    font-weight: 600;
+}
+
+.form > .no-acc {
+    flex-grow: 1;
+    margin: 10px 0px 0px 0px;
+    text-align: center;
+}
+
+/*This is for the main-page
+contains the brand, topbar, sidenav and main-section*/
+.main-page-wrapper {
+    display: grid;
+    height: 100vh;
+    grid-template-columns: 1fr 9fr;
+    grid-template-rows: 0.75fr 9.25fr;
+    grid-template-areas: 
+    "brandname topbar"
+    "sidenav main";
+    background-color: var(--bgcolor1);
+}
+
+.main-page-wrapper-collapsed {
+    display: grid;
+    height: 100vh;
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.75fr 9.25fr;
+    grid-template-areas:
+    "topbar"
+    "main";
+    background-color: var(--bgcolor1);
+}
+
+brandname-section {
+    grid-area: brandname;
+    color: var(--maincolor);
+    background-color: var(--light);
+}
+
+brandname-section > p {
+    font-weight: 800;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1em;
+    text-align: center;
+}
+
+topbar-section {
+    grid-area: topbar;
+    display: flex;
+    flex-direction: row;
+    background-color: var(--maincolor);
+    color: var(--light);
+    align-items: center;
+}
+
+topbar-section > .burger-search {
+    margin: 10px 10px 10px 10px;
+}
+
+topbar-section > .burger-search > i {
+    margin: 0px 10px 0px 0px;
+}
+
+topbar-section > .burger-search > .search-bar {
+    margin: 0px;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    background-color: var(--tagcolor);
+    color: var(--light);
+    padding: 5px 10px 5px 10px;
+    border: 0;
+}
+
+topbar-section > .burger-search > .search-bar::placeholder {
+    color: var(--light);
+}
+
+topbar-section > .burger-search > .search-btn {
+    margin: 0px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    background-color: var(--tagcolor);
+    color: var(--light);
+    padding: 5px 10px 5px 10px;
+    border: 0;
+}
+
+topbar-section > .admin-logout {
+    margin-left: auto;
+}
+
+topbar-section > .admin-logout > .admin-btn{
+    border: 0;
+    margin: 0px 10px 0px 0px;
+    padding: 5px;
+    border-radius: 50%;
+    background-color: var(--maincolor);
+    color: var(--light)
+}
+
+topbar-section > .admin-logout > .logout{
+    border: 0;
+    margin: 0px 10px 0px 0px;
+    padding: 5px;
+    background-color: var(--maincolor);
+    color: var(--light);
+    font-weight: 400;
+}
+
+topbar-section > .admin-logout > .logout:hover{
+    background-color: var(--tagcolor);
+    color: var(--maincolor);
+    border-radius: 5px;
+}
+
+sidenav-section {
+    grid-area: sidenav;
+}
+
+sidenav-section > .sidenav {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--light);
+    margin: 0% 0% 0% 0%;
+}
+
+sidenav-section > .sidenav > a {
+    text-align: center;
+    text-decoration: none;
+    color: var(--tagcolor2);
+    padding: 20px 10px 20px 10px;
+    font-size: 0.8em;
+}
+
+sidenav-section > .sidenav > p {
+    text-align: center;
+    text-decoration: none;
+    color: var(--tagcolor2);
+    padding: 10px 10px 10px 10px;
+    margin: 0;
+    font-size: 0.8em;
+}
+
+sidenav-section > .sidenav > p:hover {
+    color: var(--tagcolor);
+    background-color: var(--light);
+}
+
+sidenav-section > .sidenav > a:hover {
+    color: var(--tagcolor);
+    background-color: var(--light);
+}
+
+sidenav-section > .sidenav > .current {
+    color: var(--tagcolor);
+    background-color: var(--light);
+}
+
+/*Main section -dashboard, nested grid
+contains the business details as card
+and cards that is linked to tabs*/
+
+main-section {
+    grid-area: main;
+    padding: 0;
+    margin: 0;
+}
+
+.dashboard{
+    display: grid;
+    height: 100%;
+    width: 100%;
+    grid-template-columns: 1.75fr 2.25fr;
+    grid-template-rows: 1fr 10fr;
+    grid-template-areas: 
+    "title title"
+    "bus-desc-card card-holder";
+}
+
+.title {
+    grid-area: title;
+    margin: 0px 0px 0px 10px;
+    padding: 0px 0px 0px 20px; 
+    line-height: .8;
+    font-size: 1em;
+}
+
+.bus-desc-card {
+    grid-area: bus-desc-card;
+    background-color: var(--light);
+    box-shadow: var(--boxShadow2);
+    margin: 0px 10px 10px 10px;
+    border-radius: 20px;
+    padding: 50px;
+}
+
+.bus-desc-card > img {
+    background-color: var(--maincolor);
+    border-radius: 50%;
+    width: 10%;
+    height: auto;   
+    margin: 0;
+}
+
+.bus-desc-card > p {
+    color: var(--tagcolor2);
+    font-size: 0.8em;
+}
+
+.bus-desc-card > .bus-name {
+    color: var(--dark);
+    font-size: 1.5em;
+    margin: 0;
+}
+
+.bus-desc-card > .bus-loc {
+    color: var(--dark);
+    font-size: 1em;
+}
+
+.bus-desc-card > .con-num {
+    color: var(--dark);
+    font-size: 1em;
+}
+
+/*Grid for dashboard anchors*/
+.card-holder {
+    grid-area: card-holder;
+    display: grid;
+    grid-template-columns: 2fr 2fr;
+    grid-template-rows: 1.5fr 1.5fr 1.5fr;
+    grid-template-areas: 
+    "subscriber regis-food"
+    "add-menu rec-order"
+    "del-pick sales";
+    grid-gap: 10px;
+    margin: 0px 10px 10px 10px;
+}
+
+.card-holder > .a-card {
+    background-color:var(--light);
+    color: var(--maincolor);
+    border-radius: 10px;
+    box-shadow: var(--boxShadow2);
+    text-decoration: none;
+}
+
+.card-holder > .a-card:hover {
+    background-color:var(--tagcolor);
+    color: var(--light);
+}
+
+.card-holder > .a-card > i{
+    font-size: 2.5em;
+    margin: 50px 0px 0px 20px;
+}
+
+.card-holder > .a-card > h3{
+    font-size: 1.25em;
+    margin: 10px 0px 0px 20px;
+}
+
+
+.subscriber {
+    grid-area: subscriber;
+}
+
+.regis-food {
+    grid-area: regis-food;
+}
+
+.add-menu {
+    grid-area: add-menu;
+}
+
+.rec-order {
+    grid-area: rec-order;
+}
+
+.del-pick {
+    grid-area: del-pick;
+}
+
+.sales {
+    grid-area: sales;
+}
+
+/*Main section -subscribers, nested grid
+contains the registered subscriber as table
+and cards that is linked to tabs*/
+
+.subscribers-tab {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 1fr 10fr;
+    grid-template-areas: 
+    "subs-title subs-title"
+    "subs-table subs-regis-card";
+    height: 100%;
+    width: 100%;
+}
+
+.subs-title {
+    grid-area: subs-title;
+    margin: 0px 0px 0px 10px;
+    padding: 0px 0px 0px 20px; 
+    line-height: .8;
+    font-size: 1em;
+}
+
+.subs-table {
+    grid-area: subs-table;
+    background-color: var(--light);
+    width: 96%;
+    margin: 0% 2% 5% 2%;
+    box-shadow: var(--boxShadow2);
+    font-size: 0.7em;
+}
+
+.subs-table > table{
+    width: 100%;
+    border-collapse: collapse;
+    border: none;
+    height: auto;
+}
+
+.subs-table > table > thead > tr > th {
+    text-align: left;
+    padding: 5px;
+    background-color: var(--maincolor);
+    color: var(--light);
+    border: none;
+}
+
+.subs-table > table > tbody > tr > td {
+    text-align: left;
+    padding: 5px;
+    color: var(--dark);
+    border: none;
+}
+
+.subs-table > table > tbody > tr > td > .update-btn{
+    color: var(--submitBtn);
+    border: none;
+    background-color: var(--light);
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+.subs-table > table > tbody > tr > td > .update-btn:hover{
+    color: var(--light);
+    background-color: var(--submitBtn);
+}
+
+.subs-table > table > tbody > tr > td > .delete-btn{
+    color: var(--deleteBtn);
+    border: none;
+    background-color: var(--light);
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+.subs-table > table > tbody > tr > td > .delete-btn:hover{
+    color: var(--light);
+    background-color: var(--deleteBtn);
+}
+
+.subs-regis-card {
+    grid-area: subs-regis-card;
+    display: flex;
+    margin: 0px 10px 10px 10px;
+    padding: 20px;
+    flex-direction: column;
+    background-color: var(--light);
+    box-shadow: var(--boxShadow2);
+    border-radius: 20px;
+}
+
+.subs-regis-card > img {
+    background-color: var(--maincolor);
+    border-radius: 50%;
+    width: 15%;
+    height: auto;   
+    margin: 0;
+}
+
+.subs-regis-card > h3 {
+    color: var(--dark);
+    font-size: 1.5em;
+    margin: 0;
+}
+
+.subs-regis-card > h5 {
+    color: var(--dark);
+    font-size: 0.8em;
+    margin: 50px 0px 0px 0px;
+}
+
+.subs-regis-card > input {
+    margin: 5px 0px 0px 0px;
+    background-color: var(--light);
+    border-color: var(--inputBorder);
+    color: var(--dark);
+    border-width: 1px;
+    border-radius: 10px;
+    padding: 5px;
+    border-style: solid;
+}
+
+.subs-regis-card > button {
+    margin: 20px 0px 0px 0px;
+    background-color: var(--submitBtn);
+    border: none;
+    padding: 10px;
+    border-radius: 15px;
+    box-shadow: var(--btnShadow);
+    color:var(--light);
+    font-weight: 600;
+}
+
+.modal-container {
+    display: none;    
+    position: fixed;
+    z-index: 1;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-update {
+    display: flex;
+    padding: 20px;
+    flex-direction: column;
+    background-color: var(--light);
+    box-shadow: var(--boxShadow2);
+    border-radius: 20px;
+    position: fixed;
+    z-index: 2;
+    width: 25%;
+    height: 75%;
+    overflow: auto;
+    margin: 0;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.modal-update > img {
+    background-color: var(--maincolor);
+    border-radius: 50%;
+    width: 15%;
+    height: auto;   
+    margin: 0;
+}
+
+.modal-update > h3 {
+    color: var(--dark);
+    font-size: 1.5em;
+    margin: 0;
+}
+
+.modal-update > h5 {
+    color: var(--dark);
+    font-size: 0.8em;
+    margin: 50px 0px 0px 0px;
+}
+
+.modal-update > input {
+    margin: 5px 0px 0px 0px;
+    background-color: var(--light);
+    border-color: var(--inputBorder);
+    color: var(--dark);
+    border-width: 1px;
+    border-radius: 10px;
+    padding: 5px;
+    border-style: solid;
+}
+
+.modal-update > button {
+    margin: 20px 0px 0px 0px;
+    background-color: var(--submitBtn);
+    border: none;
+    padding: 10px;
+    border-radius: 15px;
+    box-shadow: var(--btnShadow);
+    color:var(--light);
+    font-weight: 600;
+}
+
+.modal-update > .cancel-btn {
+    margin: 20px 0px 0px 0px;
+    background-color: var(--bgcolor1);
+    border: none;
+    padding: 10px;
+    border-radius: 15px;
+    box-shadow: var(--btnShadow);
+    color:var(--dark);
+    font-weight: 600;
+}
+
+.delete-modal-container {
+    display: none;    
+    position: fixed;
+    z-index: 1;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+}
+
+.delete-card {
+    display: flex;
+    padding: 20px;
+    flex-direction: column;
+    background-color: var(--light);
+    box-shadow: var(--boxShadow2);
+    border-radius: 20px;
+    position: fixed;
+    z-index: 2;
+    width: 25%;
+    height: 50%;
+    overflow: auto;
+    margin: 0;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.delete-card > img {
+    background-color: var(--maincolor);
+    border-radius: 50%;
+    width: 15%;
+    height: auto;   
+    margin: 0;
+}
+
+.delete-card > h3 {
+    color: var(--dark);
+    font-size: 1.5em;
+    margin: 0;
+}
+
+.delete-card > h5 {
+    color: var(--dark);
+    font-size: 1em;
+    margin: 50px 0px 0px 0px;
+}
+
+
+.delete-card > button {
+    margin: 20px 0px 0px 0px;
+    background-color: var(--deleteBtn);
+    border: none;
+    padding: 10px;
+    border-radius: 15px;
+    box-shadow: var(--btnShadow);
+    color:var(--light);
+    font-weight: 600;
+}
+
+.delete-card > .cancel-del-btn {
+    margin: 20px 0px 0px 0px;
+    background-color: var(--bgcolor1);
+    border: none;
+    padding: 10px;
+    border-radius: 15px;
+    box-shadow: var(--btnShadow);
+    color:var(--dark);
+    font-weight: 600;
+}
+
+@media only screen and (max-width: 768px) {
+    .container {
+        display: grid;
+        height: 100vh;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
+        grid-template-areas: 
+        "login-page";
+        background-color: var(--maincolor);
+    }
+    .wrapper {
+        grid-area: login-page;
+        height: 80%;
+        margin: 10% 5% 10% 5%;
+        box-shadow: var(--boxShadow);
+        border-radius: 10px;
+    }
+
+    .title-tagline {
+        display: none;
+    }
+
+    topbar-section > .burger-search{
+        width: 70%;
+        margin: 0px 0px 0px 0px;
+    }
+
+    topbar-section > .burger-search > i{
+        margin: 0px 10px 0px 10px;
+    }
+
+    topbar-section > .burger-search > .search-bar{
+        width: 40%;
+    }
+
+    topbar-section > .admin-logout > .admin-btn {
+        margin: ;
+        margin-top: auto;
+    }
+
+    .sidenav {
+        height: 100%;
+    }
+    
+    .main-page-wrapper{
+        background-color: var(--bgcolor1);
+        height: 100%;
+    }
+
+    .main-page-wrapper-collapsed {
+        background-color: var(--bgcolor1);
+        height: 100%;
+    }
+    
+    .dashboard{
+        display: grid;
+        height: 100%;
+        width: 100%;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 10fr 10fr;
+        grid-template-areas: 
+        "title"
+        "bus-desc-card"
+        "card-holder";
+    }
+
+    .bus-desc-card > img {
+        width: 20%;
+        height: auto;
+    }
+
+    .subscribers-tab{
+        display: grid;
+        height: 100%;
+        width: 100%;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 10fr 10fr;
+        grid-template-areas: 
+        "subs-title"
+        "subs-table"
+        "subs-regis-card";
+    }
+
+    .modal-update {
+        width: 75%;
+        height: 75%;
+    }
+
+    .delete-card {
+        width: 60%;
+        height: 50%;
+    }
+}

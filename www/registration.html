@@ -6,12 +6,54 @@
     <meta name="format-detection" content="telephone=no" />
     <meta name="msapplication-tap-highlight" content="no" />
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
-    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' gap:; style-src 'self' 'unsafe-inline'; media-src *" />
-   
+    
     <link rel="stylesheet" type="text/css" href="css/index.css" />
-    <link rel="stylesheet" href="./css/fontawesome.min.css">
+    <link rel="stylesheet" href="./fontawesome-free-5.15.1-web/fontawesome-free-5.15.1-web/css/all.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <title>Login</title>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".register").click(function(){
+                console.log("clicked");
+            var owner_username= $.trim($(".regis-username").val());
+            var bus_name= $.trim($(".regis-name").val());
+            var bus_desc= $.trim($(".regis-desc").val());
+            var address= $.trim($(".regis-address").val());
+            var contact= $.trim($(".regis-num").val());
+            var password= $.trim($(".regis-password").val());
+            var confirm= $.trim($(".regis-confirm").val());
+            
+            if(password === confirm) {
+                var dataString="owner_username="+owner_username+"&bus_name="+bus_name+"&bus_desc="+bus_desc+"&address="+address+
+                "&contact="+contact+"&password="+password+"&register=";
+                console.log(dataString);
+                $.ajax({
+                    type: "POST", 
+                    url: "http://192.168.254.118/final_project/www/server/insert.php",
+                    crossDomain: true, 
+                    cache: false, 
+                    data: dataString,  
+                    success: function(data){
+                        console.log(data);
+                        if(data == "success"){
+                            alert("success");
+                            window.location = "index.html";
+                        }  
+                        else if( data == "exist")
+                            alert("Account is already there");
+                        else if(data == "error")
+                            alert("Register Failed");
+                    }
+                });
+            }else {
+                alert("Password don't match");
+            }
+        });
+    });
+    </script>
 </head>
 
 <body>
@@ -19,7 +61,7 @@
         <div class="title-tagline">
             <div class="title-card"></div>
             <div class="title">
-                <h3>Welcome to the MySystem</h3>
+                <img src="./img/logo-gawis.png" alt="" class="responsive">
             </div>
             <div class="tagline">
                 <p>Manage your business with MySystem 
@@ -28,29 +70,32 @@
         </div>
         <div class="wrapper login-page">
             <div class="header login-header">
-                <img src="./res/icon/android/drawable-hdpi-icon.png" alt="" class="logo">
+                <img src="./img/GAWIS-PIC-LOGO-final.jpg" alt="" class="logo">
                 <h3>Register.</h3>
                 <p>Fill up the required information
                 </p>
             </div>
             <div class="form regis-form">
-                <h5>Business name*</h5>
-                <input type="text" placeholder="Enter your business name here..." class="regis-name" required>
+                <h5>User name*</h5>
+                <input type="text" placeholder="Enter your user name here..." class="regis-username">
+
+                <h5 class="label-top">Business name*</h5>
+                <input type="text" placeholder="Enter your business name here..." class="regis-name">
 
                 <h5 class="label-top">Business description*</h5>
-                <input type="text" placeholder="Enter your business description here..." class="regis-desc" required>
+                <input type="text" placeholder="Enter your business description here..." class="regis-desc">
 
                 <h5 class="label-top">Contact number*</h5>
-                <input type="text" placeholder="11 digit contact number..." class="regis-num" required>
+                <input type="text" placeholder="11 digit contact number..." class="regis-num">
 
                 <h5 class="label-top">Address*</h5>
-                <input type="text" placeholder="Enter your business address here..." class="regis-num" required>
+                <input type="text" placeholder="Enter your business address here..." class="regis-address">
 
                 <h5 class="label-top regis-pw">Password*</h5>
-                <input type="text" placeholder="Enter your password here..." class="regis-password" required>
+                <input type="password" placeholder="Enter your password here..." class="regis-password">
 
                 <h5 class="label-top confirm-pw">Confirm password*</h5>
-                <input type="text" placeholder="Confirm your password here..." class="regis-password" required>
+                <input type="password" placeholder="Confirm your password here..." class="regis-confirm">
 
                 <button class="register">Register</button>
                 <h5 class="no-acc">Existing user? <a href="./index.html">Log in</a></h5>
@@ -58,11 +103,6 @@
         </div>
     </div>
 
-    <script type="text/javascript" src="cordova.js"></script>
-    <script type="text/javascript" src="js/index.js"></script>
-    <script type="text/javascript">
-        app.initialize();
-    </script>
 </body>
 
 </html>

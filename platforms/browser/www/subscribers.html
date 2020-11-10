@@ -18,7 +18,7 @@
             $("#sub-insert").click(function() {  
                 var sub_name = $("#sub-name").val();
                 var sub_contact = $("#sub-contact").val();
-                var dataString = "&sub_name=" + sub_name + "&sub_contact=" + sub_contact +
+                var dataString = "sub_name=" + sub_name + "&sub_contact=" + sub_contact +
                 "&insert=";
                 console.log(dataString);
                 if ($.trim(sub_name).length > 0 & $.trim(sub_contact).length > 0)
@@ -30,16 +30,19 @@
                         crossDomain: true,  
                         cache: false,  
                         beforeSend: function() {
-                        $("#insert").val('Connecting...');
+                        
                         },
                         success: function(data) {
-                            if (data == "success") {  alert("inserted");
-                            $("#insert").val('submit');
-                            } else if (data == "error") {  alert("error");
+                            console.log(data);
+                            if (data == "success") {  
+                                //alert("inserted");
+                                location.reload(true);
+                            } else if (data == "error") {  
+                                alert("error");
                             }
                         }
                     });
-                    location.reload(true);
+                    
                 }
                 return false;
             });
@@ -115,7 +118,7 @@
                     },
                     success: function(data) {  
                         if (data == "success") {
-                            alert("Updated");
+                            //alert("Updated");
                             history.pushState('','', "subscribers.html");
                             location.reload(true);
                         $("#sub-update").val("Update");
@@ -137,10 +140,10 @@
                 data: dataString,
                 crossDomain: true,  
                 cache: false,  
-                beforeSend: function(){ $("#delete").val('Connecting...');},
+                beforeSend: function(){ $("#sub-delete").val('Connecting...');},
                 success: function(data) {  
                     if (data == "success") {
-                        alert("Deleted");
+                        //alert("Deleted");
                         history.pushState('','', "subscribers.html");
                         location.reload(true);
                     } else if (data == "error") {  
@@ -159,7 +162,9 @@
 <body>
     <div class="main-page-wrapper">
         <brandname-section class="brandname">
-            <p>[Brandname]</p>
+            <div class="bn-holder">
+                <img src="./img/gawis-invert-nomargin.jpg" alt="">
+            </div>
         </brandname-section>
         <topbar-section>
             <div class="burger-search">
@@ -198,21 +203,31 @@
                 </div>
                 <div class="subs-table">
                     <table>
-                        <thead>
-                            <tr>
-                                <th>ID</span></th>
-                                <th>Name</th>
-                                <th>Contact Number</th>
-                                <th>Update</th>
-                                <th>Delete</th>
-                            </tr>
-                        </thead>
-                        <tbody id="subs-list">
-                        </tbody>
+                        <tr>
+                            <td>
+                                <table class="table-header">
+                                    <tr class="header-row">
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Contact Number</th>
+                                        <th>Update</th>
+                                        <th>Delete</th>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="overflow">
+                                    <table id="subs-list">
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
                     </table>
                 </div>
                 <div class="subs-regis-card">
-                    <img src="./res/icon/android/drawable-hdpi-icon.png" alt="" class="logo">
+                    <img src="./img/GAWIS-PIC-LOGO-final.jpg" alt="" class="logo">
                     <h3>Register.</h3>
 
                     <h5 class="label-top">Subscriber's Name*</h5>
