@@ -46,6 +46,11 @@ using css grid template*/
     flex-direction: column;
 }
 
+.responsive {
+    width: 100%;
+    height: auto;
+}
+
 /*these are the title-tagline components*/
 .title-tagline > .title-card {
     flex-grow: 100;
@@ -366,7 +371,7 @@ main-section {
 .bus-desc-card > img {
     background-color: var(--maincolor);
     border-radius: 50%;
-    width: 10%;
+    width: 20%;
     height: auto;   
     margin: 0;
 }
@@ -591,7 +596,7 @@ and cards that is linked to tabs*/
     border-radius: 20px;
 }
 
-.subs-regis-card > img {
+.subs-regis-card > .logo {
     background-color: var(--maincolor);
     border-radius: 50%;
     width: 15%;

@@ -6,18 +6,25 @@
     <meta name="format-detection" content="telephone=no" />
     <meta name="msapplication-tap-highlight" content="no" />
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
-    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' gap:; style-src 'self' 'unsafe-inline'; media-src *" />
-   
-    <link rel="stylesheet" type="text/css" href="./css/index.css" />
+     
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
     <link rel="stylesheet" href="./fontawesome-free-5.15.1-web/fontawesome-free-5.15.1-web/css/all.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-    <title>Login</title>
+    <title>Dashboard</title>
+    
+    <script src="./js/jquery.mobile-1.4.5.js"></script>
+    <script src="./js/jquery-3.5.1.js"></script>
+    
+    <script type="text/javascript">
+    </script>
 </head>
 
 <body>
     <div class="main-page-wrapper">
         <brandname-section class="brandname">
-            <p>[Brandname]</p>
+            <div class="bn-holder">
+                <img src="./img/gawis-invert-nomargin.jpg" alt="">
+            </div>
         </brandname-section>
         <topbar-section>
             <div class="burger-search">
@@ -55,7 +62,7 @@
                     <h3>Dashboard</h3>
                 </div>
                 <div class="bus-desc-card">
-                    <img src="./res/icon/android/drawable-hdpi-icon.png" alt="" class="logo">
+                    <img src="./img/GAWIS-PIC-LOGO-final.jpg" alt="" class="logo">
                     <h3 class="bus-name">[Business Name]</h3>
                     <p class="bus-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus fringilla odio non sapien rutrum
                     interdum. [Business Description]</p>
@@ -95,12 +102,8 @@
             </div>
         </main-section>
     </div>
-
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
-    <script type="text/javascript">
-        app.initialize();
-    </script>
 </body>
 
 </html>

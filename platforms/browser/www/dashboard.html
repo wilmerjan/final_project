@@ -10,8 +10,33 @@
     <link rel="stylesheet" type="text/css" href="css/index.css" />
     <link rel="stylesheet" href="./fontawesome-free-5.15.1-web/fontawesome-free-5.15.1-web/css/all.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    
     <title>Dashboard</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script type="text/javascript">
+        $(document).ready(function() {
+            var url = "http://192.168.254.118/final_project/platforms/browser/www/server/login_json.php";
+            $.getJSON(url, function(result) {  
+            //console.log(result);
+                $.each(result, function(i, field) {  
+                    console.log(field);
+                    const username = localStorage.getItem("username");
+                    if (username === field.owner_username) {
+                        localStorage.bus_id = field.owner_id;
+                        let bus_name = field.business_name;
+                        let bus_desc = field.business_description;
+                        let bus_add = field.business_address;
+                        let bus_num = field.contact_number;
+
+                        $(".bus-name").html(bus_name);
+                        $(".bus-desc").html(bus_desc);
+                        $(".bus-loc").html(bus_add);
+                        $(".con-num").html(bus_num);
+                    }
+                });
+
+            });
+        });
     </script>
 </head>
 
@@ -63,11 +88,11 @@
                     <p class="bus-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus fringilla odio non sapien rutrum
                     interdum. [Business Description]</p>
     
-                    <h3 class="bus-loc">Business Location</h3>
-                    <p>[Business Location]</p>
+                    <h3>Business Location</h3>
+                    <p class="bus-loc">[Business Location]</p>
     
-                    <h3 class="con-num">Contact Number</h3>
-                    <p>[Contact Number]</p>
+                    <h3>Contact Number</h3>
+                    <p class="con-num">[Contact Number]</p>
                 </div>
                 <div class="card-holder">
                     <a class="a-card subscriber" href="./subscribers.html">
