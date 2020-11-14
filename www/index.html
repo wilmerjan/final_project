@@ -16,34 +16,35 @@
     <script src="./js/jquery.mobile-1.4.5.js"></script>
     <script src="./js/jquery-3.5.1.js"></script>
     <script type="text/javascript">
-     $(document).ready(function() {
-        $(".login").click(function(){
-            var owner_username= $.trim($(".user-name").val());
-            var password= $.trim($(".business-password").val());
-
-            var loginString ="owner_username="+owner_username+"&password="+password+"&login=";
-            console.log(loginString);
-            $.ajax({
-            type: "POST",
-            crossDomain: true, cache: false,  
-            url: "http://192.168.254.118/final_project/www/server/insert.php",
-            data: loginString,  
-            success: function(data){
-                console.log(data);
-                if(data == "success") {
-                    alert("Login Success..!");  
-                    localStorage.loginstatus = "true";  
-                    window.location.href = "dashboard.html";
-                }
-                else if(data == "error")
-                {
-                alert("Login Failed..!");
-                }
-            }
-            });
+        $(document).ready(function() {
+           $(".login").click(function(){
+               var owner_username= $.trim($(".user-name").val());
+               var password= $.trim($(".business-password").val());
+   
+               var loginString ="owner_username="+owner_username+"&password="+password+"&login=";
+               console.log(loginString);
+               $.ajax({
+               type: "POST",
+               crossDomain: true, cache: false,  
+               url: "http://192.168.254.118/final_project/www/server/insert.php",
+               data: loginString,  
+               success: function(data){
+                   console.log(data);
+                   if(data == "success") {
+                       alert("Login Success..!");  
+                       localStorage.loginstatus = "true";
+                       localStorage.setItem("username", owner_username);
+                       window.location.href = "dashboard.html";
+                   }
+                   else if(data == "error")
+                   {
+                   alert("Login Failed..!");
+                   }
+               }
+               });
+           });
         });
-     });
-    </script>
+       </script>
 
 </head>
 

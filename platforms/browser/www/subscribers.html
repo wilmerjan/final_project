@@ -58,14 +58,19 @@
                     var id = field.subs_id;
                     var name = field.name;
                     var contact_number = field.contact_number;
-                    const url_back = `subscribers.html`;
-                    
                     $("#subs-list").append(`<tr><td class="sub-id">` + id + `</td><td class="sub-name-table">` + name + `</td>` +
-                    `<td class="sub-contact-table">` + contact_number + 
-                    `</td><td><button class="update-btn" onclick="update_modal()" href="`+ `subscribers.html?id=` + id + `&name=` + name + `&contact=` + contact_number +`">Update</button></td>` +
-                    `<td><button class="delete-btn" onclick="delete_modal()" href="`+ `subscribers.html?id=` + id + `&name=` + name + `&contact=` + contact_number +`">Delete</button></td></tr>`);
-                    //const url = `subscribers.html?id=` + id + `&name` + name + `&contact=` + contact_number;
+                        `<td class="sub-contact-table">` + contact_number + 
+                        `</td><td><button class="update-btn" onclick="update_modal()" href="`+ `subscribers.html?id=` + id + `&name=` + name + `&contact=` + contact_number +`">Update</button></td>` +
+                        `<td><button class="delete-btn" onclick="delete_modal()" href="`+ `subscribers.html?id=` + id + `&name=` + name + `&contact=` + contact_number +`">Delete</button></td></tr>`);
 
+                    $(".search-bar").on("keyup", function() {
+                        let value = $(this).val().toLowerCase();
+                        $("#subs-list tr").filter(function() {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                        });
+                    });
+                    
+                    const url_back = `subscribers.html`;
                     $(".update-btn").on("click", function(){
                         const url = this.getAttribute('href');
                         console.log(url);

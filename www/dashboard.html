@@ -14,8 +14,30 @@
     
     <script src="./js/jquery.mobile-1.4.5.js"></script>
     <script src="./js/jquery-3.5.1.js"></script>
-    
     <script type="text/javascript">
+        $(document).ready(function() {
+            var url = "http://192.168.254.118/final_project/www/server/login_json.php";
+            $.getJSON(url, function(result) {  
+            //console.log(result);
+                $.each(result, function(i, field) {  
+                    console.log(field);
+                    const username = localStorage.getItem("username");
+                    if (username === field.owner_username) {
+                        localStorage.bus_id = field.owner_id;
+                        let bus_name = field.business_name;
+                        let bus_desc = field.business_description;
+                        let bus_add = field.business_address;
+                        let bus_num = field.contact_number;
+
+                        $(".bus-name").html(bus_name);
+                        $(".bus-desc").html(bus_desc);
+                        $(".bus-loc").html(bus_add);
+                        $(".con-num").html(bus_num);
+                    }
+                });
+
+            });
+        });
     </script>
 </head>
 

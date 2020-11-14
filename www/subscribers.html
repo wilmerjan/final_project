@@ -66,6 +66,13 @@
                     `<td><button class="delete-btn" onclick="delete_modal()" href="`+ `subscribers.html?id=` + id + `&name=` + name + `&contact=` + contact_number +`">Delete</button></td></tr>`);
                     //const url = `subscribers.html?id=` + id + `&name` + name + `&contact=` + contact_number;
 
+                    $(".search-bar").on("keyup", function() {
+                        let value = $(this).val().toLowerCase();
+                        $("#subs-list tr").filter(function() {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                        });
+                    });
+
                     $(".update-btn").on("click", function(){
                         const url = this.getAttribute('href');
                         console.log(url);
