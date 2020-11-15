@@ -17,16 +17,17 @@
     <script type="text/javascript">
         $(document).ready(function() {
             $("#sub-insert").click(function() {  
+                let bus_id = localStorage.getItem("bus_id");
                 var sub_name = $("#sub-name").val();
                 var sub_contact = $("#sub-contact").val();
-                var dataString = "sub_name=" + sub_name + "&sub_contact=" + sub_contact +
+                var dataString = "sub_name=" + sub_name + "&sub_contact=" + sub_contact + "&bus_id=" + bus_id +
                 "&insert=";
                 console.log(dataString);
                 if ($.trim(sub_name).length > 0 & $.trim(sub_contact).length > 0)
                 {
                     $.ajax({
                         type: "POST",
-                        url: "http://192.168.254.118/final_project/platforms/browser/www/server/insert.php",  
+                        url: "http://192.168.254.118/final_project/www/server/insert.php",  
                         data: dataString,
                         crossDomain: true,  
                         cache: false,  
@@ -51,20 +52,22 @@
         </script>
         <script type="text/javascript">
             $(document).ready(function() {
-                var url = "http://192.168.254.118/final_project/platforms/browser/www/server/json.php";
+                var url = "http://192.168.254.118/final_project/www/server/json.php";
                 $.getJSON(url, function(result) {  
-                console.log(result);
-                    $.each(result, function(i, field) {  
-                    var id = field.subs_id;
-                    var name = field.name;
-                    var contact_number = field.contact_number;
-                    const url_back = `subscribers.html`;
-                    
+                //console.log(result);
+                    let bus_id = localStorage.getItem("bus_id");
+                    $.each(result, function(i, field) {
+ 
+                    if(bus_id === field.owner_id) {
+                        //console.log(fields.subs_id);
+                        //console.log(subs_id);
+                        var id = field.subs_id;
+                        var name = field.name;
+                        var contact_number = field.contact_number;
                     $("#subs-list").append(`<tr><td class="sub-id">` + id + `</td><td class="sub-name-table">` + name + `</td>` +
-                    `<td class="sub-contact-table">` + contact_number + 
-                    `</td><td><button class="update-btn" onclick="update_modal()" href="`+ `subscribers.html?id=` + id + `&name=` + name + `&contact=` + contact_number +`">Update</button></td>` +
-                    `<td><button class="delete-btn" onclick="delete_modal()" href="`+ `subscribers.html?id=` + id + `&name=` + name + `&contact=` + contact_number +`">Delete</button></td></tr>`);
-                    //const url = `subscribers.html?id=` + id + `&name` + name + `&contact=` + contact_number;
+                        `<td class="sub-contact-table">` + contact_number + 
+                        `</td><td><button class="update-btn" onclick="update_modal()" href="`+ `subscribers.html?id=` + id + `&name=` + name + `&contact=` + contact_number +`">Update</button></td>` +
+                        `<td><button class="delete-btn" onclick="delete_modal()" href="`+ `subscribers.html?id=` + id + `&name=` + name + `&contact=` + contact_number +`">Delete</button></td></tr>`);
 
                     $(".search-bar").on("keyup", function() {
                         let value = $(this).val().toLowerCase();
@@ -72,7 +75,8 @@
                         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                         });
                     });
-
+                    
+                    const url_back = `subscribers.html`;
                     $(".update-btn").on("click", function(){
                         const url = this.getAttribute('href');
                         console.log(url);
@@ -101,6 +105,8 @@
                     $(".cancel-del-btn").on("click", function(){
                         history.pushState('','', url_back);
                     });
+        
+                    }
                     });
 
                 });
@@ -117,7 +123,7 @@
                 console.log(dataString);
                 $.ajax({
                     type: "POST",
-                    url: "http://192.168.254.118/final_project/platforms/browser/www/server/update.php",  
+                    url: "http://192.168.254.118/final_project/www/server/update.php",  
                     data: dataString,
                     crossDomain: true,  
                     cache: false,
@@ -144,7 +150,7 @@
             console.log(dataString);
             $.ajax({
                 type: "GET",
-                url: "http://192.168.254.118/final_project/platforms/browser/www/server/delete.php",  
+                url: "http://192.168.254.118/final_project/www/server/delete.php",  
                 data: dataString,
                 crossDomain: true,  
                 cache: false,  

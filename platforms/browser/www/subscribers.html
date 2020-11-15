@@ -17,9 +17,10 @@
     <script type="text/javascript">
         $(document).ready(function() {
             $("#sub-insert").click(function() {  
+                let bus_id = localStorage.getItem("bus_id");
                 var sub_name = $("#sub-name").val();
                 var sub_contact = $("#sub-contact").val();
-                var dataString = "sub_name=" + sub_name + "&sub_contact=" + sub_contact +
+                var dataString = "sub_name=" + sub_name + "&sub_contact=" + sub_contact + "&bus_id=" + bus_id +
                 "&insert=";
                 console.log(dataString);
                 if ($.trim(sub_name).length > 0 & $.trim(sub_contact).length > 0)
@@ -53,11 +54,16 @@
             $(document).ready(function() {
                 var url = "http://192.168.254.118/final_project/platforms/browser/www/server/json.php";
                 $.getJSON(url, function(result) {  
-                console.log(result);
-                    $.each(result, function(i, field) {  
-                    var id = field.subs_id;
-                    var name = field.name;
-                    var contact_number = field.contact_number;
+                //console.log(result);
+                    let bus_id = localStorage.getItem("bus_id");
+                    $.each(result, function(i, field) {
+ 
+                    if(bus_id === field.owner_id) {
+                        //console.log(fields.subs_id);
+                        //console.log(subs_id);
+                        var id = field.subs_id;
+                        var name = field.name;
+                        var contact_number = field.contact_number;
                     $("#subs-list").append(`<tr><td class="sub-id">` + id + `</td><td class="sub-name-table">` + name + `</td>` +
                         `<td class="sub-contact-table">` + contact_number + 
                         `</td><td><button class="update-btn" onclick="update_modal()" href="`+ `subscribers.html?id=` + id + `&name=` + name + `&contact=` + contact_number +`">Update</button></td>` +
@@ -99,6 +105,8 @@
                     $(".cancel-del-btn").on("click", function(){
                         history.pushState('','', url_back);
                     });
+        
+                    }
                     });
 
                 });
