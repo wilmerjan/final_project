@@ -365,15 +365,15 @@ main-section {
     box-shadow: var(--boxShadow2);
     margin: 0px 10px 10px 10px;
     border-radius: 20px;
-    padding: 50px;
+    padding: 30px;
 }
 
 .bus-desc-card > img {
     background-color: var(--maincolor);
     border-radius: 50%;
-    width: 20%;
+    width: 15%;
     height: auto;   
-    margin: 0;
+    margin: 10px 0px;
 }
 
 .bus-desc-card > p {
@@ -388,13 +388,24 @@ main-section {
 }
 
 .bus-desc-card > .bus-loc {
+    color: var(--tagcolor2);
+    font-size: 0.8em;
+    margin-left: 20px;
+    padding: 0;
+}
+
+.bus-desc-card > .inner-h3 {
     color: var(--dark);
     font-size: 1em;
+    margin-left: 20px;
+    padding: 0;
 }
 
 .bus-desc-card > .con-num {
-    color: var(--dark);
-    font-size: 1em;
+    color: var(--tagcolor2);
+    font-size: 0.8em;
+    margin-left: 20px;
+    padding: 0;
 }
 
 /*Grid for dashboard anchors*/

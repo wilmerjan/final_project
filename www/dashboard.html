@@ -31,8 +31,8 @@
 
                         $(".bus-name").html(bus_name);
                         $(".bus-desc").html(bus_desc);
-                        $(".bus-loc").html(bus_add);
-                        $(".con-num").html(bus_num);
+                        $(".bus-loc").html("<i class='fas fa-map-pin'></i> - " + bus_add);
+                        $(".con-num").html("<i class='fas fa-phone'></i> - " + bus_num);
                     }
                 });
 
@@ -89,11 +89,11 @@
                     <p class="bus-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus fringilla odio non sapien rutrum
                     interdum. [Business Description]</p>
     
-                    <h3 class="bus-loc">Business Location</h3>
-                    <p>[Business Location]</p>
+                    <h3 class="inner-h3">Business Location</h3>
+                    <p class="bus-loc">[Business Location]</p>
     
-                    <h3 class="con-num">Contact Number</h3>
-                    <p>[Contact Number]</p>
+                    <h3 class="inner-h3">Contact Number</h3>
+                    <p class="con-num">[Contact Number]</p>
                 </div>
                 <div class="card-holder">
                     <a class="a-card subscriber" href="./subscribers.html">

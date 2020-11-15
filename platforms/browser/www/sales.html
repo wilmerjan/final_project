@@ -6,22 +6,26 @@
     <meta name="format-detection" content="telephone=no" />
     <meta name="msapplication-tap-highlight" content="no" />
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
-    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' gap:; style-src 'self' 'unsafe-inline'; media-src *" />
-   
+ 
     <link rel="stylesheet" type="text/css" href="css/index.css" />
     <link rel="stylesheet" href="./fontawesome-free-5.15.1-web/fontawesome-free-5.15.1-web/css/all.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-    <title>Login</title>
+    <title>Sales</title>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 </head>
 
 <body>
     <div class="main-page-wrapper">
-        <brandname-section>
-            <p>[Brandname]</p>
+        <brandname-section class="brandname">
+            <div class="bn-holder">
+                <img src="./img/gawis-invert-nomargin.jpg" alt="">
+            </div>
         </brandname-section>
         <topbar-section>
             <div class="burger-search">
-                <i class="fas fa-bars"></i>
+                <i class="fas fa-bars" id="open-sidenav"></i>
                 <input type="text" placeholder="Search..." class="search-bar"><button class="search-btn"><i class="fas fa-search"></i></button>
             </div>
             <div class="admin-logout">
@@ -29,34 +33,36 @@
                 <button class="logout">Log out</button>
             </div>
         </topbar-section>
-        <sidenav-section>
-            <a href="./dashboard.html"><i class="fas fa-caret-square-down"></i>
-                <br>Dashboard</a>
-            <a href="./subscribers.html"><i class="fas fa-users"></i>
-                <br>Subscribers</a>
-            <a href="./register-food.html"><i class="far fa-list-alt"></i>
-                <br>Register Food</a>
-            <a href="./add-menu.html"><i class="fas fa-clipboard-list"></i>
-                <br>Add Menu</a>
-            <a href="./received-order.html"><i class="fas fa-inbox"></i>
-                <br>Received Order</a>
-            <a href="./delivery-pickup.html"><i class="fas fa-truck"></i>
-                <br>For Delivery or Pick Up</a>
-            <a href="./sales.html" class="current"><i class="far fa-chart-bar"></i>
-                <br>Sales</a>
+        <sidenav-section  class="sidenav-collapsed">
+            <div class="sidenav">
+                <a href="./dashboard.html"><i class="fas fa-caret-square-down"></i>
+                    <br>Dashboard</a>
+                <a href="./subscribers.html"><i class="fas fa-users"></i>
+                    <br>Subscribers</a>
+                <a href="./register-food.html"><i class="far fa-list-alt"></i>
+                    <br>Register Food</a>
+                <a href="./add-menu.html"><i class="fas fa-clipboard-list"></i>
+                    <br>Add Menu</a>
+                <a href="./received-order.html"><i class="fas fa-inbox"></i>
+                    <br>Received Order</a>
+                <a href="./delivery-pickup.html"><i class="fas fa-truck"></i>
+                    <br>For Delivery or Pick Up</a>
+                <a href="./sales.html" class="current"><i class="far fa-chart-bar"></i>
+                    <br>Sales</a>
+                    <br>
+                <p class="close-sidenav"><i class="fas fa-chevron-left"></i> Collapse</p>
+            </div>
         </sidenav-section>
         <main-section>
-            <div class="sales-section">
-                
+            <div class="sales-tab">
+                <div class="title">
+                    <h3>Sales</h3>
+                </div>
             </div>
         </main-section>
-    </div>
-
+        
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
-    <script type="text/javascript">
-        app.initialize();
-    </script>
 </body>
 
 </html>

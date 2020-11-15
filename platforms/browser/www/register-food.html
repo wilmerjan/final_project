@@ -10,152 +10,9 @@
     <link rel="stylesheet" type="text/css" href="css/index.css" />
     <link rel="stylesheet" href="./fontawesome-free-5.15.1-web/fontawesome-free-5.15.1-web/css/all.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-    <title>Login</title>
+    <title>Register Food</title>
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $("#sub-insert").click(function() {  
-                var sub_name = $("#sub-name").val();
-                var sub_contact = $("#sub-contact").val();
-                var dataString = "sub_name=" + sub_name + "&sub_contact=" + sub_contact +
-                "&insert=";
-                console.log(dataString);
-                if ($.trim(sub_name).length > 0 & $.trim(sub_contact).length > 0)
-                {
-                    $.ajax({
-                        type: "POST",
-                        url: "http://192.168.254.118/final_project/platforms/browser/www/server/insert.php",  
-                        data: dataString,
-                        crossDomain: true,  
-                        cache: false,  
-                        beforeSend: function() {
-                        
-                        },
-                        success: function(data) {
-                            console.log(data);
-                            if (data == "success") {  
-                                //alert("inserted");
-                                location.reload(true);
-                            } else if (data == "error") {  
-                                alert("error");
-                            }
-                        }
-                    });
-                    
-                }
-                return false;
-            });
-        });
-        </script>
-        <script type="text/javascript">
-            $(document).ready(function() {
-                var url = "http://192.168.254.118/final_project/platforms/browser/www/server/json.php";
-                $.getJSON(url, function(result) {  
-                console.log(result);
-                    $.each(result, function(i, field) {  
-                    var id = field.subs_id;
-                    var name = field.name;
-                    var contact_number = field.contact_number;
-                    const url_back = `subscribers.html`;
-                    
-                    $("#subs-list").append(`<tr><td class="sub-id">` + id + `</td><td class="sub-name-table">` + name + `</td>` +
-                    `<td class="sub-contact-table">` + contact_number + 
-                    `</td><td><button class="update-btn" onclick="update_modal()" href="`+ `subscribers.html?id=` + id + `&name=` + name + `&contact=` + contact_number +`">Update</button></td>` +
-                    `<td><button class="delete-btn" onclick="delete_modal()" href="`+ `subscribers.html?id=` + id + `&name=` + name + `&contact=` + contact_number +`">Delete</button></td></tr>`);
-                    //const url = `subscribers.html?id=` + id + `&name` + name + `&contact=` + contact_number;
-
-                    $(".update-btn").on("click", function(){
-                        const url = this.getAttribute('href');
-                        console.log(url);
-                        history.pushState('','', url);
-                        var code = decodeURI(getUrlVars());
-                        var id = decodeURI(getUrlVars()["id"]);
-                        var name = decodeURI(getUrlVars()["name"]);
-                        var contact = decodeURI(getUrlVars()["contact"]);  
-
-                        console.log(code);
-                        console.log(id);
-                        console.log(name);
-                        console.log(contact);
-
-                        $("#sub-name-update").val(name);
-                        $("#sub-contact-update").val(contact);
-                    });
-                    $(".delete-btn").on("click", function(){
-                        const url = this.getAttribute('href');
-                        console.log(url);
-                        history.pushState('','', url);
-                    });
-                    $(".cancel-btn").on("click", function(){
-                        history.pushState('','', url_back);
-                    });
-                    $(".cancel-del-btn").on("click", function(){
-                        history.pushState('','', url_back);
-                    });
-                    });
-
-                });
-            });
-        </script>
-        <script type="text/javascript">
-            $(document).ready(function() { 
-            $("#sub-update").on("click", function() { 
-                console.log("clicked-updatebtn");
-                var id = decodeURI(getUrlVars()["id"]);
-                var name = $("#sub-name-update").val(); 
-                var contact = $("#sub-contact-update").val();
-                var dataString = "id=" + id + "&name=" + name + "&contact=" + contact + "&update=";
-                console.log(dataString);
-                $.ajax({
-                    type: "POST",
-                    url: "http://192.168.254.118/final_project/platforms/browser/www/server/update.php",  
-                    data: dataString,
-                    crossDomain: true,  
-                    cache: false,
-                    beforeSend: function() {
-                        $("#sub-update").val('Connecting...');
-                    },
-                    success: function(data) {  
-                        if (data == "success") {
-                            //alert("Updated");
-                            history.pushState('','', "subscribers.html");
-                            location.reload(true);
-                        $("#sub-update").val("Update");
-                        } else if (data == "error") {  
-                            alert("error");
-                        }
-                    }
-                });
-            });
-
-        $("#sub-delete").on("click", function() { 
-            console.log("clicked-deletebtn"); 
-            var id = decodeURI(getUrlVars()["id"]);
-            var dataString = "id=" + id + "&delete=";
-            console.log(dataString);
-            $.ajax({
-                type: "GET",
-                url: "http://192.168.254.118/final_project/platforms/browser/www/server/delete.php",  
-                data: dataString,
-                crossDomain: true,  
-                cache: false,  
-                beforeSend: function(){ $("#sub-delete").val('Connecting...');},
-                success: function(data) {  
-                    if (data == "success") {
-                        //alert("Deleted");
-                        history.pushState('','', "subscribers.html");
-                        location.reload(true);
-                    } else if (data == "error") {  
-                        alert("may error!!!");
-                        console.log(data);
-                        location.reload(true);
-                    }
-                }
-            });
-        });
-    });
-</script>
 
 </head>
 
@@ -180,9 +37,9 @@
             <div class="sidenav">
                 <a href="./dashboard.html"><i class="fas fa-caret-square-down"></i>
                     <br>Dashboard</a>
-                <a href="./subscribers.html" class="current"><i class="fas fa-users"></i>
+                <a href="./subscribers.html"><i class="fas fa-users"></i>
                     <br>Subscribers</a>
-                <a href="./register-food.html"><i class="far fa-list-alt"></i>
+                <a href="./register-food.html" class="current"><i class="far fa-list-alt"></i>
                     <br>Register Food</a>
                 <a href="./add-menu.html"><i class="fas fa-clipboard-list"></i>
                     <br>Add Menu</a>
@@ -197,79 +54,13 @@
             </div>
         </sidenav-section>
         <main-section>
-            <div class="subscribers-tab">
-                <div class="subs-title">
-                    <h3>Subscribers</h3>
-                </div>
-                <div class="subs-table">
-                    <table>
-                        <tr>
-                            <td>
-                                <table class="table-header">
-                                    <tr class="header-row">
-                                        <th>ID</th>
-                                        <th>Name</th>
-                                        <th>Contact Number</th>
-                                        <th>Update</th>
-                                        <th>Delete</th>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="overflow">
-                                    <table id="subs-list">
-                                    </table>
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="subs-regis-card">
-                    <img src="./img/GAWIS-PIC-LOGO-final.jpg" alt="" class="logo">
-                    <h3>Register.</h3>
-
-                    <h5 class="label-top">Subscriber's Name*</h5>
-                    <input type="text" placeholder="Enter subscriber's name" class="sub-name" id="sub-name" required>
-
-                    <h5 class="label-top">Contact Number*</h5>
-                    <input type="text" placeholder="Enter 11 digit number..." class="sub-contact" id="sub-contact" required>
-
-                    <br>
-                    <button class="sub-regis-btn" id="sub-insert">Register</button>
+            <div class="regis-food">
+                <div class="title">
+                    <h3>Register Food</h3>
                 </div>
             </div>
         </main-section>
-        <div class="modal-container">
-            <div class="modal-update">
-                <img src="./res/icon/android/drawable-hdpi-icon.png" alt="" class="logo">
-                <h3>Update.</h3>
-
-                <h5 class="label-top">Subscriber's Name*</h5>
-                <input type="text" placeholder="Enter subscriber's name" class="sub-name" id="sub-name-update" required>
-
-                <h5 class="label-top">Contact Number*</h5>
-                <input type="text" placeholder="Enter 11 digit number..." class="sub-contact" id="sub-contact-update" required>
-
-                <br>
-                <button class="sub-update-btn" id="sub-update">Update</button>
-                <button class="cancel-btn" onclick="cancel_modal()">Cancel</button>
-            </div>
-        </div>
-        <div class="delete-modal-container">
-            <div class="delete-card">
-                <img src="./res/icon/android/drawable-hdpi-icon.png" alt="" class="logo">
-                <h3>Delete.</h3>
-
-                <h5 class="label-top">Are you sure, you want to delete?</h5>
-                <br>
-                <button class="sub-update-btn" id="sub-delete">Delete</button>
-                <button class="cancel-del-btn" onclick="cancel_del_modal()">Cancel</button>
-            </div>
-        </div>
-    </div>
-
+        
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
 </body>
