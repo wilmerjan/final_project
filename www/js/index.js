@@ -2,6 +2,7 @@ const open_sidenav = document.querySelector("#open-sidenav");
 const close_sidenav = document.querySelector(".close-sidenav");
 const modal = document.querySelector(".modal-container");
 const del_modal = document.querySelector(".delete-modal-container");
+const logout_modal = document.querySelector(".logout-modal-container");
 const main_page_wrapper = document.querySelector(".main-page-wrapper");
 const mobile_width = window.matchMedia("(max-width: 768px)");
 const brandname = document.querySelector(".brandname");
@@ -58,6 +59,25 @@ function delete_modal() {
 function cancel_del_modal() {
     del_modal.style.display = "none";
 }
+
+function logout_modal_pop() {
+    logout_modal.style.display = "block";
+    console.log("Logout Button Clicked");
+}
+
+function cancel_logout_modal() {
+    logout_modal.style.display = "none";
+}
+
+function logout_action() {
+    localStorage.removeItem("bus_id");
+    localStorage.removeItem("username");
+    localStorage.removeItem("bus_id");
+    localStorage.loginStatus = "false";
+    window.location.href = "index.html";
+}
+
+
 
 function getUrlVars() {
     var vars = [],  hash;

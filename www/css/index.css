@@ -809,6 +809,81 @@ and cards that is linked to tabs*/
     font-weight: 600;
 }
 
+.logout-modal-container {
+    display: none;    
+    position: fixed;
+    z-index: 1;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+}
+
+.logout-card {
+    display: flex;
+    padding: 20px;
+    flex-direction: column;
+    background-color: var(--light);
+    box-shadow: var(--boxShadow2);
+    border-radius: 20px;
+    position: fixed;
+    z-index: 2;
+    width: 25%;
+    height: 50%;
+    overflow: auto;
+    margin: 0;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.logout-card > img {
+    background-color: var(--maincolor);
+    border-radius: 50%;
+    width: 15%;
+    height: auto;   
+    margin: 0;
+}
+
+.logout-card > h3 {
+    color: var(--dark);
+    font-size: 1.5em;
+    margin: 0;
+}
+
+.logout-card > h5 {
+    color: var(--dark);
+    font-size: 1em;
+    margin: 50px 0px 0px 0px;
+}
+
+
+.logout-card > button {
+    margin: 20px 0px 0px 0px;
+    background-color: var(--deleteBtn);
+    border: none;
+    padding: 10px;
+    border-radius: 15px;
+    box-shadow: var(--btnShadow);
+    color:var(--light);
+    font-weight: 600;
+}
+
+.logout-card > .cancel-logout-btn {
+    margin: 20px 0px 0px 0px;
+    background-color: var(--bgcolor1);
+    border: none;
+    padding: 10px;
+    border-radius: 15px;
+    box-shadow: var(--btnShadow);
+    color:var(--dark);
+    font-weight: 600;
+}
+
 @media only screen and (max-width: 768px) {
     .container {
         display: grid;
@@ -907,6 +982,11 @@ and cards that is linked to tabs*/
     }
 
     .delete-card {
+        width: 60%;
+        height: 50%;
+    }
+
+    .logout-card {
         width: 60%;
         height: 50%;
     }

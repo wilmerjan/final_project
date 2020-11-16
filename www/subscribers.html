@@ -187,7 +187,7 @@
             </div>
             <div class="admin-logout">
                 <button class="admin-btn"><i class="fas fa-user"></i></button>
-                <button class="logout">Log out</button>
+                <button class="logout" onclick="logout_modal_pop()">Log out</button>
             </div>
         </topbar-section>
         <sidenav-section  class="sidenav-collapsed">
@@ -257,7 +257,7 @@
         </main-section>
         <div class="modal-container">
             <div class="modal-update">
-                <img src="./res/icon/android/drawable-hdpi-icon.png" alt="" class="logo">
+                <img src="./img/GAWIS-PIC-LOGO-final.jpg" alt="" class="logo">
                 <h3>Update.</h3>
 
                 <h5 class="label-top">Subscriber's Name*</h5>
@@ -273,13 +273,24 @@
         </div>
         <div class="delete-modal-container">
             <div class="delete-card">
-                <img src="./res/icon/android/drawable-hdpi-icon.png" alt="" class="logo">
+                <img src="./img/GAWIS-PIC-LOGO-final.jpg" alt="" class="logo">
                 <h3>Delete.</h3>
 
                 <h5 class="label-top">Are you sure, you want to delete?</h5>
                 <br>
                 <button class="sub-update-btn" id="sub-delete">Delete</button>
                 <button class="cancel-del-btn" onclick="cancel_del_modal()">Cancel</button>
+            </div>
+        </div>
+        <div class="logout-modal-container">
+            <div class="logout-card">
+                <img src="./img/GAWIS-PIC-LOGO-final.jpg" alt="" class="logo">
+                <h3>Log Out.</h3>
+
+                <h5 class="label-top">Are you sure, you want to log out?</h5>
+                <br>
+                <button class="logout-btn" onclick="logout_action()">Log Out</button>
+                <button class="cancel-logout-btn" onclick="cancel_logout_modal()">Cancel</button>
             </div>
         </div>
     </div>

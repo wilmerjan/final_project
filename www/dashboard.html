@@ -55,7 +55,7 @@
             </div>
             <div class="admin-logout">
                 <button class="admin-btn"><i class="fas fa-user"></i></button>
-                <button class="logout">Log out</button>
+                <button class="logout" onclick="logout_modal_pop()">Log out</button>
             </div>
         </topbar-section>
         <sidenav-section  class="sidenav-collapsed">
@@ -123,6 +123,17 @@
                 </div>
             </div>
         </main-section>
+        <div class="logout-modal-container">
+            <div class="logout-card">
+                <img src="./img/GAWIS-PIC-LOGO-final.jpg" alt="" class="logo">
+                <h3>Log Out.</h3>
+
+                <h5 class="label-top">Are you sure, you want to log out?</h5>
+                <br>
+                <button class="logout-btn" onclick="logout_action()">Log Out</button>
+                <button class="cancel-logout-btn" onclick="cancel_logout_modal()">Cancel</button>
+            </div>
+        </div>
     </div>
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
