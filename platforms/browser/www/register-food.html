@@ -54,9 +54,85 @@
             </div>
         </sidenav-section>
         <main-section>
-            <div class="regis-food">
-                <div class="title">
-                    <h3>Register Food</h3>
+            <div class="regis-food-tab">
+                <div class="regis-title">
+                    <h3>Registered Food and Stock</h3>
+                </div>
+                <div class="regis-menu">
+                    <div class="menu-filter">
+                        <h5>Classification:</h5>
+                        <select class="food-class-filter filter-select" id="food-class-filter">
+                            <option value=""></option>
+                            <option value="Single">Single</option>
+                            <option value="Combo">Combo</option>
+                        </select>
+                        <h5>Type:</h5>
+                        <select class="food-type-filter filter-select" id="food-type-filter">
+                            <option value=""></option>
+                            <option value="Snack">Snack</option>
+                            <option value="Meal">Meal</option>
+                            <option value="Beverage">Beverage</option>
+                            <option value="Snack with Beverage">Snack with Beverage</option>
+                            <option value="Meal with Beverage">Meal with Beverage</option>
+                        </select>
+
+                        <button class="filter">Filter</button>
+                        <button class="display-all">Display All</button>
+                    </div>
+                    <div class="display-menu">
+                        <div class="menu-card">
+                            <div class="food-image">
+                                <img src="./img/pexels-ella-olsson-1640777.jpg" alt="">
+                            </div>
+                            <div class="food-desc">
+                                <p>Name: Food Name</p>
+                                <p>Price: Php 100.00</p>
+                                <p>Stock: 5 servings</p>
+                                <p>Classification: Single</p>
+                                <p>Type: Meal</p>
+                            </div>
+                            <div class="menu-btns">
+                                <button class="regis-update-btn">Update</button>
+                                <button class="regis-archive">Archive</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="regis-food-card">
+                    <div class="food-card">
+                        <img src="./img/GAWIS-PIC-LOGO-final.jpg" alt="" class="logo">
+                        <h3>Register Food.</h3>
+        
+                        <h5 class="top">Food Name</h5>
+                        <input type="text" placeholder="Enter food name" class="food-name" id="food-name">
+        
+                        <h5>Food Price</h5>
+                        <input type="text" placeholder="Enter food price" class="food-price" id="food-price">
+        
+                        <h5>Classification</h5>
+                        <select class="food-class" id="food-class" name="classification">
+                            <option value="Single">Single</option>
+                            <option value="Combo">Combo</option>
+                        </select>
+        
+                        <h5>Type</h5>
+                        <select class="food-type" id="food-type" name="food-type">
+                            <option value="Snack">Snack</option>
+                            <option value="Meal">Meal</option>
+                            <option value="Beverage">Beverage</option>
+                            <option value="Snack with Beverage">Snack with Beverage</option>
+                            <option value="Meal with Beverage">Meal with Beverage</option>
+                        </select>
+  
+                        <h5>Initial Stock</h5>
+                        <input type="number" placeholder="Enter initial stock" class="initial-stock" id="initial-stock">
+        
+                        <h5>Add Photo</h5>
+                        <input type="file" class="add-photo" id="add-photo" accept="image/png, image/jpeg">
+
+                        <br>
+                        <button class="regis-food-btn" id="regis-food-insert">Register</button>
+                    </div>
                 </div>
             </div>
         </main-section>

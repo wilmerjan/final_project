@@ -884,6 +884,196 @@ and cards that is linked to tabs*/
     font-weight: 600;
 }
 
+/*tab to register food*/
+.regis-food-tab {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 1fr 10fr;
+    grid-template-areas: 
+    "regis-title regis-title"
+    "display-menu food-card";
+    height: 100%;
+    width: 100%;
+}
+  
+.regis-title {
+    grid-area: regis-title;
+    margin: 0px 0px 0px 10px;
+    padding: 0px 0px 0px 20px; 
+    line-height: .8;
+    font-size: 1em;
+}
+            
+.regis-menu {
+    grid-area: display-menu;
+    margin: 0px 10px 10px 10px;
+    height: 525px;
+}
+
+.menu-filter {
+    height: 10%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.menu-filter > h5{
+    font-size: 0.8em;
+    padding: 5px 5px 0px 5px
+}
+
+.menu-filter > .filter-select{
+    height: 60%;
+    width: 175px;
+    font-size: 0.8em;
+}
+
+.menu-filter > .filter, .display-all {
+    background-color: var(--submitBtn);
+    color: var(--light);
+    box-shadow: var(--btnShadow);
+    border-radius: 10px;
+    height: 30px;
+    width: 75px;
+    border: none;
+    margin: 5px 0px 0px 10px;
+}
+
+.display-menu {
+    display: flex;
+    height: 90%;
+    width: 100%;
+    overflow-y: scroll;  
+    overflow-x: hidden;
+    flex-wrap: wrap;
+}
+
+.display-menu > .menu-card {
+    width: 19%;
+    height: 50%;
+    margin: 1% 1% 0% 0%;
+    background-color: var(--light);
+    color: var(--dark);
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    box-shadow: var(--boxShadow2);
+}
+
+.display-menu > .menu-card > .food-image {
+    flex-grow: 2;
+}
+
+.display-menu > .menu-card > .food-image > img{
+    height: auto;
+    width: 100%;
+    object-fit: contain;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.display-menu > .menu-card > .food-desc {
+    flex-grow: 2;
+    font-size: 0.7em;
+    line-height: 80%;
+    margin-left: 5px;
+}
+
+.display-menu > .menu-card > .menu-btns {
+    flex-grow: 1;
+    text-align: center;
+}
+
+.display-menu > .menu-card > .menu-btns > .regis-update-btn{
+    background-color: none;
+    border: none;
+    color: var(--submitBtn);
+    font-size: 0.8em;
+}
+
+.display-menu > .menu-card > .menu-btns > .regis-archive{
+    background-color: none;
+    border: none;
+    color: var(--deleteBtn);
+    font-size: 0.8em;
+}
+
+.display-menu > .menu-card > .menu-btns > .regis-update-btn:hover{
+    background-color: var(--submitBtn);
+    border: none;
+    color: var(--light);
+    font-size: 0.8em;
+}
+
+.display-menu > .menu-card > .menu-btns > .regis-archive:hover{
+    background-color: var(--deleteBtn);
+    border: none;
+    color: var(--light);
+    font-size: 0.8em;
+}
+
+.regis-food-card {
+    grid-area: food-card;
+    margin: 0px 10px 10px 0px;
+}
+
+.food-card {
+    display: flex;
+    padding: 6.725% 5%;
+    height: 90%;
+    flex-direction: column;
+    background-color: var(--light);
+    box-shadow: var(--boxShadow2);
+    border-radius: 20px;
+}
+
+.food-card > .logo {
+    background-color: var(--maincolor);
+    border-radius: 50%;
+    width: 15%;
+    height: auto;   
+    margin: 0;
+}
+
+.food-card > h3 {
+    color: var(--dark);
+    font-size: 1.5em;
+    margin: 0;
+}
+
+.food-card > .top {
+    margin-top: 10px;
+}
+
+.food-card > h5 {
+    color: var(--dark);
+    font-size: 0.8em;
+    margin: 5px 0px 0px 0px;
+}
+
+.food-card > input, select {
+    margin: 5px 0px 0px 0px;
+    background-color: var(--light);
+    border-color: var(--inputBorder);
+    color: var(--dark);
+    border-width: 1px;
+    border-radius: 10px;
+    padding: 5px;
+    border-style: solid;
+}
+
+.food-card > button {
+    margin: 20px 0px 0px 0px;
+    background-color: var(--submitBtn);
+    border: none;
+    padding: 10px;
+    border-radius: 15px;
+    box-shadow: var(--btnShadow);
+    color:var(--light);
+    font-weight: 600;
+}
+
 @media only screen and (max-width: 768px) {
     .container {
         display: grid;

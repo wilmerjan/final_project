@@ -500,7 +500,7 @@ and cards that is linked to tabs*/
     margin: 0% 2% 5% 2%;
     box-shadow: var(--boxShadow2);
     font-size: 0.7em;
-    height: 450px;
+    height: 500px;
 }
 
 .subs-table > table{
@@ -529,7 +529,7 @@ and cards that is linked to tabs*/
 
 .overflow {
     overflow: auto;
-    height: 430px;
+    height: 400px;
     background-color: var(--light);
 }
 
@@ -883,6 +883,8 @@ and cards that is linked to tabs*/
     color:var(--dark);
     font-weight: 600;
 }
+
+
 
 @media only screen and (max-width: 768px) {
     .container {
