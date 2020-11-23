@@ -14,6 +14,114 @@
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+    <script type="text/javascript">
+    //food-name, food-price, food-class, food-type, initial-stock, add-photo, regis-food-btn
+        $(document).ready(function() {
+            $(".regis-food-btn").click(function() {  
+
+                let bus_id = localStorage.getItem("bus_id");
+                var food_name = $(".food-name").val();
+                var food_price = $(".food-price").val();
+                var food_class = $(".food-class").val();
+                var food_type = $(".food-type").val();
+                var initial_stock = $(".initial-stock").val();
+                var add_photo = $("#file")[0].files[0].toString();
+
+        
+                console.log(add_photo);
+                var dataString = "food_name=" + food_name + "&food_price=" + food_price + "&food_class=" + food_class +
+                "&food_type="+ food_type + "&initial_stock=" + initial_stock + "&add_photo=" + add_photo + "&bus_id=" + bus_id +
+                "&food_insert=";
+                console.log(dataString);
+                if ($.trim(food_name).length > 0 & $.trim(food_price).length > 0 & $.trim(food_class).length > 0 &
+                $.trim(food_type).length > 0 & $.trim(initial_stock).length > 0 & $.trim(add_photo).length > 0 &
+                $.trim(bus_id).length > 0)
+                {
+                    $.ajax({
+                        type: "POST",
+                        url: "http://192.168.254.118/final_project/platforms/browser/www/server/insert.php",  
+                        data: dataString,
+                        crossDomain: true,  
+                        cache: false,  
+                        beforeSend: function() {
+                        
+                        },
+                        success: function(data) {
+                            console.log(data);
+                            if (data == "success") {  
+                                //alert("inserted");
+                                location.reload(true);
+                            } else if (data == "error") {  
+                                alert("error");
+
+                            }
+                        }
+                    });
+                    
+                }
+                return false;
+            });
+        });
+        </script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                var url = "http://192.168.254.118/final_project/platforms/browser/www/server/food_json.php";
+                $.getJSON(url, function(result) {  
+                //console.log(result);
+                    let bus_id = localStorage.getItem("bus_id");
+                    $.each(result, function(i, field) {
+                    
+                    if(bus_id === field.owner_id) {
+            
+                        var name = field.food_name;
+                        var price = field.food_price;
+                        var classification = field.food_classification;
+                        var type = field.food_type;
+                        var stock = field.stock_qty;
+                        var photo = field.food_photo;
+                        console.log(photo);
+
+                        //href="`+ `register-food.html?"food_name=" + name + "&food_price=" + price + "&food_class=" + classification +
+                        //"&food_type="+ type + "&initial_stock=" + stock + "&add_photo=" + photo +
+                        //"&food_insert="
+                        $(".display-menu").append(`
+                        <div class="menu-card">
+                            <div class="food-image">
+                                <img src="url(`+photo+`)" alt="">
+                            </div>
+                            <div class="food-desc">
+                                <p>Name:` + name + `</p>
+                                <p>Price: Php` + price + `</p>
+                                <p>Stock:` + stock + `serving/s</p>
+                                <p>Classification:` + classification +`</p>
+                                <p>Type:` + type +`</p>
+                            </div>
+                            <div class="menu-btns">
+                                <button class="regis-update-btn">Update</button>
+                                <button class="regis-archive">Archive</button>
+                            </div>
+                        </div>
+                        `);
+                    //let food_class_filter= $(".food-class-filter").val();
+                    //let food_type_filter= $(".food-type-filter").val();
+                    $(".filter").on("click", function() {
+                        let value = $(".food-class-filter").val().toLowerCase();
+                        let value2 = $(".food-type-filter").val().toLowerCase();
+                        $(".menu-card").filter(function() {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value2) > -1)
+                        });
+                    });
+
+                    $(".display-all").on("click", function() {
+                        location.reload(true);
+                    });
+
+                        }
+                    });
+                });
+            });
+        </script>
 </head>
 
 <body>
@@ -72,8 +180,8 @@
                             <option value="Snack">Snack</option>
                             <option value="Meal">Meal</option>
                             <option value="Beverage">Beverage</option>
-                            <option value="Snack with Beverage">Snack with Beverage</option>
-                            <option value="Meal with Beverage">Meal with Beverage</option>
+                            <option value="Snackbeverage">Snack-Beverage</option>
+                            <option value="Mealbeverage">Meal-Beverage</option>
                         </select>
 
                         <button class="filter">Filter</button>
@@ -102,7 +210,7 @@
                     <div class="food-card">
                         <img src="./img/GAWIS-PIC-LOGO-final.jpg" alt="" class="logo">
                         <h3>Register Food.</h3>
-        
+                        
                         <h5 class="top">Food Name</h5>
                         <input type="text" placeholder="Enter food name" class="food-name" id="food-name">
         
@@ -120,15 +228,15 @@
                             <option value="Snack">Snack</option>
                             <option value="Meal">Meal</option>
                             <option value="Beverage">Beverage</option>
-                            <option value="Snack with Beverage">Snack with Beverage</option>
-                            <option value="Meal with Beverage">Meal with Beverage</option>
+                            <option value="Snackbeverage">Combo-snack</option>
+                            <option value="Mealbeverage">Meal-Beverage</option>
                         </select>
   
                         <h5>Initial Stock</h5>
                         <input type="number" placeholder="Enter initial stock" class="initial-stock" id="initial-stock">
         
                         <h5>Add Photo</h5>
-                        <input type="file" class="add-photo" id="add-photo" accept="image/png, image/jpeg">
+                        <input type="file" class="add-photo" id="file" accept="image/png, image/jpeg">
 
                         <br>
                         <button class="regis-food-btn" id="regis-food-insert">Register</button>

@@ -1,5 +1,6 @@
 <?php
-include "db.php";  if(isset($_POST['update']))
+include "db.php";  
+if(isset($_POST['update']))
 {
 $id=$_POST['id'];
 $name=$_POST['name'];
