@@ -128,6 +128,12 @@
                     $(".cancel-archive-btn").on("click", function(){
                         history.pushState('','', url_back);
                     });
+                    $(".search-bar").on("keyup", function() {
+                        let value = $(this).val().toLowerCase();
+                        $("#regis_display tr").filter(function() {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                        });
+                    });
                     $(".food-class-filter").on("click", function() {
                         let value = $(this).val().toLowerCase();
                         $("#regis_display tr").filter(function() {
