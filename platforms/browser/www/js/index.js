@@ -8,6 +8,7 @@ const mobile_width = window.matchMedia("(max-width: 768px)");
 const brandname = document.querySelector(".brandname");
 const sidenav_collapsed = document.querySelector(".sidenav-collapsed");
 const logout = document.querySelector(".logout");
+const regis_modal = document.querySelector(".regis-modal-container");
 
 function myFunction(mobile_width) {
     if (mobile_width.matches) {
@@ -67,6 +68,14 @@ function logout_modal_pop() {
 
 function cancel_logout_modal() {
     logout_modal.style.display = "none";
+}
+
+function regis_modal_pop() {
+    regis_modal.style.display = "block";
+}
+
+function cancel_regis_modal() {
+    regis_modal.style.display = "none";
 }
 
 function logout_action() {

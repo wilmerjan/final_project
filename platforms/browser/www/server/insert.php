@@ -19,11 +19,10 @@ $food_price=$_POST['food_price'];
 $food_class=$_POST['food_class'];
 $food_type=$_POST['food_type'];
 $initial_stock=$_POST['initial_stock'];
-$add_photo=$_POST['add_photo'];
 
 $bus_id=$_POST['bus_id'];
-$q=mysqli_query($con,"INSERT INTO `food_tbl`(`food_name`, `food_price`, `food_classification`, `food_type`, `stock_qty`, `food_photo`, `owner_id`) VALUES 
-('$food_name', '$food_price', '$food_class', '$food_type', '$initial_stock', '$add_photo', '$bus_id')");
+$q=mysqli_query($con,"INSERT INTO `food_tbl`(`food_name`, `food_price`, `food_classification`, `food_type`, `stock_qty`, `owner_id`) VALUES 
+('$food_name', '$food_price', '$food_class', '$food_type', '$initial_stock', '$bus_id')");
 if($q)
 echo "success";  
 else

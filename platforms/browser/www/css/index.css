@@ -524,7 +524,7 @@ and cards that is linked to tabs*/
     color: var(--light);
     border: none;
     height: 20px;
-    width: 20%;
+    width: auto;
 }
 
 .overflow {
@@ -587,11 +587,6 @@ and cards that is linked to tabs*/
 }
 
 .delete-btn:hover {
-    color: var(--light);
-    background-color: var(--deleteBtn);
-}
-
-.subs-table > table > tbody > tr > td > .delete-btn:hover{
     color: var(--light);
     background-color: var(--deleteBtn);
 }
@@ -891,7 +886,7 @@ and cards that is linked to tabs*/
     grid-template-rows: 1fr 10fr;
     grid-template-areas: 
     "regis-title regis-title"
-    "display-menu food-card";
+    "regis-table food-card";
     height: 100%;
     width: 100%;
 }
@@ -940,77 +935,101 @@ and cards that is linked to tabs*/
     margin: 5px 0px 0px 10px;
 }
 
-.display-menu {
-    display: flex;
-    height: 90%;
+.regis-menu {
+    grid-area: regis-table;
+    width: 96%;
+    margin: 0% 2% 5% 2%;
+    height: 450px;
+}
+
+.regis-menu > table{
     width: 100%;
-    overflow-y: scroll;  
-    overflow-x: hidden;
-    flex-wrap: wrap;
+    border-collapse: collapse;
+    border: none;
+    height: 100%;
 }
 
-.display-menu > .menu-card {
-    width: 19%;
-    height: 50%;
-    margin: 1% 1% 0% 0%;
-    background-color: var(--light);
-    color: var(--dark);
-    display: flex;
-    flex-direction: column;
-    border-radius: 5px;
-    box-shadow: var(--boxShadow2);
-}
-
-.display-menu > .menu-card > .food-image {
-    flex-grow: 2;
-}
-
-.display-menu > .menu-card > .food-image > img{
+.regis-header {
+    width: 100%;
+    border-collapse: collapse;
+    border: none;
     height: auto;
+}
+
+.regis-header-row > th {
+    text-align: left;
+    padding: 5px;
+    background-color: var(--maincolor);
+    color: var(--light);
+    border: none;
+    height: 20px;
+    width: 15%;
+    font-size: 0.8em;
+}
+
+.regisoverflow {
+    overflow: auto;
+    height: 430px;
+    background-color: var(--light);
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--light); 
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--maincolor); 
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--dark); 
+}
+
+#regis_display {
     width: 100%;
-    object-fit: contain;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
+    border-collapse: collapse;
+    border: none;
 }
 
-.display-menu > .menu-card > .food-desc {
-    flex-grow: 2;
+.regis-row-data > td {
+    text-align: left;
+    color: var(--dark);
+    padding: 5px;
+    border: none;
+    width: 15%;
     font-size: 0.7em;
-    line-height: 80%;
-    margin-left: 5px;
 }
 
-.display-menu > .menu-card > .menu-btns {
-    flex-grow: 1;
-    text-align: center;
-}
-
-.display-menu > .menu-card > .menu-btns > .regis-update-btn{
-    background-color: none;
-    border: none;
+.regis-modal-btn {
     color: var(--submitBtn);
-    font-size: 0.8em;
-}
-
-.display-menu > .menu-card > .menu-btns > .regis-archive{
-    background-color: none;
     border: none;
-    color: var(--deleteBtn);
-    font-size: 0.8em;
+    background-color: var(--light);
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 1em;
 }
 
-.display-menu > .menu-card > .menu-btns > .regis-update-btn:hover{
+.regis-modal-btn:hover {
+    color: var(--light);
     background-color: var(--submitBtn);
-    border: none;
-    color: var(--light);
-    font-size: 0.8em;
 }
 
-.display-menu > .menu-card > .menu-btns > .regis-archive:hover{
-    background-color: var(--deleteBtn);
+.regis-archive {
+    color: var(--deleteBtn);
     border: none;
+    background-color: var(--light);
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+.regis-archive:hover {
     color: var(--light);
-    font-size: 0.8em;
+    background-color: var(--deleteBtn);
 }
 
 .regis-food-card {
@@ -1071,6 +1090,106 @@ and cards that is linked to tabs*/
     border-radius: 15px;
     box-shadow: var(--btnShadow);
     color:var(--light);
+    font-weight: 600;
+}
+
+.regis-modal-container {
+    display: none;   
+    position: fixed;
+    z-index: 1;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+}
+
+.regis-modal-update {
+    display: flex;
+    padding: 20px;
+    flex-direction: column;
+    background-color: var(--light);
+    box-shadow: var(--boxShadow2);
+    border-radius: 20px;
+    position: fixed;
+    z-index: 2;
+    width: 25%;
+    height: 75%;
+    overflow: auto;
+    margin: 0;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.regis-modal-update > .logo {
+    background-color: var(--maincolor);
+    border-radius: 50%;
+    width: 15%;
+    height: auto;   
+    margin: 0;
+}
+
+.regis-modal-update > h3 {
+    color: var(--dark);
+    font-size: 1.5em;
+    margin: 0;
+}
+
+.regis-modal-update > .top {
+    margin-top: 10px;
+}
+
+.regis-modal-update > h5 {
+    color: var(--dark);
+    font-size: 0.8em;
+    margin: 5px 0px 0px 0px;
+}
+
+.regis-modal-update > input, select {
+    margin: 5px 0px 0px 0px;
+    background-color: var(--light);
+    border-color: var(--inputBorder);
+    color: var(--dark);
+    border-width: 1px;
+    border-radius: 10px;
+    padding: 5px;
+    border-style: solid;
+}
+
+.regis-modal-update > .regis-update-btn {
+    margin: 20px 0px 0px 0px;
+    background-color: var(--submitBtn);
+    border: none;
+    padding: 10px;
+    border-radius: 15px;
+    box-shadow: var(--btnShadow);
+    color:var(--light);
+    font-weight: 600;
+}
+
+.regis-modal-update > .regis-cancel-btn {
+    margin: 20px 0px 0px 0px;
+    background-color: var(--bgcolor1);
+    border: none;
+    padding: 10px;
+    border-radius: 15px;
+    box-shadow: var(--btnShadow);
+    color:var(--dark);
+    font-weight: 600;
+}
+
+.delete-card > .cancel-del-btn {
+    margin: 20px 0px 0px 0px;
+    background-color: var(--bgcolor1);
+    border: none;
+    padding: 10px;
+    border-radius: 15px;
+    box-shadow: var(--btnShadow);
+    color:var(--dark);
     font-weight: 600;
 }
 

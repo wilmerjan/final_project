@@ -25,17 +25,13 @@
                 var food_class = $(".food-class").val();
                 var food_type = $(".food-type").val();
                 var initial_stock = $(".initial-stock").val();
-                var add_photo = $("#file")[0].files[0].toString();
 
-        
-                console.log(add_photo);
                 var dataString = "food_name=" + food_name + "&food_price=" + food_price + "&food_class=" + food_class +
-                "&food_type="+ food_type + "&initial_stock=" + initial_stock + "&add_photo=" + add_photo + "&bus_id=" + bus_id +
+                "&food_type="+ food_type + "&initial_stock=" + initial_stock + "&bus_id=" + bus_id +
                 "&food_insert=";
-                console.log(dataString);
+                //console.log(dataString);
                 if ($.trim(food_name).length > 0 & $.trim(food_price).length > 0 & $.trim(food_class).length > 0 &
-                $.trim(food_type).length > 0 & $.trim(initial_stock).length > 0 & $.trim(add_photo).length > 0 &
-                $.trim(bus_id).length > 0)
+                $.trim(food_type).length > 0 & $.trim(initial_stock).length > 0 & $.trim(bus_id).length > 0)
                 {
                     $.ajax({
                         type: "POST",
@@ -72,43 +68,75 @@
                     $.each(result, function(i, field) {
                     
                     if(bus_id === field.owner_id) {
-            
+                        var id = field.food_id;
                         var name = field.food_name;
                         var price = field.food_price;
                         var classification = field.food_classification;
                         var type = field.food_type;
                         var stock = field.stock_qty;
-                        var photo = field.food_photo;
-                        console.log(photo);
-
-                        //href="`+ `register-food.html?"food_name=" + name + "&food_price=" + price + "&food_class=" + classification +
-                        //"&food_type="+ type + "&initial_stock=" + stock + "&add_photo=" + photo +
-                        //"&food_insert="
-                        $(".display-menu").append(`
-                        <div class="menu-card">
-                            <div class="food-image">
-                                <img src="url(`+photo+`)" alt="">
-                            </div>
-                            <div class="food-desc">
-                                <p>Name:` + name + `</p>
-                                <p>Price: Php` + price + `</p>
-                                <p>Stock:` + stock + `serving/s</p>
-                                <p>Classification:` + classification +`</p>
-                                <p>Type:` + type +`</p>
-                            </div>
-                            <div class="menu-btns">
-                                <button class="regis-update-btn">Update</button>
-                                <button class="regis-archive">Archive</button>
-                            </div>
-                        </div>
+                        console.log(stock);
+                        /*<button class="regis-update-btn" onclick="regis_modal_pop()" href="`+ `register-food.html?name=` + name + `&price=` + price +
+                                `&classification=`+classification+`&type=`+type+`&stock=`+stock+`&photo=`+photo+`">Update</button>
+                                <button class="regis-archive" href="`+ `register-food.html?name=` + name + `&price=` + price +
+                                `&classification=`+classification+`&type=`+type+`&stock=`+stock+`&photo=`+photo+`&id=`+field.food_name+`&owner_id=`+field.owner_id+`">Archive</button>
+                        */
+                        $("#regis_display").append(`
+                            <tr class="regis-row-data">
+                                <td>`+name+`</td>
+                                <td>`+price+`</td>
+                                <td>`+classification+`</td>
+                                <td>`+type+`</td>
+                                <td>`+stock+`</td>
+                                <td>
+                                    <button class="regis-modal-btn" onclick="regis_modal_pop()" href="`+ `register-food.html?name=` + name + `&price=` + price +
+                                    `&classification=`+classification+`&type=`+type+`&stock=`+stock+`&id=`+id+`">Update</button>
+                                </td>
+                                <td>
+                                    <button class="regis-archive" href="`+ `register-food.html?name=` + name + `&price=` + price +
+                                    `&classification=`+classification+`&type=`+type+`&stock=`+stock+`&id=`+id+`&owner_id=`+field.owner_id+
+                                    `">Delete</button>
+                                </td>
+                            </tr>
                         `);
-                    //let food_class_filter= $(".food-class-filter").val();
-                    //let food_type_filter= $(".food-type-filter").val();
-                    $(".filter").on("click", function() {
-                        let value = $(".food-class-filter").val().toLowerCase();
-                        let value2 = $(".food-type-filter").val().toLowerCase();
-                        $(".menu-card").filter(function() {
+
+                    const url_back = `register-food.html`;
+                    $(".regis-modal-btn").on("click", function(){
+                        const url = this.getAttribute('href');
+                        console.log(url);
+                        history.pushState('','', url);
+                        var name = decodeURI(getUrlVars()["name"]);
+                        var price = decodeURI(getUrlVars()["price"]);
+                        var classification = decodeURI(getUrlVars()["classification"]);  
+                        var type = decodeURI(getUrlVars()["type"]);
+                        var stock = decodeURI(getUrlVars()["stock"]);
+                        var id = decodeURI(getUrlVars()["id"]);
+
+                        $(".regis-food-name").val(name);
+                        $(".regis-food-price").val(price);
+                        $(".regis-food-class").val(classification);
+                        $(".regis-food-type").val(type);
+                        $(".regis-initial-stock").val(stock);
+                    });
+                    $(".archive-btn").on("click", function(){
+                        const url = this.getAttribute('href');
+                        console.log(url);
+                        history.pushState('','', url);
+                    });
+                    $(".regis-cancel-btn").on("click", function(){
+                        history.pushState('','', url_back);
+                    });
+                    $(".cancel-archive-btn").on("click", function(){
+                        history.pushState('','', url_back);
+                    });
+                    $(".food-class-filter").on("click", function() {
+                        let value = $(this).val().toLowerCase();
+                        $("#regis_display tr").filter(function() {
                         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                        });
+                    });
+                    $(".food-type-filter").on("click", function() {
+                        let value2 = $(this).val().toLowerCase();
+                        $("#regis_display tr").filter(function() {
                         $(this).toggle($(this).text().toLowerCase().indexOf(value2) > -1)
                         });
                     });
@@ -116,12 +144,52 @@
                     $(".display-all").on("click", function() {
                         location.reload(true);
                     });
-
+                        
                         }
                     });
                 });
             });
         </script>
+        <script type="text/javascript">
+            $(document).ready(function() { 
+            $(".regis-update-btn").on("click", function() { 
+                //console.log("clicked-updatebtn");
+                    var id = decodeURI(getUrlVars()["id"]);
+                    var name = $(".regis-food-name").val();
+                    var price = $(".regis-food-price").val();
+                    var classification = $(".regis-food-class").val();
+                    var type = $(".regis-food-type").val();
+                    var stock = $(".regis-initial-stock").val();
+                    //var photo = $(".regis-add-photo").val(photo);
+                    var dataString = "id=" + id + "&name=" + name + "&price=" + price +
+                    "&classification=" + classification + "&type=" + type + "&stock=" + stock +
+                    "&regis_update=";
+                console.log(dataString);
+                $.ajax({
+                    type: "POST",
+                    url: "http://192.168.254.118/final_project/platforms/browser/www/server/update.php",  
+                    data: dataString,
+                    crossDomain: true,  
+                    cache: false,
+                    beforeSend: function() {
+                    },
+                    success: function(data) {  
+                        if (data == "success") {
+                            alert("Updated");
+                            history.pushState('','', "register-food.html");
+                            location.reload(true);
+                        } else if (data == "error") {  
+                            alert("error");
+                        }
+                    }
+                });
+            });
+
+        $("#sub-delete").on("click", function() { 
+
+        });
+    });
+</script>
 </head>
 
 <body>
@@ -180,30 +248,41 @@
                             <option value="Snack">Snack</option>
                             <option value="Meal">Meal</option>
                             <option value="Beverage">Beverage</option>
-                            <option value="Snackbeverage">Snack-Beverage</option>
-                            <option value="Mealbeverage">Meal-Beverage</option>
+                            <option value="SB-Snack-Beverage">Snack with Beverage</option>
+                            <option value="MB-Meal-Beverage">Meal with Beverage</option>
+                            <option value="SC-Snack-Combo">Snack Combo</option>
+                            <option value="MC-Meal-Combo">Meal Combo</option>
+                            <option value="BC-Beverage-Combo">Beverage Combo</option>
                         </select>
-
-                        <button class="filter">Filter</button>
                         <button class="display-all">Display All</button>
                     </div>
-                    <div class="display-menu">
-                        <div class="menu-card">
-                            <div class="food-image">
-                                <img src="./img/pexels-ella-olsson-1640777.jpg" alt="">
-                            </div>
-                            <div class="food-desc">
-                                <p>Name: Food Name</p>
-                                <p>Price: Php 100.00</p>
-                                <p>Stock: 5 servings</p>
-                                <p>Classification: Single</p>
-                                <p>Type: Meal</p>
-                            </div>
-                            <div class="menu-btns">
-                                <button class="regis-update-btn">Update</button>
-                                <button class="regis-archive">Archive</button>
-                            </div>
-                        </div>
+                    <div class="regis-menu">
+                        <table>
+                            <tr>
+                                <td>
+                                    <table class="regis-header">
+                                        <tr class="regis-header-row">
+                                            <th>Name</th>
+                                            <th>Price</th>
+                                            <th>Classification</th>
+                                            <th>Type</th>
+                                            <th>Stock</th>
+                                            <th>Update</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="regisoverflow">
+                                        <table id="regis_display">
+                                            
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
                 <div class="regis-food-card">
@@ -228,15 +307,15 @@
                             <option value="Snack">Snack</option>
                             <option value="Meal">Meal</option>
                             <option value="Beverage">Beverage</option>
-                            <option value="Snackbeverage">Combo-snack</option>
-                            <option value="Mealbeverage">Meal-Beverage</option>
+                            <option value="SB-Snack-Beverage">Snack with Beverage</option>
+                            <option value="MB-Meal-Beverage">Meal with Beverage</option>
+                            <option value="SC-Snack-Combo">Snack Combo</option>
+                            <option value="MC-Meal-Combo">Meal Combo</option>
+                            <option value="BC-Beverage-Combo">Beverage Combo</option>
                         </select>
   
                         <h5>Initial Stock</h5>
                         <input type="number" placeholder="Enter initial stock" class="initial-stock" id="initial-stock">
-        
-                        <h5>Add Photo</h5>
-                        <input type="file" class="add-photo" id="file" accept="image/png, image/jpeg">
 
                         <br>
                         <button class="regis-food-btn" id="regis-food-insert">Register</button>
@@ -253,6 +332,42 @@
                 <br>
                 <button class="logout-btn" onclick="logout_action()">Log Out</button>
                 <button class="cancel-logout-btn" onclick="cancel_logout_modal()">Cancel</button>
+            </div>
+        </div>
+        <div class="regis-modal-container">
+            <div class="regis-modal-update">
+                <img src="./img/GAWIS-PIC-LOGO-final.jpg" alt="" class="logo">
+                <h3>Update.</h3>
+                
+                <h5 class="top">Food Name</h5>
+                <input type="text" placeholder="Enter food name" class="regis-food-name">
+        
+                <h5>Food Price</h5>
+                <input type="text" placeholder="Enter food price" class="regis-food-price">
+        
+                <h5>Classification</h5>
+                <select class="regis-food-class">
+                <option value="Single">Single</option>
+                <option value="Combo">Combo</option>
+                </select>
+        
+                <h5>Type</h5>
+                <select class="regis-food-type">
+                    <option value="Snack">Snack</option>
+                    <option value="Meal">Meal</option>
+                    <option value="Beverage">Beverage</option>
+                    <option value="SB-Snack-Beverage">Snack with Beverage</option>
+                    <option value="MB-Meal-Beverage">Meal with Beverage</option>
+                    <option value="SC-Snack-Combo">Snack Combo</option>
+                    <option value="MC-Meal-Combo">Meal Combo</option>
+                    <option value="BC-Beverage-Combo">Beverage Combo</option>
+                </select>
+  
+                <h5>Initial Stock</h5>
+                <input type="number" placeholder="Enter initial stock" class="regis-initial-stock">
+       
+                <button class="regis-update-btn" id="regis-update">Update</button>
+                <button class="regis-cancel-btn" onclick="cancel_regis_modal()">Cancel</button>
             </div>
         </div>
         
