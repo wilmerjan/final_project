@@ -92,9 +92,9 @@
                                     `&classification=`+classification+`&type=`+type+`&stock=`+stock+`&id=`+id+`">Update</button>
                                 </td>
                                 <td>
-                                    <button class="regis-archive" href="`+ `register-food.html?name=` + name + `&price=` + price +
+                                    <button class="regis-archive" onclick="regis_archive_pop()" href="`+ `register-food.html?name=` + name + `&price=` + price +
                                     `&classification=`+classification+`&type=`+type+`&stock=`+stock+`&id=`+id+`&owner_id=`+field.owner_id+
-                                    `">Delete</button>
+                                    `">Archive</button>
                                 </td>
                             </tr>
                         `);
@@ -117,7 +117,7 @@
                         $(".regis-food-type").val(type);
                         $(".regis-initial-stock").val(stock);
                     });
-                    $(".archive-btn").on("click", function(){
+                    $(".regis-archive").on("click", function(){
                         const url = this.getAttribute('href');
                         console.log(url);
                         history.pushState('','', url);
@@ -125,7 +125,7 @@
                     $(".regis-cancel-btn").on("click", function(){
                         history.pushState('','', url_back);
                     });
-                    $(".cancel-archive-btn").on("click", function(){
+                    $(".cancel-archive").on("click", function(){
                         history.pushState('','', url_back);
                     });
                     $(".search-bar").on("keyup", function() {
@@ -191,8 +191,58 @@
                 });
             });
 
-        $("#sub-delete").on("click", function() { 
+        $(".archive-btn").on("click", function() { 
+            console.log("clickedaksak");
+            var food_id = decodeURI(getUrlVars()["id"]);
+            var food_name = decodeURI(getUrlVars()["name"]);
+            var food_price = decodeURI(getUrlVars()["price"]);
+            var food_class = decodeURI(getUrlVars()["classification"]);
+            var food_type = decodeURI(getUrlVars()["type"]);
+            var initial_stock = decodeURI(getUrlVars()["stock"]);
+            var bus_id = decodeURI(getUrlVars()["owner_id"]);
 
+            //name=Item2&price=199.00&classification=Combo&type=Snack&stock=8&id=39&owner_id=15
+                    var dataString = "food_id=" + food_id + "&food_name=" + food_name + "&food_price=" + food_price +
+                    "&food_class=" + food_class + "&food_type=" + food_type + "&initial_stock=" + initial_stock +
+                    "&bus_id="+ bus_id +"&food_insert_archive=";
+                    var dataStringdel = "food_id=" + food_id + "&food_delete=";
+                $.ajax({
+                    type: "POST",
+                    url: "http://192.168.254.118/final_project/platforms/browser/www/server/insert.php",  
+                    data: dataString,
+                    crossDomain: true,  
+                    cache: false,
+                    beforeSend: function() {
+                        //console.log(dataString);
+                    },
+                    success: function(data) {  
+                        console.log(data);
+                        if (data == "success") {
+                            
+                        } else if (data == "error") {  
+                            alert("error");
+                        }
+                    }
+                });
+                $.ajax({
+                type: "GET",
+                url: "http://192.168.254.118/final_project/platforms/browser/www/server/delete.php",  
+                data: dataStringdel,
+                crossDomain: true,  
+                cache: false,  
+                beforeSend: function(){},
+                success: function(data) {  
+                    if (data == "success") {
+                        alert("Archived");
+                        history.pushState('','', "register-food.html");
+                        location.reload(true);
+                    } else if (data == "error") {  
+                        alert("may error!!!");
+                        console.log(data);
+                        location.reload(true);
+                    }
+                }
+            });
         });
     });
 </script>
@@ -374,6 +424,17 @@
        
                 <button class="regis-update-btn" id="regis-update">Update</button>
                 <button class="regis-cancel-btn" onclick="cancel_regis_modal()">Cancel</button>
+            </div>
+        </div>
+        <div class="delete-modal-container archive-modal">
+            <div class="delete-card">
+                <img src="./img/GAWIS-PIC-LOGO-final.jpg" alt="" class="logo">
+                <h3>Archive.</h3>
+
+                <h5 class="label-top">Are you sure, you want to archive it?</h5>
+                <br>
+                <button class="sub-update-btn archive-btn" id="sub-delete">Archive</button>
+                <button class="cancel-del-btn cancel-archive" onclick="cancel_archive_modal()">Cancel</button>
             </div>
         </div>
         

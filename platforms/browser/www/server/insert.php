@@ -29,6 +29,24 @@ else
 echo "error";
 }
 
+if(isset($_POST['food_insert_archive']))
+{
+$food_id=$_POST['food_id'];
+$food_name=$_POST['food_name'];
+$food_price=$_POST['food_price'];
+$food_class=$_POST['food_class'];
+$food_type=$_POST['food_type'];
+$initial_stock=$_POST['initial_stock'];
+$bus_id=$_POST['bus_id'];
+
+$faq=mysqli_query($con,"INSERT INTO `food_archive_tbl`(`food_id`,`food_name`, `food_price`, `food_classification`, `food_type`, `stock_qty`, `owner_id`) VALUES 
+('$food_id', '$food_name', '$food_price', '$food_class', '$food_type', '$initial_stock', '$bus_id')");
+if($faq)
+echo "success";  
+else
+echo "error";
+}
+
 
 if(isset($_POST['register']))
 {
