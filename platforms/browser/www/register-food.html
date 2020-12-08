@@ -75,6 +75,68 @@
                         var type = field.food_type;
                         var stock = field.stock_qty;
 
+                        if(stock >= 6 && stock <=10) {
+                            $("#regis_display").append(`
+                            <tr class="regis-row-data">
+                                <td>`+name+`</td>
+                                <td>`+price+`</td>
+                                <td>`+classification+`</td>
+                                <td>`+type+`</td>
+                                <td style="background-color:#f5ec3d; color:#fff;">`+stock+`</td>
+                                <td>
+                                    <button class="regis-modal-btn" onclick="regis_modal_pop()" href="`+ `register-food.html?name=` + name + `&price=` + price +
+                                    `&classification=`+classification+`&type=`+type+`&stock=`+stock+`&id=`+id+`">Update</button>
+                                </td>
+                                <td>
+                                    <button class="regis-archive" onclick="regis_archive_pop()" href="`+ `register-food.html?name=` + name + `&price=` + price +
+                                    `&classification=`+classification+`&type=`+type+`&stock=`+stock+`&id=`+id+`&owner_id=`+field.owner_id+
+                                    `">Archive</button>
+                                </td>
+                            </tr>
+                        `);
+                        }
+                        else if(stock >= 1 && stock <=5) {
+                            $("#regis_display").append(`
+                            <tr class="regis-row-data">
+                                <td>`+name+`</td>
+                                <td>`+price+`</td>
+                                <td>`+classification+`</td>
+                                <td>`+type+`</td>
+                                <td style="background-color:#e08c04; color:#fff;">`+stock+`</td>
+                                <td>
+                                    <button class="regis-modal-btn" onclick="regis_modal_pop()" href="`+ `register-food.html?name=` + name + `&price=` + price +
+                                    `&classification=`+classification+`&type=`+type+`&stock=`+stock+`&id=`+id+`">Update</button>
+                                </td>
+                                <td>
+                                    <button class="regis-archive" onclick="regis_archive_pop()" href="`+ `register-food.html?name=` + name + `&price=` + price +
+                                    `&classification=`+classification+`&type=`+type+`&stock=`+stock+`&id=`+id+`&owner_id=`+field.owner_id+
+                                    `">Archive</button>
+                                </td>
+                            </tr>
+                        `);
+                        }
+
+                        else if(stock == 0) { 
+                            $("#regis_display").append(`
+                            <tr class="regis-row-data">
+                                <td>`+name+`</td>
+                                <td>`+price+`</td>
+                                <td>`+classification+`</td>
+                                <td>`+type+`</td>
+                                <td style="background-color:#a80c0c ; color:#fff;">`+stock+`</td>
+                                <td>
+                                    <button class="regis-modal-btn" onclick="regis_modal_pop()" href="`+ `register-food.html?name=` + name + `&price=` + price +
+                                    `&classification=`+classification+`&type=`+type+`&stock=`+stock+`&id=`+id+`">Update</button>
+                                </td>
+                                <td>
+                                    <button class="regis-archive" onclick="regis_archive_pop()" href="`+ `register-food.html?name=` + name + `&price=` + price +
+                                    `&classification=`+classification+`&type=`+type+`&stock=`+stock+`&id=`+id+`&owner_id=`+field.owner_id+
+                                    `">Archive</button>
+                                </td>
+                            </tr>
+                        `);
+                        }
+                        else if(stock > 10) { 
                         $("#regis_display").append(`
                             <tr class="regis-row-data">
                                 <td>`+name+`</td>
@@ -93,7 +155,7 @@
                                 </td>
                             </tr>
                         `);
-
+                        }
                     const url_back = `register-food.html`;
                     $(".regis-modal-btn").on("click", function(){
                         const url = this.getAttribute('href');

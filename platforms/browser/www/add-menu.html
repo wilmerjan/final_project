@@ -31,7 +31,50 @@
             var type = field.food_type;
             var stock = field.stock_qty;
 
-            $("#add_display").append(`
+            if(stock >= 6 && stock <=10) {
+                $("#add_display").append(`
+                <tr class="add-row-data">
+                    <td class="name-td">`+name+`</td>
+                    <td class="price-td">`+price+`</td>
+                    <td>`+classification+`</td>
+                    <td>`+type+`</td>
+                    <td style="background-color:#f5ec3d; color:#fff;">`+stock+`</td>
+                    <td>
+                        <button class="add-item-btn">Add To Menu</button>
+                    </td>
+                </tr>
+            `);
+            }
+            else if(stock >= 1 && stock <=5) {
+                $("#add_display").append(`
+                <tr class="add-row-data">
+                    <td class="name-td">`+name+`</td>
+                    <td class="price-td">`+price+`</td>
+                    <td>`+classification+`</td>
+                    <td>`+type+`</td>
+                    <td style="background-color:#e08c04; color:#fff;">`+stock+`</td>
+                    <td>
+                        <button class="add-item-btn">Add To Menu</button>
+                    </td>
+                </tr>
+            `);
+            }
+            else if(stock == 0) {
+                $("#add_display").append(`
+                <tr class="add-row-data">
+                    <td class="name-td">`+name+`</td>
+                    <td class="price-td">`+price+`</td>
+                    <td>`+classification+`</td>
+                    <td>`+type+`</td>
+                    <td style="background-color:#a80c0c ; color:#fff;">`+stock+`</td>
+                    <td>
+                        <button class="add-item-btn">Add To Menu</button>
+                    </td>
+                </tr>
+            `);
+            }
+            else if(stock > 10) {
+                $("#add_display").append(`
                 <tr class="add-row-data">
                     <td class="name-td">`+name+`</td>
                     <td class="price-td">`+price+`</td>
@@ -43,6 +86,7 @@
                     </td>
                 </tr>
             `);
+            }
 
             $(".search-bar").on("keyup", function() {
                 let value = $(this).val().toLowerCase();

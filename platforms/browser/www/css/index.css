@@ -359,6 +359,20 @@ main-section {
     font-size: 1em;
 }
 
+.title > h3 > a {
+    background-color: var(--maincolor);
+    color: var(--light);
+    text-decoration: none;
+    padding: 5px;
+    font-size: 0.8em;
+    border-radius: 5px;
+}
+
+.title > h3 > a:hover {
+    color: var(--maincolor);
+    background-color: var(--light);
+}
+
 .bus-desc-card {
     grid-area: bus-desc-card;
     background-color: var(--light);

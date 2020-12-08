@@ -82,7 +82,31 @@
 
                 return str;
         }
+                    //var csv is the CSV file with headers
+            function csvJSON(csv){
 
+            var lines=csv.split("\n");
+
+            var result = [];
+
+            var headers=lines[0].split(",");
+
+            for(var i=1;i<lines.length;i++){
+
+                var obj = {};
+                var currentline=lines[i].split(",");
+
+                for(var j=0;j<headers.length;j++){
+                    obj[headers[j]] = currentline[j];
+                }
+
+                result.push(obj);
+
+            }
+
+            //return result; //JavaScript object
+            return JSON.stringify(result); //JSON
+            }
         $(document).on("click", ".rt-complete-btn", function() {
             let completed_ticket = [];
                 let name = $(this).closest("tr").find(".rt-name").text();
@@ -103,6 +127,9 @@
                 let transac_credit = 0;
                 let bus_id = localStorage.getItem("bus_id");
 
+                let purpose_header = "name,price,qty,subtotal\n" + transac_purpose;
+                let purpose_json = csvJSON(purpose_header); 
+                console.log(purpose_json);
                 let dataString = "transac_details=" + transac_details + "&transac_purpose=" + transac_purpose +
                 "&transac_debit=" + transac_debit + "&transac_credit=" + transac_credit + "&transac_date=" +
                 transac_date + "&owner_id=" + bus_id +
@@ -152,7 +179,7 @@
                     }
                 }
             });
-            location.reload(true);
+            //location.reload(true);
             return false;
         });
         $(document).on("click", ".rt-cancel-btn", function() {
