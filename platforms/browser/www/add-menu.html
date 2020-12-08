@@ -8,15 +8,151 @@
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
  
     <link rel="stylesheet" type="text/css" href="css/index.css" />
+    <link rel="stylesheet" type="text/css" href="css/addmenu.css" />
     <link rel="stylesheet" href="./fontawesome-free-5.15.1-web/fontawesome-free-5.15.1-web/css/all.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <title>Add Menu</title>
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+    /**/
+    $(document).ready(function() {
+    var url = "http://192.168.254.118/final_project/platforms/browser/www/server/food_json.php";
+    $.getJSON(url, function(result) {  
+        //console.log(result);
+        let bus_id = localStorage.getItem("bus_id");
+        $.each(result, function(i, field) {
+                    
+        if(bus_id === field.owner_id) {
+            var id = field.food_id;
+            var name = field.food_name;
+            var price = field.food_price;
+            var classification = field.food_classification;
+            var type = field.food_type;
+            var stock = field.stock_qty;
+
+            $("#add_display").append(`
+                <tr class="add-row-data">
+                    <td class="name-td">`+name+`</td>
+                    <td class="price-td">`+price+`</td>
+                    <td>`+classification+`</td>
+                    <td>`+type+`</td>
+                    <td>`+stock+`</td>
+                    <td>
+                        <button class="add-item-btn">Add To Menu</button>
+                    </td>
+                </tr>
+            `);
+
+            $(".search-bar").on("keyup", function() {
+                let value = $(this).val().toLowerCase();
+                $("#add_display tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+    
+            $(".food-class-filter").on("click", function() {
+                let value = $(this).val().toLowerCase();
+                $("#add_display tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+
+            $(".food-type-filter").on("click", function() {
+                let value2 = $(this).val().toLowerCase();
+                $("#add_display tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value2) > -1)
+                });
+            });
+
+            function selectElement(id, valueToSelect) {    
+                let element = document.querySelector(id);
+                element.value = valueToSelect;
+            }
+            $(".display-all").on("click", function() {
+                let value = "";
+                $("#add_display tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+                let value2 = "";
+                $("#add_display tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value2) > -1)
+                });
+                selectElement('.food-type-filter', '');
+                selectElement('.food-class-filter', '');
+            });
+                        
+            }
+            
+        });
+        $(".add-item-btn").on("click", function() {
+            let item_name = $(this).closest("tr").find(".name-td").text();
+            let item_price = $(this).closest("tr").find(".price-td").text();
+                $(".menu-table").append(`
+                    <tr class="menu-row">
+                        <td class="append-name">`+item_name+`</td>
+                        <td class="append-price">`+item_price+`</td>
+                        <td>
+                            <button class="remove-item">Remove</button>
+                        </td>
+                    </tr>
+                `);
+        });
+        $(document).on("click",".remove-item", function() {
+            console.log("remove button clicked");
+            $(this).closest("tr").remove();
+        });
+        $(".publish-menu-btn").on("click", function() {
+            let menu_list = [];
+            $(".menu-table tr").each(function (a, b) {
+                var name = $('.append-name', b).text();
+                var value = $('.append-price', b).text();
+                menu_list.push({ Name: name, Price: value });
+            });
+            let result_menu = JSON.stringify(menu_list);
+            let result_date = $(".publish-date").val();
+            let bus_id = localStorage.getItem("bus_id");
+
+            var dataString = "result_menu=" + result_menu + "&result_date=" + result_date + "&owner_id=" + bus_id +
+                "&menu_insert=";
+                console.log(dataString);
+                if ($.trim(result_menu).length > 0 & $.trim(result_date).length > 0 & $.trim(bus_id).length > 0)
+                {
+                    $.ajax({
+                        type: "POST",
+                        url: "http://192.168.254.118/final_project/platforms/browser/www/server/insert.php",  
+                        data: dataString,
+                        crossDomain: true,  
+                        cache: false,  
+                        beforeSend: function() {
+                        
+                        },
+                        success: function(data) {
+                            //console.log(data);
+                            if (data == "success") {  
+                                alert("Published");
+                                location.reload(true);
+                            } else if (data == "error") {  
+                                alert("error");
+
+                            }
+                        }
+                    });
+                    
+                }
+                return false;
+        });
+    });
+});
+</script>
+<script type="text/javascript">
+
+</script>
 
 </head>
 
 <body>
+    
     <div class="main-page-wrapper">
         <brandname-section class="brandname">
             <div class="bn-holder">
@@ -29,7 +165,6 @@
                 <input type="text" placeholder="Search..." class="search-bar"><button class="search-btn"><i class="fas fa-search"></i></button>
             </div>
             <div class="admin-logout">
-                <button class="admin-btn"><i class="fas fa-user"></i></button>
                 <button class="logout" onclick="logout_modal_pop()">Log out</button>
             </div>
         </topbar-section>
@@ -46,7 +181,7 @@
                 <a href="./received-order.html"><i class="fas fa-inbox"></i>
                     <br>Received Order</a>
                 <a href="./delivery-pickup.html"><i class="fas fa-truck"></i>
-                    <br>For Delivery or Pick Up</a>
+                    <br>Order Status</a>
                 <a href="./sales.html"><i class="far fa-chart-bar"></i>
                     <br>Sales</a>
                     <br>
@@ -55,8 +190,90 @@
         </sidenav-section>
         <main-section>
             <div class="add-menu">
-                <div class="title">
+                <div class="add-title">
                     <h3>Add Menu</h3>
+                </div>
+                <div class="select-menu">
+                    <div class="menu-filter">
+                        <h5>Classification:</h5>
+                        <select class="food-class-filter filter-select" id="food-class-filter">
+                            <option value=""></option>
+                            <option value="Single">Single</option>
+                            <option value="Combo">Combo</option>
+                        </select>
+                        <h5>Type:</h5>
+                        <select class="food-type-filter filter-select" id="food-type-filter">
+                            <option value=""></option>
+                            <option value="Snack">Snack</option>
+                            <option value="Meal">Meal</option>
+                            <option value="Beverage">Beverage</option>
+                            <option value="SB-Snack-Beverage">Snack with Beverage</option>
+                            <option value="MB-Meal-Beverage">Meal with Beverage</option>
+                            <option value="SC-Snack-Combo">Snack Combo</option>
+                            <option value="MC-Meal-Combo">Meal Combo</option>
+                            <option value="BC-Beverage-Combo">Beverage Combo</option>
+                        </select>
+                        <button class="display-all">Display All</button>
+                    </div>
+                    <div class="select-menu">
+                        <table>
+                            <tr>
+                                <td>
+                                    <table class="add-header">
+                                        <tr class="add-header-row">
+                                            <th>Name</th>
+                                            <th>Price</th>
+                                            <th>Classification</th>
+                                            <th>Type</th>
+                                            <th>Stock</th>
+                                            <th>Add</th>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="addoverflow">
+                                        <table id="add_display">
+                                            <!--<tr class="add-row-data">
+                                                <td>Name</td>
+                                                <td>Price</td>
+                                                <td>classification</td>
+                                                <td>Type</td>
+                                                <td>Stock</td>
+                                                <td>
+                                                    <button class="add-item-btn">Add To Menu</button>
+                                                </td>
+                                            </tr>-->
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="publish-menu">
+                    <div class="menu-for-tomorrow">
+                        <img src="./img/GAWIS-PIC-LOGO-final.jpg" alt="" class="logo">
+                        <h3>Menu For Tomorrow.</h3>
+                        <div class="flex-row">
+                            <label>Publish date:</label>
+                            <input type="date" class="publish-date">
+                        </div>
+                        <div class="menuoverflow">
+                            <table class="menu-table">
+                                <!--<tr class="menu-row">
+                                    <td>Spaghetti</td>
+                                    <td>Php 199.00</td>
+                                    <td>
+                                        <button class="remove-item">Remove</button>
+                                    </td>
+                                </tr>-->
+                            </table>
+                        </div>
+                        
+                        <button class="publish-menu-btn" id="menu-insert">Publish</button>
+                    </div>
                 </div>
             </div>
         </main-section>

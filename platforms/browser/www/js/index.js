@@ -10,6 +10,8 @@ const sidenav_collapsed = document.querySelector(".sidenav-collapsed");
 const logout = document.querySelector(".logout");
 const regis_modal = document.querySelector(".regis-modal-container");
 const archive_modal = document.querySelector(".archive-modal");
+const admin_modal = document.querySelector(".administrator-modal-container");
+
 
 function myFunction(mobile_width) {
     if (mobile_width.matches) {
@@ -87,6 +89,14 @@ function cancel_archive_modal() {
     archive_modal.style.display = "none";
 }
 
+function admin_modal_pop() {
+    admin_modal.style.display = "block";
+}
+
+function cancel_owner_modal() {
+    admin_modal.style.display = "none";
+}
+
 function logout_action() {
     localStorage.removeItem("bus_id");
     localStorage.removeItem("username");
@@ -94,8 +104,6 @@ function logout_action() {
     localStorage.loginStatus = "false";
     window.location.href = "index.html";
 }
-
-
 
 function getUrlVars() {
     var vars = [],  hash;

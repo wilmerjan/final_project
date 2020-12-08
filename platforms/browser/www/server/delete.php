@@ -20,4 +20,14 @@ echo "success";
 echo "error";
 }
 
+if(isset($_GET['ticket_del']))
+{
+$id=$_GET['id'];
+$q=mysqli_query($con, "DELETE FROM `ticket_tbl` WHERE  `ticket_id` ='$id'") or die(mysqli_error($con));  
+if($q)
+echo "success"; 
+ else
+echo "error";
+}
+
 ?>

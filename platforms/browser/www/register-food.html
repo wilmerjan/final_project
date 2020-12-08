@@ -74,12 +74,7 @@
                         var classification = field.food_classification;
                         var type = field.food_type;
                         var stock = field.stock_qty;
-                        console.log(stock);
-                        /*<button class="regis-update-btn" onclick="regis_modal_pop()" href="`+ `register-food.html?name=` + name + `&price=` + price +
-                                `&classification=`+classification+`&type=`+type+`&stock=`+stock+`&photo=`+photo+`">Update</button>
-                                <button class="regis-archive" href="`+ `register-food.html?name=` + name + `&price=` + price +
-                                `&classification=`+classification+`&type=`+type+`&stock=`+stock+`&photo=`+photo+`&id=`+field.food_name+`&owner_id=`+field.owner_id+`">Archive</button>
-                        */
+
                         $("#regis_display").append(`
                             <tr class="regis-row-data">
                                 <td>`+name+`</td>
@@ -102,7 +97,6 @@
                     const url_back = `register-food.html`;
                     $(".regis-modal-btn").on("click", function(){
                         const url = this.getAttribute('href');
-                        console.log(url);
                         history.pushState('','', url);
                         var name = decodeURI(getUrlVars()["name"]);
                         var price = decodeURI(getUrlVars()["price"]);
@@ -147,8 +141,21 @@
                         });
                     });
 
+                    function selectElement(id, valueToSelect) {    
+                        let element = document.querySelector(id);
+                        element.value = valueToSelect;
+                    }
                     $(".display-all").on("click", function() {
-                        location.reload(true);
+                        let value = "";
+                        $("#regis_display tr").filter(function() {
+                            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                        });
+                        let value2 = "";
+                        $("#regis_display tr").filter(function() {
+                            $(this).toggle($(this).text().toLowerCase().indexOf(value2) > -1)
+                        });
+                        selectElement('.food-type-filter', '');
+                        selectElement('.food-class-filter', '');
                     });
                         
                         }
@@ -166,7 +173,6 @@
                     var classification = $(".regis-food-class").val();
                     var type = $(".regis-food-type").val();
                     var stock = $(".regis-initial-stock").val();
-                    //var photo = $(".regis-add-photo").val(photo);
                     var dataString = "id=" + id + "&name=" + name + "&price=" + price +
                     "&classification=" + classification + "&type=" + type + "&stock=" + stock +
                     "&regis_update=";
@@ -261,7 +267,6 @@
                 <input type="text" placeholder="Search..." class="search-bar"><button class="search-btn"><i class="fas fa-search"></i></button>
             </div>
             <div class="admin-logout">
-                <button class="admin-btn"><i class="fas fa-user"></i></button>
                 <button class="logout" onclick="logout_modal_pop()">Log out</button>
             </div>
         </topbar-section>
@@ -278,7 +283,7 @@
                 <a href="./received-order.html"><i class="fas fa-inbox"></i>
                     <br>Received Order</a>
                 <a href="./delivery-pickup.html"><i class="fas fa-truck"></i>
-                    <br>For Delivery or Pick Up</a>
+                    <br>Order Status</a>
                 <a href="./sales.html"><i class="far fa-chart-bar"></i>
                     <br>Sales</a>
                     <br>

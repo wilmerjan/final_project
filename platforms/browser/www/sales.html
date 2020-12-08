@@ -8,12 +8,92 @@
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
  
     <link rel="stylesheet" type="text/css" href="css/index.css" />
+    <link rel="stylesheet" href="css/sales.css">
     <link rel="stylesheet" href="./fontawesome-free-5.15.1-web/fontawesome-free-5.15.1-web/css/all.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <title>Sales</title>
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var url = "http://192.168.254.118/final_project/platforms/browser/www/server/transaction_json.php";
+            $.getJSON(url, function(result) {  
+            //console.log(result);
+                let bus_id = localStorage.getItem("bus_id");
+                $.each(result, function(i, field) {
 
+                if(bus_id === field.owner_id) {
+                    let id = field.transaction_id;
+                    let details = field.transaction_details;
+                    let purpose = field.transaction_purpose;
+                    let date = field.date;
+                    let debit = field.debit;
+                    let credit = field.credit;
+                $("#sales-list").append(`
+                <tr>
+                    <td>`+id+`</td>
+                    <td>`+details+`</td>
+                    <td>`+purpose+`</td>
+                    <td>`+date+`</td>
+                    <td>`+debit+`</td>
+                    <td>`+credit+`</td>
+                </tr>
+                `);
+
+                $(".search-bar").on("keyup", function() {
+                    let value = $(this).val().toLowerCase();
+                    $("#sales-list tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
+                });
+                
+    
+                }
+                });
+
+            });
+        });
+    </script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#credit-insert").click(function() {  
+            let bus_id = localStorage.getItem("bus_id");
+            let details = $(".credit-details").val();
+            let purpose = $(".credit-purpose").val();
+            let debit = 0;
+            let credit = $(".credit-amount").val();
+            let date = $(".credit-date").val();
+            let dataString = "transac_details=" + details + "&transac_purpose=" + purpose + "&transac_date=" + date +
+            "&transac_debit=" + debit + "&transac_credit=" + credit + "&owner_id=" + bus_id +
+            "&transac_insert=";
+            console.log(dataString);
+            if ($.trim(details).length > 0 & $.trim(purpose).length > 0 & $.trim(date).length > 0
+            & $.trim(debit).length > 0 & $.trim(credit).length > 0)
+            {
+                $.ajax({
+                    type: "POST",
+                    url: "http://192.168.254.118/final_project/platforms/browser/www/server/insert.php",  
+                    data: dataString,
+                    crossDomain: true,  
+                    cache: false,  
+                    beforeSend: function() {
+                    
+                    },
+                    success: function(data) {
+                        console.log(data);
+                        if (data == "success") {  
+                            alert("inserted");
+                        } else if (data == "error") {  
+                            alert("error");
+                        }
+                    }
+                });
+                
+            }
+            return false;
+        });
+    });
+    </script>
 </head>
 
 <body>
@@ -29,7 +109,6 @@
                 <input type="text" placeholder="Search..." class="search-bar"><button class="search-btn"><i class="fas fa-search"></i></button>
             </div>
             <div class="admin-logout">
-                <button class="admin-btn"><i class="fas fa-user"></i></button>
                 <button class="logout" onclick="logout_modal_pop()">Log out</button>
             </div>
         </topbar-section>
@@ -46,7 +125,7 @@
                 <a href="./received-order.html"><i class="fas fa-inbox"></i>
                     <br>Received Order</a>
                 <a href="./delivery-pickup.html"><i class="fas fa-truck"></i>
-                    <br>For Delivery or Pick Up</a>
+                    <br>Order Status</a>
                 <a href="./sales.html" class="current"><i class="far fa-chart-bar"></i>
                     <br>Sales</a>
                     <br>
@@ -55,8 +134,55 @@
         </sidenav-section>
         <main-section>
             <div class="sales-tab">
-                <div class="title">
+                <div class="sales-title">
                     <h3>Sales</h3>
+                </div>
+                <div class="sales-table">
+                    <table>
+                        <tr>
+                            <td>
+                                <table class="sales-table-header">
+                                    <tr class="sales-header-row">
+                                        <th>Transaction ID</th>
+                                        <th>Details</th>
+                                        <th>Purpose</th>
+                                        <th>Date</th>
+                                        <th>Debit</th>
+                                        <th>Credit</th>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="salesoverflow">
+                                    <table id="sales-list">
+                                        
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="sales-credit-card">
+                    
+                    <img src="./img/GAWIS-PIC-LOGO-final.jpg" alt="" class="logo">
+                    <h3>Credit.</h3>
+
+                    <h5>Details</h5>
+                    <input type="text" placeholder="Enter transaction details" class="credit-details">
+
+                    <h5>Purpose</h5>
+                    <input type="text" placeholder="Enter transaction purpose" class="credit-purpose">
+
+                    <h5>Amount</h5>
+                    <input type="text" placeholder="Enter amount" class="credit-amount">
+
+                    <h5>Purpose</h5>
+                    <input type="date" class="credit-date">
+                    <br>
+                    <button class="credit-btn" id="credit-insert">Register</button>
+                    
                 </div>
             </div>
         </main-section>

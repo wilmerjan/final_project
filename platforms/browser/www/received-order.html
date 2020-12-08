@@ -8,16 +8,264 @@
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
  
     <link rel="stylesheet" type="text/css" href="css/index.css" />
+    <link rel="stylesheet" type="text/css" href="css/receiveorder.css" />
     <link rel="stylesheet" href="./fontawesome-free-5.15.1-web/fontawesome-free-5.15.1-web/css/all.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <title>Received Order</title>
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        /**/
+        $(document).ready(function() {
+        var url = "http://192.168.254.118/final_project/platforms/browser/www/server/food_json.php";
+        $.getJSON(url, function(result) {  
+            //console.log(result);
+            let bus_id = localStorage.getItem("bus_id");
+            $.each(result, function(i, field) {
+                        
+            if(bus_id === field.owner_id) {
+                var id = field.food_id;
+                var name = field.food_name;
+                var price = field.food_price;
+                var classification = field.food_classification;
+                var type = field.food_type;
+                var stock = field.stock_qty;
+    
+                $("#add_display").append(`
+                    <tr class="add-row-data">
+                        <td class="name-td">`+name+`</td>
+                        <td class="price-td">`+price+`</td>
+                        <td>`+classification+`</td>
+                        <td>`+type+`</td>
+                        <td class="stock-td">`+stock+`</td>
+                        <td class="qty-td">
+                            <input type="number" class="qty-added">
+                        </td>
+                        <td>
+                            <button class="add-item-btn">Add Order</button>
+                        </td>
+                    </tr>
+                `);
+    
+                $(".search-bar").on("keyup", function() {
+                    let value = $(this).val().toLowerCase();
+                    $("#add_display tr").filter(function() {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
+                });
+        
+                $(".food-class-filter").on("click", function() {
+                    let value = $(this).val().toLowerCase();
+                    $("#add_display tr").filter(function() {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
+                });
+    
+                $(".food-type-filter").on("click", function() {
+                    let value2 = $(this).val().toLowerCase();
+                    $("#add_display tr").filter(function() {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value2) > -1)
+                    });
+                });
+    
+                function selectElement(id, valueToSelect) {    
+                    let element = document.querySelector(id);
+                    element.value = valueToSelect;
+                }
+                $(".display-all").on("click", function() {
+                    let value = "";
+                    $("#add_display tr").filter(function() {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
+                    let value2 = "";
+                    $("#add_display tr").filter(function() {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value2) > -1)
+                    });
+                    selectElement('.food-type-filter', '');
+                    selectElement('.food-class-filter', '');
+                });
+                            
+                }
+                
+            });
+            let item_total = 0;
+            $(".add-item-btn").on("click", function() {
+                let item_name = $(this).closest("tr").find(".name-td").text();
+                let item_price = $(this).closest("tr").find(".price-td").text();
+                let item_qty = $(this).closest("tr").find(".qty-added").val();
+                let item_stock = $(this).closest("tr").find(".stock-td").text();
+                let item_sub = item_price * item_qty;
+                    $(".ticket-table").append(`
+                        <tr class="ticket-row">
+                            <td class="name-added">`+item_name+`</td>
+                            <td class="price-added">`+item_price+`</td>
+                            <td class="qty-added">`+item_qty+`</td>
+                            <td class="sub-added">`+item_sub+`</td>
+                            <td>
+                                <button class="remove-item">Remove</button>
+                            </td>
+                        </tr>
+                    `);
+                
+                item_total+=item_sub;
+                let update_stock = item_stock-item_qty;
+                $(".total-price").html(item_total);
+                var dataString = "name=" + item_name + "&stock=" + update_stock +
+                    "&regis_stock=";
+                console.log(dataString);
+                $.ajax({
+                    type: "POST",
+                    url: "http://192.168.254.118/final_project/platforms/browser/www/server/update.php",  
+                    data: dataString,
+                    crossDomain: true,  
+                    cache: false,
+                    beforeSend: function() {
+                    },
+                    success: function(data) {  
+                        if (data == "success") {
+                        } else if (data == "error") {  
+                            alert("error");
+                        }
+                    }
+                });
+            });
+            
+            $(document).on("click",".remove-item", function() {
+                console.log("remove button clicked");
+                let subval = $(this).closest("tr").find(".sub-added").html();
+                item_total-=subval;
+                $(".total-price").html(item_total);
+                let name_added = $(this).closest("tr").find(".name-added").text();
+                let item_qty = $(this).closest("tr").find(".qty-added").text();
+                var url = "http://192.168.254.118/final_project/platforms/browser/www/server/food_json.php";
+                $.getJSON(url, function(result) {  
+                    //console.log(result);
+                    let bus_id = localStorage.getItem("bus_id");
+                    $.each(result, function(i, field) {
+                            
+                        if(bus_id === field.owner_id) {
+                            if(name_added === field.food_name){
+                                let update_stock = parseInt(item_qty) + parseInt(field.stock_qty);
+                                console.log(item_qty);
+                                console.log(field.stock_qty);
+                                console.log(update_stock);
+                                var dataString = "name=" + name_added + "&stock=" + update_stock +
+                                    "&regis_stock=";
+                                console.log(dataString);
+                                
+                                $.ajax({
+                                    type: "POST",
+                                    url: "http://192.168.254.118/final_project/platforms/browser/www/server/update.php",  
+                                    data: dataString,
+                                    crossDomain: true,  
+                                    cache: false,
+                                    beforeSend: function() {
+                                    },
+                                    success: function(data) {  
+                                        if (data == "success") {
+                                        } else if (data == "error") {  
+                                            alert("error");
+                                        }
+                                    }
+                                });
+                                
+                            }
+                        }
+                    });
+                });
+                //$(this).closest("tr").remove();
+            });
 
+            function ConvertToCSV(objArray) {
+                var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+                var str = '';
+
+                for (var i = 0; i < array.length; i++) {
+                    var line = '';
+                    for (var index in array[i]) {
+                        if (line != '') line += ','
+
+                        line += array[i][index];
+                    }
+
+                    str += line + '\r\n';
+                }
+
+                return str;
+            }
+
+            $(".add-ticket-btn").on("click", function() {
+                let order_list = [];
+                $(".ticket-table tr").each(function (a, b) {
+                    var name = $('.name-added', b).text();
+                    var price = $('.price-added', b).text();
+                    var qty = $('.qty-added', b).text();
+                    var sub_total = $('.sub-added', b).text();
+                    order_list.push({ Name: name, Price: price, Quantity: qty, SubTotal: sub_total });
+                });
+                let result_order = JSON.stringify(order_list);
+
+                let ticket_name = $(".name-ticket").val();
+                let ticket_address = $(".address-ticket").val();
+                let ticket_connum = $(".connum-ticket").val();
+                let ticket_assign = $(".assign-ticket").val();
+                let ticket_notes = $(".note-ticket").val();
+                let ticket_method = $(".method-ticket").val();
+                let ticket_order = ConvertToCSV(result_order);
+                let ticket_total = $(".total-price").text();
+                let owner_id = localStorage.getItem("bus_id");
+
+                var dataString = "ticket_name=" + ticket_name + "&ticket_address=" + ticket_address + "&ticket_connum=" + 
+                ticket_connum + "&ticket_assign=" + ticket_assign + "&ticket_notes=" + ticket_notes + "&ticket_method=" +
+                ticket_method + "&ticket_order=" + ticket_order + "&ticket_total=" + ticket_total + "&owner_id=" +
+                owner_id +
+                    "&ticket_insert=";
+                    console.log(dataString);
+                    if ($.trim(ticket_name).length > 0 & $.trim(ticket_address).length > 0 & $.trim(ticket_connum).length > 0 &
+                    $.trim(ticket_assign).length > 0 & $.trim(ticket_notes).length > 0 & $.trim(ticket_method).length > 0 &
+                    $.trim(ticket_order).length > 0 & $.trim(ticket_total).length > 0 & $.trim(owner_id).length > 0)
+                    {
+                        $.ajax({
+                            type: "POST",
+                            url: "http://192.168.254.118/final_project/platforms/browser/www/server/insert.php",  
+                            data: dataString,
+                            crossDomain: true,  
+                            cache: false,  
+                            beforeSend: function() {
+                            
+                            },
+                            success: function(data) {
+                                //console.log(data);
+                                if (data == "success") {  
+                                    alert("Ticket Added");
+                                    location.reload(true);
+                                } else if (data == "error") {  
+                                    alert("error");
+    
+                                }
+                            }
+                        });
+                        
+                    }
+                    return false;
+                
+            });
+        });
+    });
+    </script>
+    <script src="https://apps.elfsight.com/p/platform.js" defer></script>
+    <script async src="//static.zotabox.com/8/2/8230c3cbd823ff558276f9494e929f3c/widgets.js"></script>
+    <script language="javascript"> 
+        function LoadPage(){ 
+          var objFrame=document.getElementById("myIframe"); 
+          objFrame.src=document.getElementById("URL").value;
+         }
+       </script>
 </head>
 
 <body>
-    <div class="main-page-wrapper">
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v9.0&appId=2867114456945411&autoLogAppEvents=1" nonce="QqL18mmT"></script>    <div class="main-page-wrapper">
         <brandname-section class="brandname">
             <div class="bn-holder">
                 <img src="./img/gawis-invert-nomargin.jpg" alt="">
@@ -29,7 +277,6 @@
                 <input type="text" placeholder="Search..." class="search-bar"><button class="search-btn"><i class="fas fa-search"></i></button>
             </div>
             <div class="admin-logout">
-                <button class="admin-btn"><i class="fas fa-user"></i></button>
                 <button class="logout" onclick="logout_modal_pop()">Log out</button>
             </div>
         </topbar-section>
@@ -46,7 +293,7 @@
                 <a href="./received-order.html" class="current"><i class="fas fa-inbox"></i>
                     <br>Received Order</a>
                 <a href="./delivery-pickup.html"><i class="fas fa-truck"></i>
-                    <br>For Delivery or Pick Up</a>
+                    <br>Order Status</a>
                 <a href="./sales.html"><i class="far fa-chart-bar"></i>
                     <br>Sales</a>
                     <br>
@@ -55,8 +302,110 @@
         </sidenav-section>
         <main-section>
             <div class="received-order">
-                <div class="title">
+                <div class="received-title">
                     <h3>Received Order</h3>
+                </div>
+                <div class="order-list">
+                    <div class="elfsight-app-3495fd41-ea7a-4615-8763-9895a11b02dc"></div> 
+                    <!--
+                    <div class="fb-page" data-href="https://www.messenger.com/t/105952761367084" 
+                    data-tabs="timeline,events,messages" data-width="" data-height="" data-small-header="true" 
+                    data-adapt-container-width="true" data-hide-cover="true" data-show-facepile="true">
+                    <blockquote cite="https://www.facebook.com/Testing-page-105952761367084/inbox" class="fb-xfbml-parse-ignore">
+                        <a href="https://www.facebook.com/Testing-page-105952761367084">Testing page</a></blockquote>
+                    </div>
+                    
+                    <iframe src="demo_iframe.htm" name="iframe_a" height="300px" width="100%" title="Iframe Example"></iframe>
+
+                    <p><a href="https://m.facebook.com/" target="iframe_a">Facebook</a></p>
+
+                    <p>When the target attribute of a link matches the name of an iframe, the link will open in the iframe.</p>
+                    -->
+                    <textarea type="text" class="pasting"></textarea>
+                    </div>
+                <div class="pos-panel">
+                    
+                    <div class="logo-header">
+                        <label>Add Ticket</label>
+                    </div>
+                    <div class="receipt-section">
+
+                        <input type="text" class="name-ticket" placeholder="Name">
+
+                        <input type="text" class="address-ticket" placeholder="Address">
+                        
+                        <input type="text" class="connum-ticket" placeholder="Contact Number">
+
+                        <input type="text" class="note-ticket" placeholder="Additional Notes">
+
+                        <input type="text" class="assign-ticket" placeholder="Care of Personnel">
+                        
+                        <select class="method-ticket">
+                            <option value="">Method</option>
+                            <option value="For Delivery">For Delivery</option>
+                            <option value="For Pick up">For Pick up</option>
+                        </select>
+                        
+                        <div class="ticketoverflow">
+                            <table class="ticket-table">
+                                
+                            </table>
+                        </div>
+                        <h3><span>Total: Php</span><span class="total-price"> 00.00</span></h3>
+                        <button class="add-ticket-btn">Add Ticket</button>
+                    </div>
+                    <div class="menu-section">
+                        <div class="select-menu">
+                            <div class="filter">
+                                <h5>Classification:</h5>
+                                <select class="food-class-filter filter-select" id="food-class-filter">
+                                    <option value=""></option>
+                                    <option value="Single">Single</option>
+                                    <option value="Combo">Combo</option>
+                                </select>
+                                <h5>Type:</h5>
+                                <select class="food-type-filter filter-select" id="food-type-filter">
+                                    <option value=""></option>
+                                    <option value="Snack">Snack</option>
+                                    <option value="Meal">Meal</option>
+                                    <option value="Beverage">Beverage</option>
+                                    <option value="SB-Snack-Beverage">Snack with Beverage</option>
+                                    <option value="MB-Meal-Beverage">Meal with Beverage</option>
+                                    <option value="SC-Snack-Combo">Snack Combo</option>
+                                    <option value="MC-Meal-Combo">Meal Combo</option>
+                                    <option value="BC-Beverage-Combo">Beverage Combo</option>
+                                </select>
+                                <button class="display-all">Display All</button>
+                            </div>
+                            <div class="select-menu">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <table class="add-header">
+                                                <tr class="add-header-row">
+                                                    <th>Name</th>
+                                                    <th>Price</th>
+                                                    <th>Classification</th>
+                                                    <th>Type</th>
+                                                    <th>Stock</th>
+                                                    <th>Quantity</th>
+                                                    <th>Add</th>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="addoverflow">
+                                                <table id="add_display">
+
+                                                </table>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                    </div>
                 </div>
             </div>
         </main-section>
@@ -71,7 +420,6 @@
                 <button class="cancel-logout-btn" onclick="cancel_logout_modal()">Cancel</button>
             </div>
         </div>
-        
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
 </body>

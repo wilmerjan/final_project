@@ -1,0 +1,247 @@
+:root {
+    --bgcolor1: #e1e2e3;
+    --maincolor: #8B4411;
+    --light: #fff;
+    --dark: #333;
+    --tagcolor: #C7AD7F;
+    --bgcolor2: #F5F5DD;
+    --tagcolor2:  #969696;
+    --submitBtn: #24a0ed;
+    --deleteBtn: #d11a2a;
+    --inputBorder: #d9d2d2;
+    --boxShadow: 5px 5px 20px -1px rgba(0,0,0,0.55);
+    --boxShadow2: 5px 5px 20px -1px rgba(0,0,0,0.2);
+    --btnShadow: 5px 5px 20px -1px rgba(0,0,0,0.3);
+}
+
+html, body{
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+.received-order {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: 1fr 10fr;
+    grid-template-areas: 
+    "received-title received-title"
+    "order-list pos-panel";
+    height: 100%;
+    width: 100%;
+}
+
+.received-title {
+    grid-area: received-title;
+    margin: 0px 0px 0px 10px;
+    padding: 0px 0px 0px 20px; 
+    line-height: .8;
+    font-size: 1em;
+}
+
+.order-list {
+    grid-area: order-list;
+    background-color: var(--light);
+    margin: 0px 10px 10px 10px;
+}
+
+.pos-panel {
+    grid-area: pos-panel;
+    background-color: var(--light);
+    margin: 0px 10px 10px 0px;
+    border-radius: 5px;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: 1fr 10fr;
+    grid-template-areas: 
+    "logo-header logo-header"
+    "receipt-section menu-section";
+}
+
+.logo-header {
+    grid-area: logo-header;
+    padding: 10px;
+}
+
+.logo-header > label {
+    font-size: 1.2em;
+    color: var(--dark);
+    font-weight: 600;
+}
+
+.receipt-section {
+    grid-area: receipt-section;
+    display: flex;
+    flex-direction: column;
+}
+
+.receipt-section {
+    font-size: 0.8em;
+    color: var(--dark);
+    margin-bottom: 5px;
+} 
+
+.name-ticket, .address-ticket, .connum-ticket, .method-ticket, .note-ticket, .assign-ticket{
+    font-size: 0.8em;
+    color: var(--dark);
+    padding: 5px;
+    border-radius: 8px;
+    border: solid;
+    border-color: #333;
+    border-width: 1px;
+    width: auto;
+    margin: 5px 15px 0px 15px;
+}
+
+.pasting {
+    width: 90%;
+    margin: 50% 5% 5% 5%;
+    height: 50%;
+}
+
+.ticketoverflow {
+    overflow: auto;
+    height: 220px;
+    background-color: var(--light);
+    margin: 10px 10px 10px 10px;
+    border-radius: 5px;
+    box-shadow: var(--boxShadow2);
+}
+
+.ticket-row > th, tr {
+    font-size: 0.8em;
+    width: 20%;
+    text-align: left;
+}
+
+.remove-item {
+    color: var(--deleteBtn);
+    border: none;
+    background-color: var(--light);
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+.remove-item:hover {
+    color: var(--light);
+    background-color: var(--deleteBtn);
+}
+
+.total-price {
+    margin: 10px;
+}
+
+.menu-section {
+    grid-area: menu-section;
+}
+
+.filter {
+    height: 10%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.filter > h5{
+    font-size: 0.8em;
+    padding: 5px 5px 0px 5px
+}
+
+.filter > .filter-select{
+    height: 75%;
+    width: 175px;
+    font-size: 0.6em;
+}
+
+.filter > .display-all {
+    background-color: var(--submitBtn);
+    color: var(--light);
+    box-shadow: var(--btnShadow);
+    border-radius: 10px;
+    height: 25px;
+    width: 75px;
+    border: none;
+    margin: 5px 0px 0px 10px;
+    font-size: 0.7em;
+}
+
+.select-menu {
+    margin: 0px 10px 10px 10px;
+    height: 100%;
+}
+
+.select-menu {
+    grid-area: select-menu;
+    width: 98%;
+    margin: 0% 1% 5% 1%;
+    height: 320px;
+}
+
+.select-menu > table{
+    width: 100%;
+    border-collapse: collapse;
+    border: none;
+    height: 100%;
+    box-shadow: var(--boxShadow2);
+}
+
+.add-header {
+    width: 100%;
+    border-collapse: collapse;
+    border: none;
+    height: auto;
+}
+
+.add-header-row > th {
+    text-align: left;
+    padding: 5px;
+    background-color: var(--maincolor);
+    color: var(--light);
+    border: none;
+    height: 20px;
+    width: 14.28%;
+    font-size: 1em;
+}
+
+.addoverflow {
+    overflow: auto;
+    height: 360px;
+    background-color: var(--light);
+}
+
+#add_display {
+    width: 100%;
+    border-collapse: collapse;
+    border: none;
+}
+
+.add-row-data > td {
+    text-align: left;
+    color: var(--dark);
+    padding: 5px;
+    border: none;
+    width: 14.28%;
+    font-size: 1em;
+}
+
+.qty-added {
+    width: 75%;
+    border-radius: 5px;
+    border-width: 1px;
+    border-color: var(--tagcolor2)
+}
+
+.add-item-btn {
+    color: var(--submitBtn);
+    border: none;
+    background-color: var(--light);
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+.add-item-btn:hover {
+    color: var(--light);
+    background-color: var(--submitBtn);
+}

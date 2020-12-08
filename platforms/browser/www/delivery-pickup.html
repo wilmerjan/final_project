@@ -8,11 +8,229 @@
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
  
     <link rel="stylesheet" type="text/css" href="css/index.css" />
+    <link rel="stylesheet" href="css/delivery.css">
     <link rel="stylesheet" href="./fontawesome-free-5.15.1-web/fontawesome-free-5.15.1-web/css/all.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <title>Order Status</title>
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var url = "http://192.168.254.118/final_project/platforms/browser/www/server/ticket_json.php";
+            $.getJSON(url, function(result) {  
+            //console.log(result);
+                let bus_id = localStorage.getItem("bus_id");
+                $.each(result, function(i, field) {
+
+                if(bus_id === field.owner_id) {
+                    let id = field.ticket_id;
+                    let name = field.ticket_name;
+                    let address = field.ticket_address;
+                    let contact_number = field.ticket_contact_num;
+                    let notes = field.ticket_notes;
+                    let assign = field.ticket_assign;
+                    let method = field.ticket_method;
+                    let order = field.ticket_order;
+                    let total = field.ticket_total;
+                    
+                $("#rt_display").append(`                                        
+                    <tr class="rt-row-data">
+                        <td class="rt-id" >`+id+`</td>
+                        <td class="rt-name" >`+name+`</td>
+                        <td class="rt-address">`+address+`</td>
+                        <td class="rt-connum">`+contact_number+`</td>
+                        <td class="rt-notes">`+notes+`</td>
+                        <td class="rt-assign">`+assign+`</td>
+                        <td class="rt-method">`+method+`</td>
+                        <td class="rt-order">`+order+`</td>
+                        <td class="rt-total">`+total+`</td>
+                        <td>
+                            <input type="date" class="rt-date">
+                        </td>
+                        <td>
+                            <button class="rt-complete-btn">Complete</button>
+                        </td>
+                        <td>
+                            <button class="rt-cancel-btn">Cancel</button>
+                        </td>
+                    </tr>
+                `);
+
+                $(".search-bar").on("keyup", function() {
+                    let value = $(this).val().toLowerCase();
+                    $("#rt_display tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
+                });
+                }
+            });
+        });
+        function ConvertToCSV(objArray) {
+                var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+                var str = '';
+
+                for (var i = 0; i < array.length; i++) {
+                    var line = '';
+                    for (var index in array[i]) {
+                        if (line != '') line += ','
+
+                        line += array[i][index];
+                    }
+
+                    str += line + '\r\n';
+                }
+
+                return str;
+        }
+
+        $(document).on("click", ".rt-complete-btn", function() {
+            let completed_ticket = [];
+                let name = $(this).closest("tr").find(".rt-name").text();
+                let address = $(this).closest("tr").find(".rt-address").text();
+                let connum = $(this).closest("tr").find(".rt-connum").text();
+                let notes = $(this).closest("tr").find(".rt-notes").text();
+                let assign = $(this).closest("tr").find(".rt-assign").text();
+                let method = $(this).closest("tr").find(".rt-method").text();
+
+                completed_ticket.push({ Name: name, Address: address, ContactNumber: connum, Notes: notes, Assign: assign, Method: method });
+                let result_details = JSON.stringify(completed_ticket);
+
+                let id = $(this).closest("tr").find(".rt-id").text();
+                let transac_details = ConvertToCSV(result_details);
+                let transac_purpose = $(this).closest("tr").find(".rt-order").text();
+                let transac_debit = $(this).closest("tr").find(".rt-total").text();
+                let transac_date = $(this).closest("tr").find(".rt-date").val();
+                let transac_credit = 0;
+                let bus_id = localStorage.getItem("bus_id");
+
+                let dataString = "transac_details=" + transac_details + "&transac_purpose=" + transac_purpose +
+                "&transac_debit=" + transac_debit + "&transac_credit=" + transac_credit + "&transac_date=" +
+                transac_date + "&owner_id=" + bus_id +
+                "&transac_insert=";
+                console.log(dataString);
+
+                let delString = "id=" + id + "&ticket_del=";
+                
+                if ($.trim(transac_details).length > 0 & $.trim(transac_purpose).length > 0 & $.trim(transac_debit).length > 0
+                & $.trim(transac_credit).length > 0 & $.trim(transac_date).length > 0 & $.trim(bus_id).length > 0)
+                {
+                    $.ajax({
+                        type: "POST",
+                        url: "http://192.168.254.118/final_project/platforms/browser/www/server/insert.php",  
+                        data: dataString,
+                        crossDomain: true,  
+                        cache: false,  
+                        beforeSend: function() {
+                        
+                        },
+                        success: function(data) {
+                            console.log(data);
+                            if (data == "success") {  
+                                alert("Transaction Completed");
+                                
+                            } else if (data == "error") {  
+                                alert("error");
+
+                            }
+                        }
+                    });
+                    
+                }
+                
+                $.ajax({
+                type: "GET",
+                url: "http://192.168.254.118/final_project/platforms/browser/www/server/delete.php",  
+                data: delString,
+                crossDomain: true,  
+                cache: false,  
+                beforeSend: function(){},
+                success: function(data) { 
+                    if (data == "success") {
+                        
+                    } else if (data == "error") {  
+
+                    }
+                }
+            });
+            location.reload(true);
+            return false;
+        });
+        $(document).on("click", ".rt-cancel-btn", function() {
+            let completed_ticket = [];
+                let name = $(this).closest("tr").find(".rt-name").text();
+                let address = $(this).closest("tr").find(".rt-address").text();
+                let connum = $(this).closest("tr").find(".rt-connum").text();
+                let notes = $(this).closest("tr").find(".rt-notes").text();
+                let assign = $(this).closest("tr").find(".rt-assign").text();
+                let method = $(this).closest("tr").find(".rt-method").text();
+
+                completed_ticket.push({ Name: name, Address: address, ContactNumber: connum, Notes: notes, Assign: assign, Method: method });
+                let result_details = JSON.stringify(completed_ticket);
+
+                let id = $(this).closest("tr").find(".rt-id").text();
+                let transac_details = ConvertToCSV(result_details);
+                let transac_purpose = $(this).closest("tr").find(".rt-order").text();
+                let transac_debit = 0;
+                let transac_date = $(this).closest("tr").find(".rt-date").val();
+                let transac_credit = 0;
+                let bus_id = localStorage.getItem("bus_id");
+
+                let dataString = "transac_details=" + transac_details + "&transac_purpose=" + transac_purpose +
+                "&transac_debit=" + transac_debit + "&transac_credit=" + transac_credit + "&transac_date=" +
+                transac_date + "&owner_id=" + bus_id +
+                "&transac_insert=";
+                console.log(dataString);
+
+                let delString = "id=" + id + "&ticket_del=";
+                
+                if ($.trim(transac_details).length > 0 & $.trim(transac_purpose).length > 0 & $.trim(transac_debit).length > 0
+                & $.trim(transac_credit).length > 0 & $.trim(transac_date).length > 0 & $.trim(bus_id).length > 0)
+                {
+                    $.ajax({
+                        type: "POST",
+                        url: "http://192.168.254.118/final_project/platforms/browser/www/server/insert.php",  
+                        data: dataString,
+                        crossDomain: true,  
+                        cache: false,  
+                        beforeSend: function() {
+                        
+                        },
+                        success: function(data) {
+                            console.log(data);
+                            if (data == "success") {  
+                                alert("Transaction Canceled");
+                                
+                            } else if (data == "error") {  
+                                alert("error");
+
+                            }
+                        }
+                    });
+                    
+                }
+                
+                $.ajax({
+                type: "GET",
+                url: "http://192.168.254.118/final_project/platforms/browser/www/server/delete.php",  
+                data: delString,
+                crossDomain: true,  
+                cache: false,  
+                beforeSend: function(){},
+                success: function(data) { 
+                    if (data == "success") {
+                        
+                    } else if (data == "error") {  
+
+                    }
+                }
+            });
+            location.reload(true);
+            return false;
+            
+        });
+
+    });
+    </script>
 
 </head>
 
@@ -29,7 +247,6 @@
                 <input type="text" placeholder="Search..." class="search-bar"><button class="search-btn"><i class="fas fa-search"></i></button>
             </div>
             <div class="admin-logout">
-                <button class="admin-btn"><i class="fas fa-user"></i></button>
                 <button class="logout" onclick="logout_modal_pop()">Log out</button>
             </div>
         </topbar-section>
@@ -46,7 +263,7 @@
                 <a href="./received-order.html"><i class="fas fa-inbox"></i>
                     <br>Received Order</a>
                 <a href="./delivery-pickup.html" class="current"><i class="fas fa-truck"></i>
-                    <br>For Delivery or Pick Up</a>
+                    <br>Order Status</a>
                 <a href="./sales.html"><i class="far fa-chart-bar"></i>
                     <br>Sales</a>
                     <br>
@@ -55,8 +272,43 @@
         </sidenav-section>
         <main-section>
             <div class="delivery-pickup">
-                <div class="title">
+                <div class="rt-title">
                     <h3>Order Status</h3>
+                </div>
+            </div>
+            <div class="received-ticket">
+                <div class="received-ticket-table">
+                    <table>
+                        <tr>
+                            <td>
+                                <table class="rt-header">
+                                    <tr class="rt-header-row">
+                                        <th class="th-id">ID</th>
+                                        <th class="th-name">Name</th>
+                                        <th class="th-address">Address</th>
+                                        <th class="th-connum">Contact Number</th>
+                                        <th class="th-notes">Notes</th>
+                                        <th class="th-assign">Assigned to</th>
+                                        <th class="th-method">Method</th>
+                                        <th class="th-order">Order</th>
+                                        <th class="th-total">Total</th>
+                                        <th class="th-date">Date</th>
+                                        <th class="th-complete">Complete</th>
+                                        <th class="th-cancel">Cancel</th>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="rtoverflow">
+                                    <table id="rt_display">
+
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </main-section>

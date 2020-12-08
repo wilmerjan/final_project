@@ -19,12 +19,14 @@
             $.getJSON(url, function(result) {  
             //console.log(result);
                 $.each(result, function(i, field) {  
-                    console.log(field);
+                    
                     const username = localStorage.getItem("username");
                     if (username === field.owner_username) {
                         localStorage.bus_id = field.owner_id;
-                        let bus_name = field.business_name;
-                        let bus_desc = field.business_description;
+                        let bus_name_string = field.business_name;
+                        let bus_name = bus_name_string.replace(/\//g, "'");
+                        let bus_desc_string = field.business_description;
+                        let bus_desc = bus_desc_string.replace(/\//g, "'");
                         let bus_add = field.business_address;
                         let bus_num = field.contact_number;
 
@@ -32,9 +34,81 @@
                         $(".bus-desc").html(bus_desc);
                         $(".bus-loc").html("<i class='fas fa-map-pin'></i> - " + bus_add);
                         $(".con-num").html("<i class='fas fa-phone'></i> - " + bus_num);
+
+                        //regis-username,regis-name,regis-desc,regis-num,regis-address,regis-password
+                        // 
+                        $(".admin-logout").append(  `<button class="admin-btn" onclick="admin_modal_pop()"`+ 
+                                                    `href ="dashboard.html?bus_username=`+field.owner_username+
+                                                    `&bus_name=`+field.business_name+`&bus_desc=`+field.business_description+`&bus_num=`+field.contact_number+
+                                                    `&bus_address=`+field.business_address+`">`+
+                                                        `<i class="fas fa-user"></i>`+
+                                                    `</button>`);
+                        
+                        const url_back = `dashboard.html`;
+                        $(".admin-btn").on("click", function(){
+                            const url = this.getAttribute('href');
+                            console.log(url);
+                            history.pushState('','', url);
+                            var id = decodeURI(getUrlVars()["id"]);
+                            var owner_username = decodeURI(getUrlVars()["bus_username"]);
+                            var owner_name = decodeURI(getUrlVars()["bus_name"]);
+                            var owner_desc = decodeURI(getUrlVars()["bus_desc"]);
+                            var owner_num = decodeURI(getUrlVars()["bus_num"]); 
+                            var owner_add = decodeURI(getUrlVars()["bus_address"]);  
+
+                            $(".owner-username").val(owner_username);
+                            $(".owner-name").val(owner_name);
+                            $(".owner-desc").val(owner_desc);
+                            $(".owner-num").val(owner_num);
+                            $(".owner-address").val(owner_add);
+                        });
                     }
                 });
 
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $(".update-owner-btn").on("click", function() { 
+                //console.log("clicked-updatebtn");
+                let id = localStorage.getItem("bus_id");
+                var username = $(".owner-username").val();
+                var name_string = $(".owner-name").val();
+                var name = name_string.replace(/'/g, "/");
+                var desc_string = $(".owner-desc").val();
+                var desc = desc_string.replace(/'/g, "/");
+                var num = $(".owner-num").val();
+                var address = $(".owner-address").val();
+                var password = $(".owner-password").val();
+                var dataString = "id=" + id + "&username=" + username + "&name=" + name +
+                    "&desc=" + desc + "&num=" + num + "&address=" + address + "&password=" + password +
+                    "&details_update=";
+                    //console.log(dataString);
+                if ($.trim(username).length > 0 & $.trim(name).length > 0 & $.trim(desc).length > 0 &
+                $.trim(num).length > 0 & $.trim(address).length > 0 & $.trim(password).length > 0)
+                {
+                    $.ajax({
+                        type        : "POST",
+                        url         : "http://192.168.254.118/final_project/platforms/browser/www/server/update.php",  
+                        data        : dataString,
+                        crossDomain : true,  
+                        cache       : false,
+                        beforeSend  : function() {
+                            console.log(dataString);
+                        },
+                        success     : function(data) {
+                            console.log(data);  
+                            if (data == "success") {
+                                alert("Updated");
+                                history.pushState('','', "dashboard.html");
+                                location.reload(true);
+                            } else if (data == "error") {  
+                                alert("error");
+                            }
+                        }
+                    });
+                }
             });
         });
     </script>
@@ -53,7 +127,6 @@
                 <input type="text" placeholder="Search..." class="search-bar"><button class="search-btn"><i class="fas fa-search"></i></button>
             </div>
             <div class="admin-logout">
-                <button class="admin-btn"><i class="fas fa-user"></i></button>
                 <button class="logout" onclick="logout_modal_pop()">Log out</button>
             </div>
         </topbar-section>
@@ -70,7 +143,7 @@
                 <a href="./received-order.html"><i class="fas fa-inbox"></i>
                     <br>Received Order</a>
                 <a href="./delivery-pickup.html"><i class="fas fa-truck"></i>
-                    <br>For Delivery or Pick Up</a>
+                    <br>Order Status</a>
                 <a href="./sales.html"><i class="far fa-chart-bar"></i>
                     <br>Sales</a>
                     <br>
@@ -133,6 +206,33 @@
                 <button class="cancel-logout-btn" onclick="cancel_logout_modal()">Cancel</button>
             </div>
         </div>
+        <div class="administrator-modal-container">
+            <div class="administrator-card">
+                <img src="./img/GAWIS-PIC-LOGO-final.jpg" alt="" class="logo">
+                <h3>Update.</h3>
+                    <h5>User name*</h5>
+                    <input type="text" class="owner-username">
+    
+                    <h5 class="label-top">Business name*</h5>
+                    <input type="text" class="owner-name">
+    
+                    <h5 class="label-top">Business description*</h5>
+                    <input type="text" class="owner-desc">
+    
+                    <h5 class="label-top">Contact number*</h5>
+                    <input type="text" class="owner-num">
+                    
+                    <h5 class="label-top">Address*</h5>
+                    <input type="text" class="owner-address">
+    
+                    <h5 class="label-top regis-pw">Change Password*</h5>
+                    <input type="text" class="owner-password">
+
+                    <button class="update-owner-btn">Update</button>
+                    <button class="cancel-owner-btn" onclick="cancel_owner_modal()">Cancel</button>
+        </div>
+        
+        
     </div>
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
