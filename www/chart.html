@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+     
+    <link rel="stylesheet" href="css/chart.css">
+    <link rel="stylesheet" href="./fontawesome-free-5.15.1-web/fontawesome-free-5.15.1-web/css/all.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    
+    
+    <title>Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+
+</head>
+
+<body>
+    <div class="main-page-wrapper">
+        <main-section>
+            <div class="reports">
+                <div class="title">
+                    <h3>Reports  <a href="./dashboard.html">Dashboard</a></h3>
+                </div>
+                <div class="report-section">
+                    <div class="profit">
+                        <div class="profit-card">
+                                <div class="icon">
+                                    <i class="fas fa-money-check-alt"></i>
+                                </div>
+                                <div class="output">
+                                    <h3 id="profit"></h3>
+                                </div>
+                        </div>
+                    </div>
+                    <div class="total-revenue">
+                        <div class="revenue-card">
+                            <div class="icon">
+                                <i class="far fa-chart-bar"></i>
+                            </div>
+                            <div class="output">
+                                <h3 id="debit"></h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="total-expenses">
+                        <div class="expenses-card">
+                            <div class="icon">
+                                <i class="fas fa-receipt"></i>
+                            </div>
+                            <div class="output">
+                                <h3 id="credit"></h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="total-subscribers">
+                        <div class="subscribers-card">
+                            <div class="icon">
+                                <i class="fas fa-user-plus"></i>
+                            </div>
+                            <div class="output">
+                                <h3 id="subs"></h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="inventory-table">
+                        <div class="inventory-card">
+                            <h3>INVENTORY STOCK UPDATE</h3>
+                            <canvas id="myChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="product-table">
+                        <div class="product-card">
+                            <h3>REVENUE BREAKDOWN</h3>
+                            <canvas id="pieChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main-section>   
+    </div>
+    <script type="text/javascript">
+        var url = "http://192.168.254.118/final_project/platforms/browser/www/server/transaction_json.php";
+            $.getJSON(url, function(result) {
+
+                let credit_total = 0;
+                let debit_total = 0;
+                
+                let bus_id = localStorage.getItem("bus_id");
+                $.each(result, function(i, field) {
+                            
+                    if(bus_id === field.owner_id) {
+                        let credit = parseFloat(field.credit);
+                        let debit = parseFloat(field.debit);
+                        
+                        credit_total+=credit;
+                        debit_total+=debit;
+
+                    }
+                });
+                let profit_total = debit_total-credit_total;
+                $("#credit").append(`<span class="expenses-output">`+credit_total+`</span><br><span class="label">TOTAL-EXPENSES</span>`);
+                $("#debit").append(`<span class="revenue-output">`+debit_total+`</span><br><span class="label">TOTAL-REVENUE</span>`);
+                $("#profit").append(`<span class="profit-output">`+profit_total+`</span><br><span class="label">PROFIT</span>`);
+                var ctx = document.getElementById('pieChart').getContext('2d');
+                Chart.defaults.global.defaultFontFamily = 'Roboto';
+                Chart.defaults.global.defaultFontSize = 12;
+                Chart.defaults.global.defaultFontColor =  '#8B4411';
+                var chart = new Chart(ctx, {
+                    // The type of chart we want to create
+                    type: 'pie',
+
+                    // The data for our dataset
+                    data: {
+                        labels: ['Profit', 'Expenses'],
+                        datasets: [{
+                            label: 'Revenue Data',
+                            backgroundColor: ['#C7AD7F','#8B4411'],
+                            borderColor: '#ffffff' ,
+                            hoverColor: '#8B4411',
+                            data: [profit_total,credit_total]
+                        }]
+                    },
+
+                    // Configuration options go here
+                    options: {
+                        responsive: true,
+                        layout: {
+                            padding: {
+                                left: 10,
+                                right: 10,
+                                top: 10,
+                                bottom: 10
+                            }
+                        }
+                    }
+                });
+            });
+    </script>
+     <script type="text/javascript">
+        var url = "http://192.168.254.118/final_project/platforms/browser/www/server/json.php";
+            $.getJSON(url, function(result) {
+                let bus_id = localStorage.getItem("bus_id");
+                let count = 0;
+                $.each(result, function(i, field) {
+                    if(bus_id === field.owner_id) {
+                        ++count;
+                    }
+                });
+                $("#subs").append(`<span class="subscribers-output">`+count+`</span><br><span class="label">SUBSCRIBERS</span>`);
+            });
+    </script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+            var url = "http://192.168.254.118/final_project/platforms/browser/www/server/food_json.php";
+            $.getJSON(url, function(result) { 
+                let bus_id = localStorage.getItem("bus_id");
+                let food_name = [];
+                let food_stock = [];
+                $.each(result, function(i, field) {
+                    
+                    if(bus_id === field.owner_id) {
+                        let food_name_list = field.food_name;
+                        let food_stock_list = field.stock_qty;
+                        food_name.push(food_name_list);
+                        food_stock.push(food_stock_list);
+                    }
+                });
+                
+                var ctx = document.getElementById('myChart').getContext('2d');
+                Chart.defaults.global.defaultFontFamily = 'Roboto';
+                Chart.defaults.global.defaultFontSize = 12;
+                Chart.defaults.global.defaultFontColor =  '#8B4411';
+                var chart = new Chart(ctx, {
+                    // The type of chart we want to create
+                    type: 'bar',
+
+                    // The data for our dataset
+                    data: {
+                        labels: food_name,
+                        datasets: [{
+                            label: 'Inventory Data',
+                            backgroundColor: '#C7AD7F',
+                            borderColor: '#ffffff' ,
+                            hoverColor: '#8B4411',
+                            data: food_stock
+                        }]
+                    },
+
+                    // Configuration options go here
+                    options: {
+                        responsive: true,
+                        layout: {
+                            padding: {
+                                left: 10,
+                                right: 10,
+                                top: 0,
+                                bottom: 0
+                            }
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+</body>
+
+</html>

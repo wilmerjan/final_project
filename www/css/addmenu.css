@@ -1,0 +1,201 @@
+:root {
+    --bgcolor1: #e1e2e3;
+    --maincolor: #8B4411;
+    --light: #fff;
+    --dark: #333;
+    --tagcolor: #C7AD7F;
+    --bgcolor2: #F5F5DD;
+    --tagcolor2:  #969696;
+    --submitBtn: #24a0ed;
+    --deleteBtn: #d11a2a;
+    --inputBorder: #d9d2d2;
+    --boxShadow: 5px 5px 20px -1px rgba(0,0,0,0.55);
+    --boxShadow2: 5px 5px 20px -1px rgba(0,0,0,0.2);
+    --btnShadow: 5px 5px 20px -1px rgba(0,0,0,0.3);
+}
+
+html, body{
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+.add-menu {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 1fr 10fr;
+    grid-template-areas: 
+    "add-title add-title"
+    "select-menu publish-menu";
+    height: 100%;
+    width: 100%;
+}
+  
+.add-title {
+    grid-area: add-title;
+    margin: 0px 0px 0px 10px;
+    padding: 0px 0px 0px 20px; 
+    line-height: .8;
+    font-size: 1em;
+}
+            
+.select-menu {
+    margin: 0px 10px 10px 10px;
+    height: 525px;
+}
+
+.select-menu {
+    grid-area: select-menu;
+    width: 96%;
+    margin: 0% 2% 5% 2%;
+    height: 450px;
+}
+
+.select-menu > table{
+    width: 100%;
+    border-collapse: collapse;
+    border: none;
+    height: 100%;
+}
+
+.add-header {
+    width: 100%;
+    border-collapse: collapse;
+    border: none;
+    height: auto;
+}
+
+.add-header-row > th {
+    text-align: left;
+    padding: 5px;
+    background-color: var(--maincolor);
+    color: var(--light);
+    border: none;
+    height: 20px;
+    width: 15%;
+    font-size: 0.8em;
+}
+
+.addoverflow {
+    overflow: auto;
+    height: 430px;
+    background-color: var(--light);
+}
+
+#add_display {
+    width: 100%;
+    border-collapse: collapse;
+    border: none;
+}
+
+.add-row-data > td {
+    text-align: left;
+    color: var(--dark);
+    padding: 5px;
+    border: none;
+    width: 15%;
+    font-size: 0.7em;
+}
+
+.add-item-btn {
+    color: var(--submitBtn);
+    border: none;
+    background-color: var(--light);
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+.add-item-btn:hover {
+    color: var(--light);
+    background-color: var(--submitBtn);
+}
+
+.publish-menu {
+    grid-area: publish-menu;
+    margin: 0px 10px 10px 0px;
+}
+
+.menu-for-tomorrow {
+    display: flex;
+    padding: 6.725% 5%;
+    height: 90%;
+    flex-direction: column;
+    background-color: var(--light);
+    box-shadow: var(--boxShadow2);
+    border-radius: 20px;
+}
+
+.menu-for-tomorrow > .logo {
+    background-color: var(--maincolor);
+    border-radius: 50%;
+    width: 15%;
+    height: auto;   
+    margin: 0;
+}
+
+.menu-for-tomorrow > h3 {
+    color: var(--dark);
+    font-size: 1.5em;
+    margin: 0;
+}
+
+.flex-row > label {
+    font-size: 0.8em;
+    margin-right: 30px;
+}
+
+.publish-date {
+    padding: 5px;
+    border-radius: 5px;
+    border: none;
+    width: 50%;
+}
+
+.menuoverflow {
+    overflow: auto;
+    height: 300px;
+    border: solid;
+    border-radius: 5px;
+    border-color: var(--tagcolor2);
+    border-width: 1px;
+}
+
+.menu-for-tomorrow > button {
+    margin: 20px 0px 0px 0px;
+    background-color: var(--submitBtn);
+    border: none;
+    padding: 10px;
+    border-radius: 15px;
+    box-shadow: var(--btnShadow);
+    color:var(--light);
+    font-weight: 600;
+}
+
+.menu-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: none;
+}
+
+.menu-row > td {
+    text-align: left;
+    color: var(--dark);
+    padding: 5px;
+    border: none;
+    width: 32%;
+    font-size: 0.7em;
+}
+
+.remove-item {
+    color: var(--deleteBtn);
+    border: none;
+    background-color: var(--light);
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+.remove-item:hover {
+    color: var(--light);
+    background-color: var(--deleteBtn);
+}

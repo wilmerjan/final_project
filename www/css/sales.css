@@ -1,0 +1,146 @@
+:root {
+    --bgcolor1: #e1e2e3;
+    --maincolor: #8B4411;
+    --light: #fff;
+    --dark: #333;
+    --tagcolor: #C7AD7F;
+    --bgcolor2: #F5F5DD;
+    --tagcolor2:  #969696;
+    --submitBtn: #24a0ed;
+    --deleteBtn: #d11a2a;
+    --inputBorder: #d9d2d2;
+    --boxShadow: 5px 5px 20px -1px rgba(0,0,0,0.55);
+    --boxShadow2: 5px 5px 20px -1px rgba(0,0,0,0.2);
+    --btnShadow: 5px 5px 20px -1px rgba(0,0,0,0.3);
+}
+
+html, body{
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+.sales-tab {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 1fr 10fr;
+    grid-template-areas: 
+    "sales-title sales-title"
+    "sales-table sales-credit-card";
+    height: 100%;
+    width: 100%;
+}
+
+.sales-title {
+    grid-area: sales-title;
+    margin: 0px 0px 0px 10px;
+    padding: 0px 0px 0px 20px; 
+    line-height: .8;
+    font-size: 1em;
+}
+
+.sales-table {
+    grid-area: sales-table;
+    background-color: var(--light);
+    width: 96%;
+    margin: 0% 2% 5% 2%;
+    box-shadow: var(--boxShadow2);
+    font-size: 0.7em;
+    height: 450px;
+}
+
+.sales-table > table{
+    width: 100%;
+    border-collapse: collapse;
+    border: none;
+    height: 100%;
+}
+
+.sales-table-header {
+    width: 100%;
+    border-collapse: collapse;
+    border: none;
+    height: auto;
+}
+
+.sales-header-row > th {
+    text-align: left;
+    padding: 5px;
+    background-color: var(--maincolor);
+    color: var(--light);
+    border: none;
+    height: 20px;
+    width: auto;
+}
+
+.salesoverflow {
+    overflow: auto;
+    height: 430px;
+    background-color: var(--light);
+}
+
+#sales-list {
+    width: 100%;
+    border-collapse: collapse;
+    border: none;
+}
+
+#sales-list > tr > td {
+    text-align: left;
+    padding: 5px;
+    color: var(--dark);
+    border: none;
+    width: 16.67%;
+}
+
+.sales-credit-card {
+    grid-area: sales-credit-card;
+    display: flex;
+    margin: 0px 10px 10px 10px;
+    padding: 20px;
+    flex-direction: column;
+    background-color: var(--light);
+    box-shadow: var(--boxShadow2);
+    border-radius: 20px;
+}
+
+.sales-credit-card > .logo {
+    background-color: var(--maincolor);
+    border-radius: 50%;
+    width: 15%;
+    height: auto;   
+    margin: 0;
+}
+
+.sales-credit-card > h3 {
+    color: var(--dark);
+    font-size: 1.5em;
+    margin: 0;
+}
+
+.sales-credit-card > h5 {
+    color: var(--dark);
+    font-size: 0.8em;
+    margin: 20px 0px 0px 0px;
+}
+
+.sales-credit-card > input {
+    margin: 5px 0px 0px 0px;
+    background-color: var(--light);
+    border-color: var(--inputBorder);
+    color: var(--dark);
+    border-width: 1px;
+    border-radius: 10px;
+    padding: 5px;
+    border-style: solid;
+}
+
+.sales-credit-card > button {
+    margin: 20px 0px 0px 0px;
+    background-color: var(--submitBtn);
+    border: none;
+    padding: 10px;
+    border-radius: 15px;
+    box-shadow: var(--btnShadow);
+    color:var(--light);
+    font-weight: 600;
+}

@@ -1,0 +1,168 @@
+:root {
+    --bgcolor1: #e1e2e3;
+    --maincolor: #8B4411;
+    --light: #fff;
+    --dark: #333;
+    --tagcolor: #C7AD7F;
+    --bgcolor2: #F5F5DD;
+    --tagcolor2:  #969696;
+    --submitBtn: #24a0ed;
+    --deleteBtn: #d11a2a;
+    --inputBorder: #d9d2d2;
+    --boxShadow: 5px 5px 20px -1px rgba(0,0,0,0.55);
+    --boxShadow2: 5px 5px 20px -1px rgba(0,0,0,0.2);
+    --btnShadow: 5px 5px 20px -1px rgba(0,0,0,0.3);
+}
+
+html, body{
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+.received-order {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 10fr;
+    grid-template-areas: 
+    "received-title"
+    "received-ticket";
+    height: 100%;
+    width: 100%;
+}
+
+.rt-title {
+    grid-area: received-title;
+    margin: 0px 0px 0px 10px;
+    padding: 0px 0px 0px 20px; 
+    line-height: .8;
+    font-size: 1em;
+}
+
+.received-ticket {
+    grid-area: received-ticket;
+    width: 96%;
+    margin: 0% 2% 5% 2%;
+    height: 450px;
+    background-color: pink;
+}
+
+.received-ticket > .received-ticket-table > table{
+    width: 100%;
+    border-collapse: collapse;
+    border: none;
+    height: 100%;
+}
+
+.rt-header {
+    width: 100%;
+    border-collapse: collapse;
+    border: none;
+    height: auto;
+}
+
+.rt-header-row > th {
+    text-align: left;
+    padding: 5px;
+    background-color: var(--maincolor);
+    color: var(--light);
+    border: none;
+    height: 20px;
+    font-size: 0.7em;
+}
+
+.th-id {
+    width: 7.33%;
+}
+
+.th-name {
+    width: 7.33%;
+}
+
+.th-address {
+    width: 7.33%;
+}
+
+.th-connum {
+    width: 8.33%;
+}
+
+.th-notes {
+    width: 7.33%;
+}
+
+.th-assign {
+    width: 7.33%;
+}
+
+.th-method {
+    width: 8.33%;
+}
+
+.th-order {
+    width: 10.33%;
+}
+
+.th-total {
+    width: 8.33%;
+}
+
+.th-date {
+    width: 12.33%;
+}
+
+.th-complete {
+    width: 8.33%;
+}
+
+.th-cancel {
+    width: 8.33%;
+}
+
+.rtoverflow {
+    overflow: auto;
+    height: 500px;
+    background-color: var(--light);
+}
+
+#rt_display {
+    width: 100%;
+    border-collapse: collapse;
+    border: none;
+}
+
+.rt-row-data > td {
+    text-align: left;
+    color: var(--dark);
+    padding: 5px;
+    border: none;
+    width: 8.33%;
+    font-size: 0.7em;
+}
+
+.rt-complete-btn {
+    color: var(--submitBtn);
+    border: none;
+    background-color: var(--light);
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+.rt-complete-btn:hover {
+    color: var(--light);
+    background-color: var(--submitBtn);
+}
+
+.rt-cancel-btn {
+    color: var(--deleteBtn);
+    border: none;
+    background-color: var(--light);
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+.rt-cancel-btn:hover {
+    color: var(--light);
+    background-color: var(--deleteBtn);
+}

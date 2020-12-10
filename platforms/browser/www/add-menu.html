@@ -146,6 +146,23 @@
             console.log("remove button clicked");
             $(this).closest("tr").remove();
         });
+        function ConvertToCSV(objArray) {
+                var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+                var str = '';
+
+                for (var i = 0; i < array.length; i++) {
+                    var line = '';
+                    for (var index in array[i]) {
+                        if (line != '') line += ','
+
+                        line += array[i][index];
+                    }
+
+                    str += line + '\r\n';
+                }
+
+                return str;
+            }
         $(".publish-menu-btn").on("click", function() {
             let menu_list = [];
             $(".menu-table tr").each(function (a, b) {
@@ -153,7 +170,9 @@
                 var value = $('.append-price', b).text();
                 menu_list.push({ Name: name, Price: value });
             });
-            let result_menu = JSON.stringify(menu_list);
+            
+            let new_list = JSON.stringify(menu_list);
+            let result_menu = ConvertToCSV(new_list);
             let result_date = $(".publish-date").val();
             let bus_id = localStorage.getItem("bus_id");
 

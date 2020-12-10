@@ -1,0 +1,340 @@
+:root {
+    --bgcolor1: #e1e2e3;
+    --maincolor: #8B4411;
+    --light: #fff;
+    --dark: #333;
+    --tagcolor: #C7AD7F;
+    --bgcolor2: #F5F5DD;
+    --tagcolor2:  #969696;
+    --submitBtn: #24a0ed;
+    --deleteBtn: #d11a2a;
+    --inputBorder: #d9d2d2;
+    --boxShadow: 5px 5px 20px -1px rgba(0,0,0,0.55);
+    --boxShadow2: 5px 5px 20px -1px rgba(0,0,0,0.2);
+    --btnShadow: 5px 5px 20px -1px rgba(0,0,0,0.3);
+}
+
+html, body{
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+.reports{
+    display: grid;
+    height: 100%;
+    width: 100%;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 10fr;
+    grid-template-areas: 
+    "title"
+    "report-section";
+}
+
+.title {
+    grid-area: title;
+    margin: 0px 0px 0px 10px;
+    padding: 0px 0px 0px 20px; 
+    line-height: .8;
+    font-size: 1em;
+}
+
+.title > h3 > a {
+    background-color: var(--maincolor);
+    color: var(--light);
+    text-decoration: none;
+    padding: 5px;
+    font-size: 0.8em;
+    border-radius: 5px;
+}
+
+.title > h3 > a:hover {
+    color: var(--maincolor);
+    background-color: var(--light);
+}
+
+.report-section {
+    grid-area: report-section;
+    display: grid;
+    height: 100%;
+    width: 100%;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 3fr;
+    grid-template-areas: 
+    "profit total-revenue total-expenses total-subscribers"
+    "inventory-table inventory-table product-table product-table";
+}
+
+.profit {
+    grid-area: profit;
+}
+
+.profit-card {
+    height: 96%;
+    width: 92%;
+    background-color: #fff;
+    margin: 0% 4% 4% 4% ;
+    border-radius: 5px;
+    box-shadow: var(--boxShadow2);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.profit-card > .icon {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.profit-card > .icon > i {
+    font-size: 3.5em;
+    color: var(--tagcolor);
+}
+
+.profit-card > .output {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.profit-card > .output > h3 > .profit-output {
+    text-align: left;
+    font-size: 1.5em;
+    padding: 0;
+    margin: 0;
+    color: var(--maincolor);
+}
+
+.profit-card > .output > h3 >.label {
+    text-align: left;
+    font-size: 0.8em;
+    padding: 0;
+    margin: 0;
+    color: var(--tagcolor);
+}
+
+.total-revenue {
+    grid-area: total-revenue;
+}
+
+.revenue-card {
+    height: 96%;
+    width: 92%;
+    background-color: #fff;
+    margin: 0% 4% 4% 4% ;
+    border-radius: 5px;
+    box-shadow: var(--boxShadow2);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.revenue-card > .icon {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.revenue-card > .icon > i {
+    font-size: 3.5em;
+    color: var(--tagcolor);
+}
+
+.revenue-card > .output {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.revenue-card > .output > h3 > .revenue-output {
+    text-align: left;
+    font-size: 1.5em;
+    padding: 0;
+    margin: 0;
+    color: var(--maincolor);
+}
+
+.revenue-card > .output > h3 >.label {
+    text-align: left;
+    font-size: 0.8em;
+    padding: 0;
+    margin: 0;
+    color: var(--tagcolor);
+}
+
+.total-expenses {
+    grid-area: total-expenses;
+}
+
+.expenses-card {
+    height: 96%;
+    width: 92%;
+    background-color: #fff;
+    margin: 0% 4% 4% 4% ;
+    border-radius: 5px;
+    box-shadow: var(--boxShadow2);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.expenses-card > .icon {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.expenses-card > .icon > i {
+    font-size: 3.5em;
+    color: var(--tagcolor);
+}
+
+.expenses-card > .output {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.expenses-card > .output > h3 > .expenses-output {
+    text-align: left;
+    font-size: 1.5em;
+    padding: 0;
+    margin: 0;
+    color: var(--maincolor);
+}
+
+.expenses-card > .output > h3 >.label {
+    text-align: left;
+    font-size: 0.8em;
+    padding: 0;
+    margin: 0;
+    color: var(--tagcolor);
+}
+
+.total-subscribers {
+    grid-area: total-subscribers;
+}
+
+.subscribers-card {
+    height: 96%;
+    width: 92%;
+    background-color: #fff;
+    margin: 0% 4% 4% 4% ;
+    border-radius: 5px;
+    box-shadow: var(--boxShadow2);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.subscribers-card > .icon {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.subscribers-card > .icon > i {
+    font-size: 3.5em;
+    color: var(--tagcolor);
+}
+
+.subscribers-card > .output {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.subscribers-card > .output > h3 > .subscribers-output {
+    text-align: left;
+    font-size: 1.5em;
+    padding: 0;
+    margin: 0;
+    color: var(--maincolor);
+}
+
+.subscribers-card > .output > h3 >.label {
+    text-align: left;
+    font-size: 0.8em;
+    padding: 0;
+    margin: 0;
+    color: var(--tagcolor);
+}
+
+.inventory-table {
+    grid-area: inventory-table;
+}
+
+.inventory-card {
+    height: 94%;
+    width: 96%;
+    background-color: #fff;
+    margin: 2% 2% 4% 2% ;
+    border-radius: 5px;
+    box-shadow: var(--boxShadow2);
+}
+
+.inventory-card > h3{
+    font-size: 1em;
+    color: var(--tagcolor);
+    padding: 20px;
+}
+
+.product-table {
+    grid-area: product-table;
+}
+
+.product-card {
+    height: 94%;
+    width: 96%;
+    background-color: #fff;
+    margin: 2% 2% 4% 2% ;
+    border-radius: 5px;
+    box-shadow: var(--boxShadow2);  
+}
+
+.product-card > h3{
+    font-size: 1em;
+    color: var(--tagcolor);
+    padding: 20px;
+}
+
+@media only screen and (max-width: 768px) {
+    .reports{
+        display: grid;
+        height: 100%;
+        width: 100%;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 30fr;
+        grid-template-areas: 
+        "title"
+        "report-section";
+    }
+    .report-section {
+        grid-area: report-section;
+        display: grid;
+        height: 100%;
+        width: 100%;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-areas: 
+        "profit" 
+        "total-revenue" 
+        "total-expenses" 
+        "total-subscribers"
+        "inventory-table" 
+        "product-table";
+    }
+}
